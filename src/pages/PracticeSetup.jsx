@@ -5,29 +5,40 @@ import PageHero from '../components/PageHero'
 import { competencies, getCompetencyById } from '../data/competencies'
 import { useQuiz } from '../context/QuizContext'
 
-// Practice flow ke fixed defaults — user ko yeh select karne ki zaroorat
-// nahi. Difficulty "Mixed" rakhi hai taake poori subject ke saved MCQs
-// (kisi bhi difficulty ke) is quiz mein shamil ho sakein.
-const PRACTICE_QUESTION_COUNT = 10
-const PRACTICE_DIFFICULTY = 'Mixed'
+const QUESTION_COUNTS = [10, 20]
 
 export default function PracticeSetup() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+
   const { settings, setSettings, resetQuizSession } = useQuiz()
+
   const [error, setError] = useState('')
 
   const competencyFromUrl = searchParams.get('competency')
 
+  // Preselect subject when Practice is opened from a competency card.
   useEffect(() => {
     if (competencyFromUrl && getCompetencyById(competencyFromUrl)) {
-      setSettings({ competencyId: competencyFromUrl })
+      setSettings({
+        competencyId: competencyFromUrl,
+      })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- run when URL param changes
-  }, [competencyFromUrl])
+  }, [competencyFromUrl, setSettings])
 
   const handleCompetencyChange = (e) => {
-    setSettings({ competencyId: e.target.value })
+    setSettings({
+      competencyId: e.target.value,
+    })
+
+    setError('')
+  }
+
+  const handleQuestionCountChange = (count) => {
+    setSettings({
+      questionCount: count,
+    })
+
     setError('')
   }
 
@@ -40,16 +51,25 @@ export default function PracticeSetup() {
       return
     }
 
-    // Practice hamesha database se, poori subject (sab topics mila kar),
-    // fixed difficulty/count ke sath — koi topic ya difficulty select nahi.
+    if (!QUESTION_COUNTS.includes(settings.questionCount)) {
+      setError('Please select 10 or 20 questions.')
+      return
+    }
+
+    // Practice always uses MongoDB.
+    // No topic and no difficulty filter.
     setSettings({
       topicId: '',
+      difficulty: 'Mixed',
+      questionCount: settings.questionCount,
       quizMode: 'db',
-      difficulty: PRACTICE_DIFFICULTY,
-      questionCount: PRACTICE_QUESTION_COUNT,
     })
 
+    // Clear the previous quiz session.
     resetQuizSession()
+
+    // Open database quiz.
+    // The backend will randomly select new questions.
     navigate('/quiz/db?fresh=1')
   }
 
@@ -57,7 +77,7 @@ export default function PracticeSetup() {
     <>
       <PageHero
         title="Practice"
-        subtitle="Select a subject and start practicing with saved MCQs from our question bank."
+        subtitle="Select a subject and question quantity to practice with random questions from the database."
       />
 
       <section className="mx-auto max-w-xl px-4 py-10 sm:px-6">
@@ -65,10 +85,15 @@ export default function PracticeSetup() {
           onSubmit={handleGenerate}
           className="space-y-6 rounded-xl border border-ulm-lavender bg-white p-6 shadow-sm"
         >
+          {/* Subject */}
           <div>
-            <label htmlFor="competency" className="mb-1 block text-sm font-medium text-ulm-dark">
+            <label
+              htmlFor="competency"
+              className="mb-1 block text-sm font-medium text-ulm-dark"
+            >
               Subject
             </label>
+
             <select
               id="competency"
               value={settings.competencyId}
@@ -77,6 +102,7 @@ export default function PracticeSetup() {
               required
             >
               <option value="">Select subject</option>
+
               {competencies.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name} ({c.weightage}%)
@@ -85,25 +111,58 @@ export default function PracticeSetup() {
             </select>
           </div>
 
+          {/* Question Quantity */}
+          <div>
+            <label className="mb-3 block text-sm font-medium text-ulm-dark">
+              Question Quantity
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              {QUESTION_COUNTS.map((count) => (
+                <button
+                  key={count}
+                  type="button"
+                  onClick={() => handleQuestionCountChange(count)}
+                  className={`rounded-lg border px-4 py-3 text-sm font-semibold transition ${
+                    settings.questionCount === count
+                      ? 'border-ulm-purple bg-ulm-purple text-white'
+                      : 'border-gray-300 bg-white text-ulm-dark hover:border-ulm-purple hover:bg-ulm-lavender'
+                  }`}
+                >
+                  {count} Questions
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Error */}
           {error && (
-            <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+            <p
+              className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"
+              role="alert"
+            >
               {error}
             </p>
           )}
 
+          {/* Generate Quiz */}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ulm-purple px-5 py-3 text-sm font-semibold text-white hover:bg-ulm-purple-dark sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ulm-purple px-5 py-3 text-sm font-semibold text-white hover:bg-ulm-purple-dark"
           >
             <Play className="h-4 w-4" aria-hidden />
-            Start Practice
+            Generate Quiz
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-500">
-          Want more control over topic and difficulty?{' '}
-          <Link to="/quiz/setup" className="font-medium text-ulm-purple hover:underline">
-            Try AI Quiz instead
+          Want to generate questions with AI?
+          {' '}
+          <Link
+            to="/quiz/setup"
+            className="font-medium text-ulm-purple hover:underline"
+          >
+            Try AI Quiz
           </Link>
         </p>
       </section>
