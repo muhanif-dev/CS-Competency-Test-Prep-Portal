@@ -10,7 +10,7 @@ import { generateQuiz, isAiConfigured } from '../services/aiService'
 export default function AIQuiz() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { settings, startNewQuiz, generationToken } = useQuiz()
+  const { settings, startNewQuiz, generationToken, getQuestionHistory, recordQuestionHistory } = useQuiz()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const runId = useRef(0)
@@ -42,9 +42,15 @@ export default function AIQuiz() {
         topicId: settings.topicId,
         numberOfQuestions: settings.questionCount,
         difficulty: settings.difficulty,
+        excludeQuestions: getQuestionHistory(settings.topicId),
       })
 
       if (id !== runId.current) return
+
+      recordQuestionHistory(
+        settings.topicId,
+        result.questions.map((q) => q.question),
+      )
 
       startNewQuiz(result)
       navigate('/quiz', { replace: true })

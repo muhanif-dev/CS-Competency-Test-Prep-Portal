@@ -2,31 +2,35 @@ import axios from 'axios'
 import { getOtherTopicNames, getTopicByIds } from '../data/competencies'
 import { parseQuizJson, validateQuizPayload } from '../utils/quizValidation'
 
-/**
- * Browser-side quiz generation via Google Gemini.
- *
- * Security note: Standard OpenAI/Anthropic secret keys must not ship in frontend bundles.
- * Google Gemini supports client-side use when the key is stored in VITE_* env vars (not
- * hardcoded) and restricted in Google Cloud Console (API + HTTP referrer limits).
- * See .env.example and README for setup.
- */
-
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_MODEL =
   import.meta.env.VITE_GEMINI_MODEL || 'gemini-3.5-flash-lite'
 
-function buildPrompt({ competencyName, topicName, otherTopics, numberOfQuestions, difficulty }) {
+function buildPrompt({
+  competencyName,
+  topicName,
+  otherTopics,
+  numberOfQuestions,
+  difficulty,
+  excludeQuestions,
+  nonce,
+}) {
   const difficultyInstruction =
     difficulty === 'Mixed'
       ? 'Use a balanced mix of Easy, Medium, and Hard questions.'
       : `All questions must be ${difficulty} difficulty (set the "difficulty" field accordingly).`
 
   const exclusionList =
-    otherTopics.length > 0
-      ? otherTopics.join(', ')
-      : 'any other topic'
+    otherTopics.length > 0 ? otherTopics.join(', ') : 'any other topic'
+
+  const previousQuestionsBlock =
+    excludeQuestions && excludeQuestions.length > 0
+      ? `\nDo NOT repeat, rephrase, or lightly modify any of these previously asked questions. Generate genuinely different questions covering different sub-concepts, examples, or angles:\n${excludeQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}\n`
+      : ''
 
   return `You are an expert Computer Science educator creating competency test preparation questions.
+
+Session reference (ignore, only for uniqueness): ${nonce}
 
 Generate questions ONLY from the selected competency area and selected topic provided below.
 
@@ -38,10 +42,11 @@ ${topicName}
 
 Do not generate questions about ${exclusionList}, or any other topic outside "${topicName}" within this competency area.
 Do not generate random or general Computer Science questions unrelated to this topic.
-
+${previousQuestionsBlock}
 Requirements:
 - Generate exactly ${numberOfQuestions} unique multiple-choice questions.
 - ${difficultyInstruction}
+- Prioritize variety: vary phrasing, use different concrete examples/code snippets/scenarios each time rather than the most common textbook version of a question.
 - Each question must have exactly 4 options with ids "A", "B", "C", "D".
 - Exactly one correct answer per question.
 - Include a clear explanation for each question.
@@ -95,6 +100,7 @@ export async function generateQuiz({
   topicId,
   numberOfQuestions,
   difficulty,
+  excludeQuestions = [],
 }) {
   if (!isAiConfigured()) {
     throw new Error(
@@ -110,12 +116,16 @@ export async function generateQuiz({
   const { competency, topic } = resolved
   const otherTopics = getOtherTopicNames(competency, topicId)
 
+  const nonce = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+
   const prompt = buildPrompt({
     competencyName: competency.name,
     topicName: topic.name,
     otherTopics,
     numberOfQuestions,
     difficulty,
+    excludeQuestions: excludeQuestions.slice(-40),
+    nonce,
   })
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
@@ -127,7 +137,9 @@ export async function generateQuiz({
       {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.9,
+          temperature: 1.1,
+          topP: 0.97,
+          topK: 64,
           responseMimeType: 'application/json',
         },
       },
@@ -150,9 +162,7 @@ export async function generateQuiz({
 
   const parsed = parseQuizJson(text)
   if (!parsed.ok) {
-    throw new Error(
-      'Unable to generate a valid quiz. Please try again.',
-    )
+    throw new Error('Unable to generate a valid quiz. Please try again.')
   }
 
   const validation = validateQuizPayload(parsed.data, numberOfQuestions)

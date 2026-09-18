@@ -2,6 +2,8 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 const STORAGE_KEY = 'cs-prep-quiz-settings'
 const RESULT_KEY = 'cs-prep-last-result'
+const HISTORY_KEY = 'cs-prep-question-history'
+const HISTORY_LIMIT_PER_TOPIC = 40
 
 const defaultSettings = {
   competencyId: '',
@@ -39,6 +41,29 @@ export function QuizProvider({ children }) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
       return next
     })
+  }, [])
+
+  const getQuestionHistory = useCallback((topicId) => {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY)
+      const all = raw ? JSON.parse(raw) : {}
+      return all[topicId] || []
+    } catch {
+      return []
+    }
+  }, [])
+
+  const recordQuestionHistory = useCallback((topicId, questionTexts) => {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY)
+      const all = raw ? JSON.parse(raw) : {}
+      const existing = all[topicId] || []
+      const merged = [...existing, ...questionTexts].slice(-HISTORY_LIMIT_PER_TOPIC)
+      all[topicId] = merged
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(all))
+    } catch {
+      // ignore storage errors
+    }
   }, [])
 
   const resetQuizSession = useCallback(() => {
@@ -134,6 +159,8 @@ export function QuizProvider({ children }) {
       completed,
       generationToken,
       resetQuizSession,
+      getQuestionHistory,
+      recordQuestionHistory,
       startNewQuiz,
       selectAnswer,
       goToNext,
@@ -154,6 +181,8 @@ export function QuizProvider({ children }) {
       completed,
       generationToken,
       resetQuizSession,
+      getQuestionHistory,
+      recordQuestionHistory,
       startNewQuiz,
       selectAnswer,
       goToNext,
