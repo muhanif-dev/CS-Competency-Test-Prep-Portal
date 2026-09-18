@@ -58,7 +58,7 @@ export default function Result() {
               Try Again
             </Link>
             <Link
-              to="/quiz/ai?fresh=1"
+              to={quizMeta?.source === 'database' ? '/quiz/db?fresh=1' : '/quiz/ai?fresh=1'}
               onClick={() => resetQuizSession()}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-ulm-purple px-4 py-2.5 text-sm font-semibold text-white hover:bg-ulm-purple-dark"
             >

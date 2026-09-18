@@ -174,6 +174,7 @@ export async function generateQuiz({
       topicId: topic.id,
       numberOfQuestions,
       difficulty,
+      source: 'ai',
       generatedAt: Date.now(),
     },
   }

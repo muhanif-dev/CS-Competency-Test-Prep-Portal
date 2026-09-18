@@ -5,6 +5,7 @@ import PageHero from '../components/PageHero'
 import { competencies, getCompetencyById, getTopicByIds } from '../data/competencies'
 import { useQuiz } from '../context/QuizContext'
 import { isAiConfigured } from '../services/aiService'
+import { Brain, Database, Play } from 'lucide-react'
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard', 'Mixed']
 const COUNTS = [10, 20]
@@ -61,8 +62,15 @@ export default function QuizSetup() {
       return
     }
 
+    if (settings.quizMode === 'ai' && !isAiConfigured()) {
+      setError(
+        'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
+      )
+      return
+    }
+    
     resetQuizSession()
-    navigate('/quiz/ai?fresh=1')
+    navigate(settings.quizMode === 'db' ? '/quiz/db?fresh=1' : '/quiz/ai?fresh=1')
   }
 
   return (
@@ -121,12 +129,41 @@ export default function QuizSetup() {
           </div>
 
           <div>
-            <span className="mb-2 block text-sm font-medium text-ulm-dark">Quiz Mode</span>
-            <div className="flex items-center gap-2 rounded-lg border border-ulm-purple/30 bg-ulm-lavender/40 px-4 py-3 text-sm">
-              <Brain className="h-5 w-5 text-ulm-purple" aria-hidden />
-              <span className="font-medium">AI Generated Quiz</span>
-            </div>
-          </div>
+  <span className="mb-2 block text-sm font-medium text-ulm-dark">Quiz Mode</span>
+  <div className="grid gap-3 sm:grid-cols-2">
+    <button
+      type="button"
+      onClick={() => setSettings({ quizMode: 'ai' })}
+      className={`flex items-center gap-2 rounded-lg border px-4 py-3 text-left text-sm ${
+        settings.quizMode === 'ai'
+          ? 'border-ulm-purple bg-ulm-lavender/40'
+          : 'border-gray-300 bg-white hover:bg-gray-50'
+      }`}
+    >
+      <Brain className="h-5 w-5 shrink-0 text-ulm-purple" aria-hidden />
+      <span>
+        <span className="block font-medium text-ulm-dark">Quiz with AI</span>
+        <span className="block text-xs text-gray-500">Fresh questions generated live</span>
+      </span>
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setSettings({ quizMode: 'db' })}
+      className={`flex items-center gap-2 rounded-lg border px-4 py-3 text-left text-sm ${
+        settings.quizMode === 'db'
+          ? 'border-ulm-purple bg-ulm-lavender/40'
+          : 'border-gray-300 bg-white hover:bg-gray-50'
+      }`}
+    >
+      <Database className="h-5 w-5 shrink-0 text-ulm-purple" aria-hidden />
+      <span>
+        <span className="block font-medium text-ulm-dark">Quiz from Database</span>
+        <span className="block text-xs text-gray-500">Random questions from saved MCQs</span>
+      </span>
+    </button>
+  </div>
+</div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>

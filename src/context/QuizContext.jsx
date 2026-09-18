@@ -9,6 +9,7 @@ const defaultSettings = {
   questionCount: 10,
   difficulty: 'Medium',
   quizMode: 'AI Generated Quiz',
+  quizMode: 'ai', // 'ai' | 'db'
 }
 
 function loadSettings() {
