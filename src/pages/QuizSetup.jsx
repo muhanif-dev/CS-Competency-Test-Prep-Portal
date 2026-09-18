@@ -1,11 +1,11 @@
-import { Brain, Play } from 'lucide-react'
+import { Brain, Database, Play } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import { competencies, getCompetencyById, getTopicByIds } from '../data/competencies'
 import { useQuiz } from '../context/QuizContext'
 import { isAiConfigured } from '../services/aiService'
-import { Brain, Database, Play } from 'lucide-react'
+
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard', 'Mixed']
 const COUNTS = [10, 20]
@@ -44,31 +44,24 @@ export default function QuizSetup() {
   const handleGenerate = (e) => {
     e.preventDefault()
     setError('')
-
+  
     if (!settings.competencyId || !settings.topicId) {
       setError('Please select both a competency area and a topic from the official syllabus.')
       return
     }
-
+  
     if (!getTopicByIds(settings.competencyId, settings.topicId)) {
       setError('Invalid topic selected. Choose a topic from the list.')
       return
     }
-
-    if (!isAiConfigured()) {
-      setError(
-        'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
-      )
-      return
-    }
-
+  
     if (settings.quizMode === 'ai' && !isAiConfigured()) {
       setError(
         'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
       )
       return
     }
-    
+  
     resetQuizSession()
     navigate(settings.quizMode === 'db' ? '/quiz/db?fresh=1' : '/quiz/ai?fresh=1')
   }
