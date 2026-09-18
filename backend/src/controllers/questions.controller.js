@@ -8,13 +8,19 @@ export async function getRandomQuiz(req, res) {
     const count = parseInt(req.query.count, 10) || 10
     const numberOfQuestions = Math.min(Math.max(count, 1), MAX_QUESTIONS)
 
-    if (!competencyId || !topicId) {
+    if (!competencyId) {
       return res.status(400).json({
-        error: 'competencyId aur topicId dono query params required hain.',
+        error: 'competencyId query param required hai.',
       })
     }
 
-    const match = { competencyId, topicId }
+    // topicId optional hai: agar diya gaya hai to sirf usi topic se questions
+    // aayenge (AI Quiz flow jaisa), agar nahi diya to poori subject (sab
+    // topics mila kar) se random questions aayenge (Practice flow).
+    const match = { competencyId }
+    if (topicId) {
+      match.topicId = topicId
+    }
     if (difficulty && difficulty !== 'Mixed') {
       match.difficulty = difficulty
     }
@@ -23,14 +29,15 @@ export async function getRandomQuiz(req, res) {
 
     if (available === 0) {
       return res.status(404).json({
-        error:
-          'Is subject/topic ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.',
+        error: topicId
+          ? 'Is subject/topic ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.'
+          : 'Is subject ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.',
       })
     }
 
     if (available < numberOfQuestions) {
       return res.status(400).json({
-        error: `Is topic ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
+        error: `Is ${topicId ? 'topic' : 'subject'} ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
       })
     }
 
@@ -52,9 +59,9 @@ export async function getRandomQuiz(req, res) {
       questions,
       meta: {
         competencyId,
-        topicId,
+        topicId: topicId || null,
         competencyArea: sampled[0]?.competencyName,
-        topic: sampled[0]?.topicName,
+        topic: topicId ? sampled[0]?.topicName : 'All Topics (Mixed Practice)',
         numberOfQuestions,
         difficulty,
         source: 'database',

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import PageHero from '../components/PageHero'
-import { getTopicByIds } from '../data/competencies'
+import { getCompetencyById, getTopicByIds } from '../data/competencies'
 import { useQuiz } from '../context/QuizContext'
 import { generateQuizFromDB } from '../services/dbService'
 
@@ -15,15 +15,27 @@ export default function DBQuiz() {
   const [error, setError] = useState('')
   const runId = useRef(0)
 
-  const resolved = getTopicByIds(settings.competencyId, settings.topicId)
+  // Agar topicId select ki gayi hai (AI-style single-topic DB quiz) to usay
+  // resolve karein; warna Practice flow hai (poori subject, topicId khali).
+  const topicResolved = settings.topicId
+    ? getTopicByIds(settings.competencyId, settings.topicId)
+    : null
+  const competency = getCompetencyById(settings.competencyId)
+  const isValidSelection = settings.topicId ? Boolean(topicResolved) : Boolean(competency)
+
+  const subtitle = topicResolved
+    ? `${topicResolved.competency.name} → ${topicResolved.topic.name}`
+    : competency
+      ? `${competency.name} → All Topics (Mixed Practice)`
+      : 'Configure your quiz to continue'
 
   const runFetch = useCallback(async () => {
     const id = ++runId.current
     setLoading(true)
     setError('')
 
-    if (!resolved) {
-      setError('Please select a valid competency area and topic before starting a quiz.')
+    if (!isValidSelection) {
+      setError('Please select a valid subject before starting a quiz.')
       setLoading(false)
       return
     }
@@ -31,7 +43,7 @@ export default function DBQuiz() {
     try {
       const result = await generateQuizFromDB({
         competencyId: settings.competencyId,
-        topicId: settings.topicId,
+        topicId: settings.topicId || undefined,
         numberOfQuestions: settings.questionCount,
         difficulty: settings.difficulty,
       })
@@ -47,7 +59,7 @@ export default function DBQuiz() {
       setLoading(false)
     }
   }, [
-    resolved,
+    isValidSelection,
     settings.competencyId,
     settings.topicId,
     settings.questionCount,
@@ -63,16 +75,11 @@ export default function DBQuiz() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- re-fetch when settings/token/fresh changes
   }, [runFetch, generationToken, freshParam])
 
+  const backTo = settings.topicId ? '/quiz/setup' : '/quiz/practice'
+
   return (
     <>
-      <PageHero
-        title="Database Quiz"
-        subtitle={
-          resolved
-            ? `${resolved.competency.name} → ${resolved.topic.name}`
-            : 'Configure your quiz to continue'
-        }
-      />
+      <PageHero title="Database Quiz" subtitle={subtitle} />
 
       <section className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
         {loading && !error && <LoadingSpinner label="Fetching questions from database..." />}
@@ -94,7 +101,7 @@ export default function DBQuiz() {
                     Try Again
                   </button>
                   <Link
-                    to="/quiz/setup"
+                    to={backTo}
                     className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-ulm-dark hover:bg-gray-50"
                   >
                     Back to Setup
@@ -105,12 +112,12 @@ export default function DBQuiz() {
           </div>
         )}
 
-        {!resolved && !loading && (
+        {!isValidSelection && !loading && (
           <p className="text-center text-gray-600">
-            <Link to="/quiz/setup" className="text-ulm-purple hover:underline">
-              Go to Quiz Setup
+            <Link to={backTo} className="text-ulm-purple hover:underline">
+              Go to Setup
             </Link>{' '}
-            to choose a competency and topic.
+            to choose a subject.
           </p>
         )}
       </section>

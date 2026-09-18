@@ -7,6 +7,7 @@ import Competencies from './pages/Competencies'
 import CompetencyDetail from './pages/CompetencyDetail'
 import DBQuiz from './pages/DBQuiz'
 import Home from './pages/Home'
+import PracticeSetup from './pages/PracticeSetup'
 import QuizPage from './pages/Quiz'
 import QuizSetup from './pages/QuizSetup'
 import Result from './pages/Result'
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="competencies" element={<Competencies />} />
             <Route path="competencies/:competencyId" element={<CompetencyDetail />} />
             <Route path="quiz/setup" element={<QuizSetup />} />
+            <Route path="practice/setup" element={<PracticeSetup />} />
             <Route path="quiz/ai" element={<AIQuiz />} />
             <Route path="quiz/db" element={<DBQuiz />} />
             <Route path="quiz" element={<QuizPage />} />

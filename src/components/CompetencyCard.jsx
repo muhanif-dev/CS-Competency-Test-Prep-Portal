@@ -19,8 +19,8 @@ export default function CompetencyCard({ competency }) {
         {competency.topics.length} topics available for focused practice
       </p>
       <div className="mt-auto flex flex-wrap gap-2 pt-5">
-        <Link
-          to={`/competencies/${competency.id}`}
+      <Link
+          to={`/quiz/practice?competency=${competency.id}`}
           className="inline-flex items-center gap-1 rounded-lg bg-ulm-purple px-4 py-2 text-sm font-medium text-white hover:bg-ulm-purple-dark"
         >
           Practice
