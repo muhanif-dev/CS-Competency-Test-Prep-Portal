@@ -2,7 +2,6 @@ import Question from '../models/Question.js'
 
 const MAX_QUESTIONS = 50
 
-// GET /api/questions/quiz?competencyId=&topicId=&count=10&difficulty=Medium|Easy|Hard|Mixed
 export async function getRandomQuiz(req, res) {
   try {
     const { competencyId, topicId, difficulty = 'Mixed' } = req.query
@@ -31,7 +30,7 @@ export async function getRandomQuiz(req, res) {
 
     if (available < numberOfQuestions) {
       return res.status(400).json({
-        error: `Is topic ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain. Kam number chunein ya pehlay aur MCQs add karein.`,
+        error: `Is topic ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
       })
     }
 
@@ -68,7 +67,6 @@ export async function getRandomQuiz(req, res) {
   }
 }
 
-// GET /api/questions/summary -> subject/topic wise count, admin/debug ke liye
 export async function getSubjectsSummary(req, res) {
   try {
     const summary = await Question.aggregate([
@@ -89,7 +87,6 @@ export async function getSubjectsSummary(req, res) {
   }
 }
 
-// POST /api/questions -> single question add karne ke liye (naya subject/topic add karte waqt)
 export async function createQuestion(req, res) {
   try {
     const question = await Question.create(req.body)
@@ -99,8 +96,6 @@ export async function createQuestion(req, res) {
   }
 }
 
-// POST /api/questions/bulk -> ek sath bohat sare questions add karne ke liye
-// body: { "questions": [ {...}, {...} ] }
 export async function bulkCreateQuestions(req, res) {
   try {
     const { questions } = req.body

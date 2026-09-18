@@ -10,7 +10,6 @@ const optionSchema = new mongoose.Schema(
 
 const questionSchema = new mongoose.Schema(
   {
-    // Yeh ids EXACTLY frontend ke src/data/competencies.js jaisi honi chahiye
     competencyId: { type: String, required: true, trim: true, index: true },
     competencyName: { type: String, required: true, trim: true },
     topicId: { type: String, required: true, trim: true, index: true },
