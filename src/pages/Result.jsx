@@ -19,7 +19,8 @@ export default function Result() {
           <h1 className="mt-3 text-2xl font-bold">Quiz Completed</h1>
           {quizMeta && (
             <p className="mt-2 text-sm text-white/90">
-              {quizMeta.competencyArea} · {quizMeta.topic}
+              {quizMeta.competencyArea}
+              {quizMeta.topic ? ` · ${quizMeta.topic}` : ''}
             </p>
           )}
         </div>

@@ -10,10 +10,10 @@ const optionSchema = new mongoose.Schema(
 
 const questionSchema = new mongoose.Schema(
   {
+    // Yeh id MUST frontend ke src/data/competencies.js ke competency "id"
+    // se match honi chahiye (e.g. 'cyber-security', 'programming-cpp-java-python').
     competencyId: { type: String, required: true, trim: true, index: true },
     competencyName: { type: String, required: true, trim: true },
-    topicId: { type: String, required: true, trim: true, index: true },
-    topicName: { type: String, required: true, trim: true },
 
     question: { type: String, required: true, trim: true },
 
@@ -26,7 +26,8 @@ const questionSchema = new mongoose.Schema(
     },
 
     correctAnswer: { type: String, required: true, enum: ['A', 'B', 'C', 'D'] },
-    explanation: { type: String, required: true, trim: true },
+    // Optional: source files (Word docs) aksar explanation nahi dete.
+    explanation: { type: String, trim: true, default: '' },
     difficulty: {
       type: String,
       required: true,
@@ -37,6 +38,6 @@ const questionSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-questionSchema.index({ competencyId: 1, topicId: 1, difficulty: 1 })
+questionSchema.index({ competencyId: 1, difficulty: 1 })
 
 export default mongoose.model('Question', questionSchema)

@@ -2,9 +2,11 @@ import Question from '../models/Question.js'
 
 const MAX_QUESTIONS = 50
 
+// GET /api/questions/quiz?competencyId=&count=10&difficulty=Medium|Easy|Hard|Mixed
+// Poori subject (competencyId) se random questions - koi topic select nahi karna hota.
 export async function getRandomQuiz(req, res) {
   try {
-    const { competencyId, topicId, difficulty = 'Mixed' } = req.query
+    const { competencyId, difficulty = 'Mixed' } = req.query
     const count = parseInt(req.query.count, 10) || 10
     const numberOfQuestions = Math.min(Math.max(count, 1), MAX_QUESTIONS)
 
@@ -14,13 +16,7 @@ export async function getRandomQuiz(req, res) {
       })
     }
 
-    // topicId optional hai: agar diya gaya hai to sirf usi topic se questions
-    // aayenge (AI Quiz flow jaisa), agar nahi diya to poori subject (sab
-    // topics mila kar) se random questions aayenge (Practice flow).
     const match = { competencyId }
-    if (topicId) {
-      match.topicId = topicId
-    }
     if (difficulty && difficulty !== 'Mixed') {
       match.difficulty = difficulty
     }
@@ -29,15 +25,13 @@ export async function getRandomQuiz(req, res) {
 
     if (available === 0) {
       return res.status(404).json({
-        error: topicId
-          ? 'Is subject/topic ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.'
-          : 'Is subject ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.',
+        error: 'Is subject ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions add/seed karein.',
       })
     }
 
     if (available < numberOfQuestions) {
       return res.status(400).json({
-        error: `Is ${topicId ? 'topic' : 'subject'} ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
+        error: `Is subject ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
       })
     }
 
@@ -51,7 +45,7 @@ export async function getRandomQuiz(req, res) {
       question: q.question,
       options: q.options,
       correctAnswer: q.correctAnswer,
-      explanation: q.explanation,
+      explanation: q.explanation || '',
       difficulty: q.difficulty,
     }))
 
@@ -59,9 +53,7 @@ export async function getRandomQuiz(req, res) {
       questions,
       meta: {
         competencyId,
-        topicId: topicId || null,
         competencyArea: sampled[0]?.competencyName,
-        topic: topicId ? sampled[0]?.topicName : 'All Topics (Mixed Practice)',
         numberOfQuestions,
         difficulty,
         source: 'database',
@@ -74,18 +66,18 @@ export async function getRandomQuiz(req, res) {
   }
 }
 
+// GET /api/questions/summary -> subject wise count, admin/debug ke liye
 export async function getSubjectsSummary(req, res) {
   try {
     const summary = await Question.aggregate([
       {
         $group: {
-          _id: { competencyId: '$competencyId', topicId: '$topicId' },
+          _id: '$competencyId',
           competencyName: { $first: '$competencyName' },
-          topicName: { $first: '$topicName' },
           count: { $sum: 1 },
         },
       },
-      { $sort: { '_id.competencyId': 1, '_id.topicId': 1 } },
+      { $sort: { _id: 1 } },
     ])
     return res.json(summary)
   } catch (err) {
