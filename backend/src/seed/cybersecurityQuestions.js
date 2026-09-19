@@ -3,12 +3,12 @@ import mongoose from 'mongoose'
 import connectDB from '../config/db.js'
 import Question from '../models/Question.js'
 
-// Cyber Security ke 240 MCQs.
-// - Q1-140: aapki original Word file se (already 4 options thay).
-// - Q141-240: aapki original file mein sirf 2 options (A/B) thay; C aur D
-//   options yahan generate kiye gaye hain taake har question 4 valid options
-//   ke sath ho. In 100 mein se sirf A aur B "asal" content hain, C/D generated
-//   distractors hain — chahein to inko baad mein apne mutabiq edit kar sakte hain.
+// Cyber Security ke 240 MCQs — final version.
+// - Content bilkul wahi hai jo seedCyberSecurity.js mein tha
+//   (Q1-140 aapki original file se, Q141-240 mein C/D generated the).
+// - FARQ: har question ka sahi jawab (correctAnswer) ab A/B/C/D mein
+//   barabar taqseem hai (60 A, 60 B, 60 C, 60 D) — pehlay zyada tar (198/240)
+//   sawalon ka jawab "B" hi tha, ab random/balanced hai.
 const sampleQuestions = [
   {
     "competencyId": "cyber-security",
@@ -17,11 +17,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Cryptography, Integrity, Authentication"
+        "text": "Confidentiality, Integrity, Availability"
       },
       {
         "id": "B",
-        "text": "Confidentiality, Integrity, Availability"
+        "text": "Cryptography, Integrity, Authentication"
       },
       {
         "id": "C",
@@ -32,7 +32,7 @@ const sampleQuestions = [
         "text": "Control, Identification, Access"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -47,18 +47,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A potential pathway for an attack to succeed"
+        "text": "A weakness in a system or process that can be exploited"
       },
       {
         "id": "C",
-        "text": "A weakness in a system or process that can be exploited"
+        "text": "A potential pathway for an attack to succeed"
       },
       {
         "id": "D",
         "text": "A type of security policy"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -73,18 +73,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A misconfigured firewall"
+        "text": "A hacker attempting to break into a server"
       },
       {
         "id": "C",
-        "text": "A hacker attempting to break into a server"
+        "text": "A misconfigured firewall"
       },
       {
         "id": "D",
         "text": "A weak password policy"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -99,18 +99,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Ensuring only authorized people can access data"
+        "text": "Ensuring data does not change unexpectedly"
       },
       {
         "id": "C",
-        "text": "Ensuring data does not change unexpectedly"
+        "text": "Ensuring only authorized people can access data"
       },
       {
         "id": "D",
         "text": "Ensuring systems are backed up regularly"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -121,11 +121,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Data is encrypted and unreadable to attackers"
+        "text": "Data is protected from unauthorized modification"
       },
       {
         "id": "B",
-        "text": "Data is protected from unauthorized modification"
+        "text": "Data is encrypted and unreadable to attackers"
       },
       {
         "id": "C",
@@ -136,7 +136,7 @@ const sampleQuestions = [
         "text": "Users can log in anytime they want"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -177,18 +177,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The likelihood that a threat will exploit a vulnerability and cause harm"
-      },
-      {
-        "id": "C",
         "text": "A tool used to detect malware"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A type of security policy"
+      },
+      {
+        "id": "D",
+        "text": "The likelihood that a threat will exploit a vulnerability and cause harm"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -225,22 +225,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Firewall"
+        "text": "Security awareness training"
       },
       {
         "id": "B",
-        "text": "Access control list"
+        "text": "Firewall"
       },
       {
         "id": "C",
-        "text": "Security awareness training"
+        "text": "Access control list"
       },
       {
         "id": "D",
         "text": "Encryption"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -251,22 +251,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Acceptable use policy"
+        "text": "Intrusion Detection System (IDS)"
       },
       {
         "id": "B",
-        "text": "Security awareness poster"
+        "text": "Acceptable use policy"
       },
       {
         "id": "C",
-        "text": "Intrusion Detection System (IDS)"
+        "text": "Security awareness poster"
       },
       {
         "id": "D",
         "text": "Background check"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -277,22 +277,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A vulnerability that has already been patched"
+        "text": "A vulnerability that is unknown to the vendor and has no patch yet"
       },
       {
         "id": "B",
-        "text": "A vulnerability that is publicly known but not yet fixed"
+        "text": "A vulnerability that has already been patched"
       },
       {
         "id": "C",
-        "text": "A vulnerability that is unknown to the vendor and has no patch yet"
+        "text": "A vulnerability that is publicly known but not yet fixed"
       },
       {
         "id": "D",
         "text": "A vulnerability that only exists on weekends"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -307,18 +307,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A suspected or confirmed violation of security policy"
-      },
-      {
-        "id": "C",
         "text": "A scheduled system update"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A user changing their password"
+      },
+      {
+        "id": "D",
+        "text": "A suspected or confirmed violation of security policy"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -329,22 +329,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Any legal software"
+        "text": "Malicious software designed to harm or exploit systems"
       },
       {
         "id": "B",
-        "text": "Software designed to protect systems"
+        "text": "Any legal software"
       },
       {
         "id": "C",
-        "text": "Malicious software designed to harm or exploit systems"
+        "text": "Software designed to protect systems"
       },
       {
         "id": "D",
         "text": "A type of firewall"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -359,18 +359,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A method of encrypting emails"
+        "text": "An attack that uses fake emails or messages to trick users"
       },
       {
         "id": "C",
-        "text": "An attack that uses fake emails or messages to trick users"
+        "text": "A method of encrypting emails"
       },
       {
         "id": "D",
         "text": "A firewall rule"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -389,14 +389,14 @@ const sampleQuestions = [
       },
       {
         "id": "C",
-        "text": "Something you are"
+        "text": "Something you read"
       },
       {
         "id": "D",
-        "text": "Something you read"
+        "text": "Something you are"
       }
     ],
-    "correctAnswer": "D",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -437,18 +437,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To keep software updated with security fixes"
-      },
-      {
-        "id": "C",
         "text": "To delete all logs"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To stop all network traffic"
+      },
+      {
+        "id": "D",
+        "text": "To keep software updated with security fixes"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -463,18 +463,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using multiple layers of security controls"
-      },
-      {
-        "id": "C",
         "text": "Relying only on a firewall"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Ignoring vulnerabilities"
+      },
+      {
+        "id": "D",
+        "text": "Using multiple layers of security controls"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -485,11 +485,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A type of ransom"
+        "text": "Any resource that has value to the organization"
       },
       {
         "id": "B",
-        "text": "Any resource that has value to the organization"
+        "text": "A type of ransom"
       },
       {
         "id": "C",
@@ -500,7 +500,7 @@ const sampleQuestions = [
         "text": "A temporary backup"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -515,18 +515,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Data stored in a database or on a hard drive"
-      },
-      {
-        "id": "C",
         "text": "Data being processed in memory"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Data being typed by a user"
+      },
+      {
+        "id": "D",
+        "text": "Data stored in a database or on a hard drive"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -537,11 +537,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To speed up internet browsing"
+        "text": "To act as a barrier between networks and control traffic based on rules"
       },
       {
         "id": "B",
-        "text": "To act as a barrier between networks and control traffic based on rules"
+        "text": "To speed up internet browsing"
       },
       {
         "id": "C",
@@ -552,7 +552,7 @@ const sampleQuestions = [
         "text": "To scan hardware for faults"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -567,18 +567,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "It filters traffic based only on IP addresses, ports, and protocols"
-      },
-      {
-        "id": "C",
         "text": "It runs only on mobile devices"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "It encrypts all packets"
+      },
+      {
+        "id": "D",
+        "text": "It filters traffic based only on IP addresses, ports, and protocols"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -593,18 +593,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To connect two networks over the internet using encrypted tunnels"
+        "text": "To delete logs automatically"
       },
       {
         "id": "C",
-        "text": "To delete logs automatically"
+        "text": "To connect two networks over the internet using encrypted tunnels"
       },
       {
         "id": "D",
         "text": "To block all inbound traffic permanently"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -645,18 +645,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "An IPS can actively block or drop malicious traffic"
-      },
-      {
-        "id": "C",
         "text": "An IPS works only on Wi‑Fi"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "An IPS never produces alerts"
+      },
+      {
+        "id": "D",
+        "text": "An IPS can actively block or drop malicious traffic"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -667,11 +667,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To hide internal IP addresses from the outside world"
+        "text": "To encrypt passwords"
       },
       {
         "id": "B",
-        "text": "To encrypt passwords"
+        "text": "To hide internal IP addresses from the outside world"
       },
       {
         "id": "C",
@@ -682,7 +682,7 @@ const sampleQuestions = [
         "text": "To detect malware in emails"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -693,22 +693,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To make a system or service unavailable by overwhelming it with traffic"
-      },
-      {
-        "id": "B",
         "text": "To slowly read small amounts of data without being noticed"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "To encrypt data for backup"
+      },
+      {
+        "id": "C",
+        "text": "To make a system or service unavailable by overwhelming it with traffic"
       },
       {
         "id": "D",
         "text": "To improve response time of servers"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -797,22 +797,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To make data unreadable to unauthorized parties"
-      },
-      {
-        "id": "B",
         "text": "To increase bandwidth"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "To delete log files automatically"
+      },
+      {
+        "id": "C",
+        "text": "To make data unreadable to unauthorized parties"
       },
       {
         "id": "D",
         "text": "To assign IP addresses"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -823,22 +823,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "HTTP"
+        "text": "TLS"
       },
       {
         "id": "B",
-        "text": "FTP"
+        "text": "HTTP"
       },
       {
         "id": "C",
-        "text": "TLS"
+        "text": "FTP"
       },
       {
         "id": "D",
         "text": "ICMP"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -853,18 +853,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To divide a network into smaller parts to limit the spread of attacks"
-      },
-      {
-        "id": "C",
         "text": "To delete all subnets"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To remove all security devices"
+      },
+      {
+        "id": "D",
+        "text": "To divide a network into smaller parts to limit the spread of attacks"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -879,18 +879,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "It acts as an intermediary that receives and inspects traffic before forwarding it"
-      },
-      {
-        "id": "C",
         "text": "It only runs on mobile phones"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "It stores all user passwords"
+      },
+      {
+        "id": "D",
+        "text": "It acts as an intermediary that receives and inspects traffic before forwarding it"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -927,11 +927,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Keeping systems patched and using up‑to‑date security devices"
+        "text": "Turning off all security alarms"
       },
       {
         "id": "B",
-        "text": "Turning off all security alarms"
+        "text": "Keeping systems patched and using up‑to‑date security devices"
       },
       {
         "id": "C",
@@ -942,7 +942,7 @@ const sampleQuestions = [
         "text": "Disabling all logging"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -979,11 +979,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To help debug problems and detect suspicious activity"
+        "text": "To store private user messages permanently"
       },
       {
         "id": "B",
-        "text": "To store private user messages permanently"
+        "text": "To help debug problems and detect suspicious activity"
       },
       {
         "id": "C",
@@ -994,7 +994,7 @@ const sampleQuestions = [
         "text": "To replace antivirus software"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1005,22 +1005,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To reduce the number of possible attack paths (attack surface)"
-      },
-      {
-        "id": "B",
         "text": "To slow down the system deliberately"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "To increase bandwidth usage"
+      },
+      {
+        "id": "C",
+        "text": "To reduce the number of possible attack paths (attack surface)"
       },
       {
         "id": "D",
         "text": "To make backups easier"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1031,11 +1031,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Relying only on a single firewall"
+        "text": "Using multiple layers such as firewalls, segmentation, IDS/IPS, and encryption"
       },
       {
         "id": "B",
-        "text": "Using multiple layers such as firewalls, segmentation, IDS/IPS, and encryption"
+        "text": "Relying only on a single firewall"
       },
       {
         "id": "C",
@@ -1046,7 +1046,7 @@ const sampleQuestions = [
         "text": "Disabling all authentication"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1135,22 +1135,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "One public key and one private key are used for encryption/decryption and signing"
-      },
-      {
-        "id": "B",
         "text": "Everyone shares the same secret key"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Only hashes are used"
+      },
+      {
+        "id": "C",
+        "text": "One public key and one private key are used for encryption/decryption and signing"
       },
       {
         "id": "D",
         "text": "Only symmetric keys exist"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1165,18 +1165,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To encrypt data or verify digital signatures"
-      },
-      {
-        "id": "C",
         "text": "To store passwords"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To compress files"
+      },
+      {
+        "id": "D",
+        "text": "To encrypt data or verify digital signatures"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1195,14 +1195,14 @@ const sampleQuestions = [
       },
       {
         "id": "C",
-        "text": "To decrypt data or create digital signatures"
+        "text": "To store public keys"
       },
       {
         "id": "D",
-        "text": "To store public keys"
+        "text": "To decrypt data or create digital signatures"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1213,11 +1213,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To decrease file size"
+        "text": "To ensure integrity and non‑repudiation of a message​"
       },
       {
         "id": "B",
-        "text": "To ensure integrity and non‑repudiation of a message​"
+        "text": "To decrease file size"
       },
       {
         "id": "C",
@@ -1228,7 +1228,7 @@ const sampleQuestions = [
         "text": "To hide source IP addresses"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1265,22 +1265,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "AES"
+        "text": "SHA‑256"
       },
       {
         "id": "B",
-        "text": "RSA"
+        "text": "AES"
       },
       {
         "id": "C",
-        "text": "SHA‑256"
+        "text": "RSA"
       },
       {
         "id": "D",
         "text": "WPA3"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1291,11 +1291,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A user cannot deny performing an action (e.g., sending a digitally signed message)​"
+        "text": "A user can change their password"
       },
       {
         "id": "B",
-        "text": "A user can change their password"
+        "text": "A user cannot deny performing an action (e.g., sending a digitally signed message)​"
       },
       {
         "id": "C",
@@ -1306,7 +1306,7 @@ const sampleQuestions = [
         "text": "A system can run faster"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1317,22 +1317,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To create and sign digital certificates that bind public keys to identities"
-      },
-      {
-        "id": "B",
         "text": "To encrypt all user data"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "To manage firewalls"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To design network topologies"
+      },
+      {
+        "id": "D",
+        "text": "To create and sign digital certificates that bind public keys to identities"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1347,18 +1347,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To bind a public key to an identity (e.g., domain or user) and to be trusted in TLS/SSL"
-      },
-      {
-        "id": "C",
         "text": "To replace passwords"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To increase internet speed"
+      },
+      {
+        "id": "D",
+        "text": "To bind a public key to an identity (e.g., domain or user) and to be trusted in TLS/SSL"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1369,22 +1369,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "FTP"
+        "text": "TLS/SSL"
       },
       {
         "id": "B",
-        "text": "HTTP"
+        "text": "FTP"
       },
       {
         "id": "C",
-        "text": "TLS/SSL"
+        "text": "HTTP"
       },
       {
         "id": "D",
         "text": "ICMP"
       }
     ],
-    "correctAnswer": "C",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1421,22 +1421,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Encrypting files or disks on a hard drive"
-      },
-      {
-        "id": "B",
         "text": "Increasing CPU clock speed"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Blocking all network traffic"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Managing usernames"
+      },
+      {
+        "id": "D",
+        "text": "Encrypting files or disks on a hard drive"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1447,22 +1447,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Losing or exposing a secret key so attackers can decrypt data or forge signatures"
-      },
-      {
-        "id": "B",
         "text": "Changing font in a document"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Rebooting a server"
+      },
+      {
+        "id": "C",
+        "text": "Losing or exposing a secret key so attackers can decrypt data or forge signatures"
       },
       {
         "id": "D",
         "text": "Updating firewall rules"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1473,11 +1473,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To reduce system performance"
+        "text": "To limit the damage if a key is compromised by changing it periodically"
       },
       {
         "id": "B",
-        "text": "To limit the damage if a key is compromised by changing it periodically"
+        "text": "To reduce system performance"
       },
       {
         "id": "C",
@@ -1488,7 +1488,7 @@ const sampleQuestions = [
         "text": "To delete all certificates"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1499,11 +1499,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only authorized users can read the data"
+        "text": "Data cannot be changed without detection"
       },
       {
         "id": "B",
-        "text": "Data cannot be changed without detection"
+        "text": "Only authorized users can read the data"
       },
       {
         "id": "C",
@@ -1514,7 +1514,7 @@ const sampleQuestions = [
         "text": "Users are forced to change passwords"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1529,18 +1529,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Data has not been altered in an unauthorized way"
+        "text": "Users can log in faster"
       },
       {
         "id": "C",
-        "text": "Users can log in faster"
+        "text": "Data has not been altered in an unauthorized way"
       },
       {
         "id": "D",
         "text": "Data is stored in multiple locations"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1581,18 +1581,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Software designed to harm or exploit systems and data"
+        "text": "Only antivirus programs"
       },
       {
         "id": "C",
-        "text": "Only antivirus programs"
+        "text": "Software designed to harm or exploit systems and data"
       },
       {
         "id": "D",
         "text": "A type of firewall"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1607,18 +1607,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Malware that attaches itself to a legitimate file or program and spreads when executed"
+        "text": "A worm that only spreads over Wi‑Fi"
       },
       {
         "id": "C",
-        "text": "A worm that only spreads over Wi‑Fi"
+        "text": "Malware that attaches itself to a legitimate file or program and spreads when executed"
       },
       {
         "id": "D",
         "text": "A security patch"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1629,11 +1629,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A worm needs to be attached to a file"
+        "text": "A worm can self‑replicate and spread across networks without user action"
       },
       {
         "id": "B",
-        "text": "A worm can self‑replicate and spread across networks without user action"
+        "text": "A worm needs to be attached to a file"
       },
       {
         "id": "C",
@@ -1644,7 +1644,7 @@ const sampleQuestions = [
         "text": "A worm is harmless by design"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1685,18 +1685,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Encrypt files and demand payment for decryption"
+        "text": "Improve network speed"
       },
       {
         "id": "C",
-        "text": "Improve network speed"
+        "text": "Encrypt files and demand payment for decryption"
       },
       {
         "id": "D",
         "text": "Automatically delete itself after 24 hours"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1711,18 +1711,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To hide itself and other malware from detection and maintain persistent access​"
+        "text": "To create strong passwords"
       },
       {
         "id": "C",
-        "text": "To create strong passwords"
+        "text": "To hide itself and other malware from detection and maintain persistent access​"
       },
       {
         "id": "D",
         "text": "To update the operating system"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1733,11 +1733,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A single compromised computer"
+        "text": "A network of compromised devices controlled by an attacker for coordinated attacks (e.g., DDoS)"
       },
       {
         "id": "B",
-        "text": "A network of compromised devices controlled by an attacker for coordinated attacks (e.g., DDoS)"
+        "text": "A single compromised computer"
       },
       {
         "id": "C",
@@ -1748,7 +1748,7 @@ const sampleQuestions = [
         "text": "A firewall device"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1785,11 +1785,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To speed up browsing"
+        "text": "To trick users into revealing sensitive information (e.g., passwords, card data)"
       },
       {
         "id": "B",
-        "text": "To trick users into revealing sensitive information (e.g., passwords, card data)"
+        "text": "To speed up browsing"
       },
       {
         "id": "C",
@@ -1800,7 +1800,7 @@ const sampleQuestions = [
         "text": "To back up data"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1837,22 +1837,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A phishing attack delivered via SMS or text messages"
-      },
-      {
-        "id": "B",
         "text": "A type of computer virus"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "A firewall log entry"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A network monitoring tool"
+      },
+      {
+        "id": "D",
+        "text": "A phishing attack delivered via SMS or text messages"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -1863,22 +1863,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A phishing attack that uses voice calls or voicemail"
-      },
-      {
-        "id": "B",
         "text": "A computer worm"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "A type of encryption"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A certificate signing request"
+      },
+      {
+        "id": "D",
+        "text": "A phishing attack that uses voice calls or voicemail"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1889,11 +1889,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "An attack that slowly reads data from a database"
+        "text": "An attack that tries to make a system or service unavailable by overwhelming it"
       },
       {
         "id": "B",
-        "text": "An attack that tries to make a system or service unavailable by overwhelming it"
+        "text": "An attack that slowly reads data from a database"
       },
       {
         "id": "C",
@@ -1904,7 +1904,7 @@ const sampleQuestions = [
         "text": "An attack that only changes background colors"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1945,18 +1945,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "An attacker who secretly intercepts and possibly alters communication between two parties"
-      },
-      {
-        "id": "C",
         "text": "A type of firewall"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A legitimate debug tool"
+      },
+      {
+        "id": "D",
+        "text": "An attacker who secretly intercepts and possibly alters communication between two parties"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -1967,22 +1967,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Tricking users with fake emails, calls, or urgent messages to reveal passwords or install malware"
-      },
-      {
-        "id": "B",
         "text": "Improving system performance"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Automating backups"
+      },
+      {
+        "id": "C",
+        "text": "Tricking users with fake emails, calls, or urgent messages to reveal passwords or install malware"
       },
       {
         "id": "D",
         "text": "Fixing broken code"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -1997,18 +1997,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using leaked usernames/passwords from one site to try to log in to many other sites"
-      },
-      {
-        "id": "C",
         "text": "Creating strong passwords"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Formatting a disk"
+      },
+      {
+        "id": "D",
+        "text": "Using leaked usernames/passwords from one site to try to log in to many other sites"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2045,11 +2045,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A legitimate support tool"
+        "text": "A hidden way for an attacker to bypass normal authentication and gain access​"
       },
       {
         "id": "B",
-        "text": "A hidden way for an attacker to bypass normal authentication and gain access​"
+        "text": "A legitimate support tool"
       },
       {
         "id": "C",
@@ -2060,7 +2060,7 @@ const sampleQuestions = [
         "text": "A type of certificate"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2097,11 +2097,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Open Web Application Software Project"
+        "text": "Open Web Application Security Project​"
       },
       {
         "id": "B",
-        "text": "Open Web Application Security Project​"
+        "text": "Open Web Application Software Project"
       },
       {
         "id": "C",
@@ -2112,7 +2112,7 @@ const sampleQuestions = [
         "text": "Online Web Analysis Service Program"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2123,11 +2123,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To list the 10 most popular web frameworks"
+        "text": "To identify the 10 most critical web application security risks"
       },
       {
         "id": "B",
-        "text": "To identify the 10 most critical web application security risks"
+        "text": "To list the 10 most popular web frameworks"
       },
       {
         "id": "C",
@@ -2138,7 +2138,7 @@ const sampleQuestions = [
         "text": "To define pricing for web apps"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2149,11 +2149,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A way to speed up database queries"
+        "text": "An attack that sends malicious SQL commands through user input to a database"
       },
       {
         "id": "B",
-        "text": "An attack that sends malicious SQL commands through user input to a database"
+        "text": "A way to speed up database queries"
       },
       {
         "id": "C",
@@ -2164,7 +2164,7 @@ const sampleQuestions = [
         "text": "A way to compress web pages"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2179,18 +2179,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Data leakage, data modification, or full database compromise"
+        "text": "Automatic deletion of the app"
       },
       {
         "id": "C",
-        "text": "Automatic deletion of the app"
+        "text": "Data leakage, data modification, or full database compromise"
       },
       {
         "id": "D",
         "text": "Enhanced SEO ranking"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2201,11 +2201,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A way to change the font on a website"
+        "text": "An attack where malicious scripts are injected into web pages viewed by other users"
       },
       {
         "id": "B",
-        "text": "An attack where malicious scripts are injected into web pages viewed by other users"
+        "text": "A way to change the font on a website"
       },
       {
         "id": "C",
@@ -2216,7 +2216,7 @@ const sampleQuestions = [
         "text": "A type of firewall rule"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2231,18 +2231,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Properly sanitizing and escaping user input/output"
-      },
-      {
-        "id": "C",
         "text": "Using only HTTP (no HTTPS)"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Allowing any script in user profiles"
+      },
+      {
+        "id": "D",
+        "text": "Properly sanitizing and escaping user input/output"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2253,11 +2253,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A virus that attacks the CPU"
+        "text": "An attack where a user unintentionally sends a request to a site they are logged into"
       },
       {
         "id": "B",
-        "text": "An attack where a user unintentionally sends a request to a site they are logged into"
+        "text": "A virus that attacks the CPU"
       },
       {
         "id": "C",
@@ -2268,7 +2268,7 @@ const sampleQuestions = [
         "text": "A protocol for email"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2283,18 +2283,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using anti‑CSRF tokens (e.g., unique tokens per session)"
-      },
-      {
-        "id": "C",
         "text": "Removing all login features"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Allowing any request from any site"
+      },
+      {
+        "id": "D",
+        "text": "Using anti‑CSRF tokens (e.g., unique tokens per session)"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2309,18 +2309,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Allowing users to access objects (e.g., files, IDs) they should not access by manipulating identifiers"
+        "text": "A way to encrypt sessions"
       },
       {
         "id": "C",
-        "text": "A way to encrypt sessions"
+        "text": "Allowing users to access objects (e.g., files, IDs) they should not access by manipulating identifiers"
       },
       {
         "id": "D",
         "text": "A firewall configuration"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2335,18 +2335,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Allowing weak passwords, credential stuffing, or predictable session IDs"
-      },
-      {
-        "id": "C",
         "text": "Using strong hashes"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Disabling all user accounts"
+      },
+      {
+        "id": "D",
+        "text": "Allowing weak passwords, credential stuffing, or predictable session IDs"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2357,11 +2357,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Creating long‑lasting sessions"
+        "text": "An attack where an attacker forces a user to use a known session ID to gain access"
       },
       {
         "id": "B",
-        "text": "An attack where an attacker forces a user to use a known session ID to gain access"
+        "text": "Creating long‑lasting sessions"
       },
       {
         "id": "C",
@@ -2372,7 +2372,7 @@ const sampleQuestions = [
         "text": "A method to speed up logins"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2387,18 +2387,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "It encrypts traffic between the browser and server to prevent eavesdropping"
+        "text": "It removes all JavaScript"
       },
       {
         "id": "C",
-        "text": "It removes all JavaScript"
+        "text": "It encrypts traffic between the browser and server to prevent eavesdropping"
       },
       {
         "id": "D",
         "text": "It disables user accounts"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2413,18 +2413,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Executing arbitrary code or creating denial‑of‑service conditions"
+        "text": "Automatic backups"
       },
       {
         "id": "C",
-        "text": "Automatic backups"
+        "text": "Executing arbitrary code or creating denial‑of‑service conditions"
       },
       {
         "id": "D",
         "text": "Better SEO"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2435,11 +2435,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Keeping all services with default settings and exposed interfaces​"
+        "text": "Using strong passwords everywhere"
       },
       {
         "id": "B",
-        "text": "Using strong passwords everywhere"
+        "text": "Keeping all services with default settings and exposed interfaces​"
       },
       {
         "id": "C",
@@ -2450,7 +2450,7 @@ const sampleQuestions = [
         "text": "Only using open‑source software"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2465,18 +2465,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To check and filter user input so it does not contain malicious or unexpected content"
+        "text": "To delete all logs"
       },
       {
         "id": "C",
-        "text": "To delete all logs"
+        "text": "To check and filter user input so it does not contain malicious or unexpected content"
       },
       {
         "id": "D",
         "text": "To disable all user forms"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2491,18 +2491,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To safely render user‑controlled data so it is not executed as code (e.g., preventing XSS)"
-      },
-      {
-        "id": "C",
         "text": "To hide passwords"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To disable cookies"
+      },
+      {
+        "id": "D",
+        "text": "To safely render user‑controlled data so it is not executed as code (e.g., preventing XSS)"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2539,11 +2539,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Showing only public information"
+        "text": "Leaking or mishandling data such as passwords, keys, or financial data​"
       },
       {
         "id": "B",
-        "text": "Leaking or mishandling data such as passwords, keys, or financial data​"
+        "text": "Showing only public information"
       },
       {
         "id": "C",
@@ -2554,7 +2554,7 @@ const sampleQuestions = [
         "text": "Using strong usernames only"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2569,18 +2569,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Enforcing strong passwords, rate limiting login attempts, and using MFA"
-      },
-      {
-        "id": "C",
         "text": "Sharing passwords via email"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Allowing unlimited failed logins"
+      },
+      {
+        "id": "D",
+        "text": "Enforcing strong passwords, rate limiting login attempts, and using MFA"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2595,18 +2595,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To control how browsers handle content and reduce risks like XSS and clickjacking"
+        "text": "To delete cookies"
       },
       {
         "id": "C",
-        "text": "To delete cookies"
+        "text": "To control how browsers handle content and reduce risks like XSS and clickjacking"
       },
       {
         "id": "D",
         "text": "To disable HTTPS"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2617,11 +2617,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To prevent all attacks from happening"
+        "text": "To detect, contain, eradicate, and recover from security incidents efficiently"
       },
       {
         "id": "B",
-        "text": "To detect, contain, eradicate, and recover from security incidents efficiently"
+        "text": "To prevent all attacks from happening"
       },
       {
         "id": "C",
@@ -2632,7 +2632,7 @@ const sampleQuestions = [
         "text": "To improve CPU speed"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2643,11 +2643,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Detection"
+        "text": "Preparation"
       },
       {
         "id": "B",
-        "text": "Preparation"
+        "text": "Detection"
       },
       {
         "id": "C",
@@ -2658,7 +2658,7 @@ const sampleQuestions = [
         "text": "Recovery"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -2669,11 +2669,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To redesign a website's layout"
+        "text": "To define roles, procedures, and tools for handling security incidents"
       },
       {
         "id": "B",
-        "text": "To define roles, procedures, and tools for handling security incidents"
+        "text": "To redesign a website's layout"
       },
       {
         "id": "C",
@@ -2684,7 +2684,7 @@ const sampleQuestions = [
         "text": "To train users on typing speed"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2747,11 +2747,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To start a new organization"
+        "text": "To restore systems and data to normal operations while validating security"
       },
       {
         "id": "B",
-        "text": "To restore systems and data to normal operations while validating security"
+        "text": "To start a new organization"
       },
       {
         "id": "C",
@@ -2762,7 +2762,7 @@ const sampleQuestions = [
         "text": "To stop all backups"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2903,11 +2903,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Fixing broken hardware"
+        "text": "The preservation, identification, extraction, and analysis of digital evidence"
       },
       {
         "id": "B",
-        "text": "The preservation, identification, extraction, and analysis of digital evidence"
+        "text": "Fixing broken hardware"
       },
       {
         "id": "C",
@@ -2918,7 +2918,7 @@ const sampleQuestions = [
         "text": "A firewall policy"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -2933,18 +2933,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To preserve the integrity and admissibility of evidence"
-      },
-      {
-        "id": "C",
         "text": "To increase network speed"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To hide the attacker"
+      },
+      {
+        "id": "D",
+        "text": "To preserve the integrity and admissibility of evidence"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -2985,18 +2985,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To understand how malware behaves and how to remove it safely"
+        "text": "To slow down the system"
       },
       {
         "id": "C",
-        "text": "To slow down the system"
+        "text": "To understand how malware behaves and how to remove it safely"
       },
       {
         "id": "D",
         "text": "To change screen resolutions"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3011,18 +3011,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To proactively search for threats that may not be detected by alerts"
-      },
-      {
-        "id": "C",
         "text": "To delete all logs"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To disable antivirus"
+      },
+      {
+        "id": "D",
+        "text": "To proactively search for threats that may not be detected by alerts"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3033,11 +3033,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only user names and no timestamps"
+        "text": "Events such as logins, failed attempts, and system changes with timestamps"
       },
       {
         "id": "B",
-        "text": "Events such as logins, failed attempts, and system changes with timestamps"
+        "text": "Only user names and no timestamps"
       },
       {
         "id": "C",
@@ -3048,7 +3048,7 @@ const sampleQuestions = [
         "text": "Only marketing emails"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3089,18 +3089,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Timeline, impact, actions taken, and lessons learned"
+        "text": "Personal opinions only"
       },
       {
         "id": "C",
-        "text": "Personal opinions only"
+        "text": "Timeline, impact, actions taken, and lessons learned"
       },
       {
         "id": "D",
         "text": "Nothing; keep it verbal"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3115,18 +3115,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Faster, more organized response and reduced business impact"
+        "text": "Slower recovery time"
       },
       {
         "id": "C",
-        "text": "Slower recovery time"
+        "text": "Faster, more organized response and reduced business impact"
       },
       {
         "id": "D",
         "text": "Increased data loss"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3141,18 +3141,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Devices such as laptops, desktops, and mobile phones that connect to a network​"
+        "text": "Physical office doors"
       },
       {
         "id": "C",
-        "text": "Physical office doors"
+        "text": "Devices such as laptops, desktops, and mobile phones that connect to a network​"
       },
       {
         "id": "D",
         "text": "Only routers"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3167,18 +3167,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Antivirus/EDR, firewalls, and device control on end‑user devices​"
+        "text": "Turning off all logs"
       },
       {
         "id": "C",
-        "text": "Turning off all logs"
+        "text": "Antivirus/EDR, firewalls, and device control on end‑user devices​"
       },
       {
         "id": "D",
         "text": "Sharing USB drives freely"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3193,18 +3193,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Endpoint Detection and Response​"
+        "text": "Encrypted Desktop Repair"
       },
       {
         "id": "C",
-        "text": "Encrypted Desktop Repair"
+        "text": "Endpoint Detection and Response​"
       },
       {
         "id": "D",
         "text": "Email Data Reader"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3245,18 +3245,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Infrastructure as a Service (e.g., virtual machines, storage, networking)​"
-      },
-      {
-        "id": "C",
         "text": "Internal app system"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Internal authentication system"
+      },
+      {
+        "id": "D",
+        "text": "Infrastructure as a Service (e.g., virtual machines, storage, networking)​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3267,11 +3267,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Platform as a Service, providing a development and deployment environment​"
+        "text": "Password authentication system"
       },
       {
         "id": "B",
-        "text": "Password authentication system"
+        "text": "Platform as a Service, providing a development and deployment environment​"
       },
       {
         "id": "C",
@@ -3282,7 +3282,7 @@ const sampleQuestions = [
         "text": "Private access system"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3293,22 +3293,22 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Software as a Service, where applications are hosted in the cloud and accessed over the internet​"
-      },
-      {
-        "id": "B",
         "text": "Systematic app security"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "Secure authentication system"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Simple access software"
+      },
+      {
+        "id": "D",
+        "text": "Software as a Service, where applications are hosted in the cloud and accessed over the internet​"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3319,11 +3319,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "The cloud provider is responsible for everything"
+        "text": "Security responsibilities are split between the cloud provider (infrastructure) and the customer (data and apps)​"
       },
       {
         "id": "B",
-        "text": "Security responsibilities are split between the cloud provider (infrastructure) and the customer (data and apps)​"
+        "text": "The cloud provider is responsible for everything"
       },
       {
         "id": "C",
@@ -3334,7 +3334,7 @@ const sampleQuestions = [
         "text": "Security is not needed in the cloud"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3349,18 +3349,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Misconfigured storage buckets or overly permissive access controls​"
-      },
-      {
-        "id": "C",
         "text": "Strong passwords on all devices"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Frequent security training"
+      },
+      {
+        "id": "D",
+        "text": "Misconfigured storage buckets or overly permissive access controls​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3423,11 +3423,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Turning off all updates"
+        "text": "MDM (Mobile Device Management), encryption, and app‑whitelisting/blacklisting​"
       },
       {
         "id": "B",
-        "text": "MDM (Mobile Device Management), encryption, and app‑whitelisting/blacklisting​"
+        "text": "Turning off all updates"
       },
       {
         "id": "C",
@@ -3438,7 +3438,7 @@ const sampleQuestions = [
         "text": "Disabling all passwords"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3479,18 +3479,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To protect data on laptops/phones if they are lost or stolen​"
-      },
-      {
-        "id": "C",
         "text": "To delete backups"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To slow down logins"
+      },
+      {
+        "id": "D",
+        "text": "To protect data on laptops/phones if they are lost or stolen​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3505,18 +3505,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Reduce the risk of exploits by keeping software updated​"
-      },
-      {
-        "id": "C",
         "text": "Delete all software"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Disable all security"
+      },
+      {
+        "id": "D",
+        "text": "Reduce the risk of exploits by keeping software updated​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3531,18 +3531,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To monitor cloud environments and detect suspicious activity (e.g., unusual logins, data exfiltration)​"
-      },
-      {
-        "id": "C",
         "text": "To remove all logs"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "To increase bandwidth cost"
+      },
+      {
+        "id": "D",
+        "text": "To monitor cloud environments and detect suspicious activity (e.g., unusual logins, data exfiltration)​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3583,18 +3583,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Enabling encryption and strict access controls on cloud storage​"
+        "text": "Sharing keys via email"
       },
       {
         "id": "C",
-        "text": "Sharing keys via email"
+        "text": "Enabling encryption and strict access controls on cloud storage​"
       },
       {
         "id": "D",
         "text": "Disabling logging"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3609,18 +3609,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Ability to enforce policies, push updates, and monitor security across devices​"
-      },
-      {
-        "id": "C",
         "text": "Increased risk from user changes"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Removing all user accounts"
+      },
+      {
+        "id": "D",
+        "text": "Ability to enforce policies, push updates, and monitor security across devices​"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3635,18 +3635,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To detect compromised devices and respond quickly to threats​"
+        "text": "To hide logs"
       },
       {
         "id": "C",
-        "text": "To hide logs"
+        "text": "To detect compromised devices and respond quickly to threats​"
       },
       {
         "id": "D",
         "text": "To disable all antivirus"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3661,18 +3661,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A unique identifier for a user, device, or system (e.g., username, email)"
-      },
-      {
-        "id": "C",
         "text": "The physical location of a data center"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A password reset link sent via email"
+      },
+      {
+        "id": "D",
+        "text": "A unique identifier for a user, device, or system (e.g., username, email)"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3709,11 +3709,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Logging in for the first time"
+        "text": "Determining what resources or actions a user is allowed to access"
       },
       {
         "id": "B",
-        "text": "Determining what resources or actions a user is allowed to access"
+        "text": "Logging in for the first time"
       },
       {
         "id": "C",
@@ -3724,7 +3724,7 @@ const sampleQuestions = [
         "text": "Backing up user data automatically"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3735,11 +3735,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Something you buy"
+        "text": "Something you know (password), something you have (token), something you are (biometrics)"
       },
       {
         "id": "B",
-        "text": "Something you know (password), something you have (token), something you are (biometrics)"
+        "text": "Something you buy"
       },
       {
         "id": "C",
@@ -3750,7 +3750,7 @@ const sampleQuestions = [
         "text": "Something someone else knows about you"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3765,18 +3765,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Logging in once to access multiple systems or applications without re‑entering credentials"
+        "text": "Requiring a new password for every application"
       },
       {
         "id": "C",
-        "text": "Requiring a new password for every application"
+        "text": "Logging in once to access multiple systems or applications without re‑entering credentials"
       },
       {
         "id": "D",
         "text": "Sharing one password across all employees"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3791,18 +3791,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using at least two different authentication factors to log in"
-      },
-      {
-        "id": "C",
         "text": "Logging in from multiple devices simultaneously"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Changing your password multiple times a day"
+      },
+      {
+        "id": "D",
+        "text": "Using at least two different authentication factors to log in"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3817,18 +3817,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Giving users only the minimum permissions needed to do their job"
+        "text": "Allowing admin access to all employees by default"
       },
       {
         "id": "C",
-        "text": "Allowing admin access to all employees by default"
+        "text": "Giving users only the minimum permissions needed to do their job"
       },
       {
         "id": "D",
         "text": "Removing all access controls to simplify IT"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3869,18 +3869,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Policies that use attributes (user role, location, time, device type, etc.) to decide access"
-      },
-      {
-        "id": "C",
         "text": "A fixed list of roles with no flexibility"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Access based only on job title"
+      },
+      {
+        "id": "D",
+        "text": "Policies that use attributes (user role, location, time, device type, etc.) to decide access"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3895,18 +3895,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A user or attacker gaining higher privileges than they should have"
+        "text": "Reducing a user's access after a policy review"
       },
       {
         "id": "C",
-        "text": "Reducing a user's access after a policy review"
+        "text": "A user or attacker gaining higher privileges than they should have"
       },
       {
         "id": "D",
         "text": "A routine password reset process"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3917,11 +3917,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "One user handling all critical tasks"
+        "text": "Splitting critical tasks across multiple users to reduce fraud or error"
       },
       {
         "id": "B",
-        "text": "Splitting critical tasks across multiple users to reduce fraud or error"
+        "text": "One user handling all critical tasks"
       },
       {
         "id": "C",
@@ -3932,7 +3932,7 @@ const sampleQuestions = [
         "text": "Automating all approvals without human review"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -3943,11 +3943,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Selling user accounts"
+        "text": "Creating and configuring user accounts and access rights in systems"
       },
       {
         "id": "B",
-        "text": "Creating and configuring user accounts and access rights in systems"
+        "text": "Selling user accounts"
       },
       {
         "id": "C",
@@ -3958,7 +3958,7 @@ const sampleQuestions = [
         "text": "Encrypting stored account data"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -3973,18 +3973,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Removing or disabling accounts and access when a user leaves or changes role"
-      },
-      {
-        "id": "C",
         "text": "Creating a new account for a new hire"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Resetting a forgotten password"
+      },
+      {
+        "id": "D",
+        "text": "Removing or disabling accounts and access when a user leaves or changes role"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -3999,18 +3999,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To enforce rules such as minimum length, complexity, and expiration to strengthen security"
+        "text": "Eliminating the need for passwords entirely"
       },
       {
         "id": "C",
-        "text": "Eliminating the need for passwords entirely"
+        "text": "To enforce rules such as minimum length, complexity, and expiration to strengthen security"
       },
       {
         "id": "D",
         "text": "Sharing passwords among team members for convenience"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4025,18 +4025,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To store passwords in a one‑way, irreversible form to protect them if the database is breached"
+        "text": "Encrypting passwords with a key that can be reversed"
       },
       {
         "id": "C",
-        "text": "Encrypting passwords with a key that can be reversed"
+        "text": "To store passwords in a one‑way, irreversible form to protect them if the database is breached"
       },
       {
         "id": "D",
         "text": "Displaying passwords on screen for verification"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4051,18 +4051,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using account lockouts, rate‑limiting, or CAPTCHA to slow down attackers"
+        "text": "Disabling all password requirements"
       },
       {
         "id": "C",
-        "text": "Disabling all password requirements"
+        "text": "Using account lockouts, rate‑limiting, or CAPTCHA to slow down attackers"
       },
       {
         "id": "D",
         "text": "Allowing login without any credentials"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4077,18 +4077,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Controlling how long a user stays logged in and how sessions are terminated"
-      },
-      {
-        "id": "C",
         "text": "Tracking which files a user has downloaded"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Configuring network firewall rules"
+      },
+      {
+        "id": "D",
+        "text": "Controlling how long a user stays logged in and how sessions are terminated"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4103,18 +4103,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Allowing one organization to trust identity information from another (e.g., \"login with Google\")"
+        "text": "Storing all passwords in a single central database"
       },
       {
         "id": "C",
-        "text": "Storing all passwords in a single central database"
+        "text": "Allowing one organization to trust identity information from another (e.g., \"login with Google\")"
       },
       {
         "id": "D",
         "text": "Blocking access from external organizations"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4129,18 +4129,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To detect suspicious logins, privilege misuse, or policy violations"
+        "text": "Automatically deleting old log files"
       },
       {
         "id": "C",
-        "text": "Automatically deleting old log files"
+        "text": "To detect suspicious logins, privilege misuse, or policy violations"
       },
       {
         "id": "D",
         "text": "Preventing users from logging in more than once"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4155,18 +4155,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Consistent control over user identities and access across systems and applications"
-      },
-      {
-        "id": "C",
         "text": "Slower access to systems due to added checks"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Requiring separate credentials for each system"
+      },
+      {
+        "id": "D",
+        "text": "Consistent control over user identities and access across systems and applications"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4207,18 +4207,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The likelihood that a threat will exploit a vulnerability and cause harm"
+        "text": "A confirmed security breach that already occurred"
       },
       {
         "id": "C",
-        "text": "A confirmed security breach that already occurred"
+        "text": "The likelihood that a threat will exploit a vulnerability and cause harm"
       },
       {
         "id": "D",
         "text": "A technical control used to block attacks"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4233,18 +4233,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The process of identifying, analyzing, and prioritizing risks"
-      },
-      {
-        "id": "C",
         "text": "Automatically fixing all vulnerabilities found"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A legal contract with a security vendor"
+      },
+      {
+        "id": "D",
+        "text": "The process of identifying, analyzing, and prioritizing risks"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4259,18 +4259,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Accept, avoid, mitigate, or transfer the risk"
-      },
-      {
-        "id": "C",
         "text": "Only accepting risks, never treating them"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Documenting risks without any further action"
+      },
+      {
+        "id": "D",
+        "text": "Accept, avoid, mitigate, or transfer the risk"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4285,18 +4285,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Taking steps to reduce the likelihood or impact of a risk"
-      },
-      {
-        "id": "C",
         "text": "Transferring all risk to insurance without any internal action"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Ignoring risks that seem unlikely"
+      },
+      {
+        "id": "D",
+        "text": "Taking steps to reduce the likelihood or impact of a risk"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4311,18 +4311,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Protecting individuals' personal information and how it is collected, stored, and used"
+        "text": "Encrypting network traffic between servers"
       },
       {
         "id": "C",
-        "text": "Encrypting network traffic between servers"
+        "text": "Protecting individuals' personal information and how it is collected, stored, and used"
       },
       {
         "id": "D",
         "text": "Backing up company financial records"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4337,18 +4337,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "General Data Protection Regulation (EU data‑privacy law)"
-      },
-      {
-        "id": "C",
         "text": "A U.S. federal law on internet speed regulation"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "An international network security certification"
+      },
+      {
+        "id": "D",
+        "text": "General Data Protection Regulation (EU data‑privacy law)"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4359,11 +4359,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A web browser"
+        "text": "An international standard for Information Security Management Systems (ISMS)"
       },
       {
         "id": "B",
-        "text": "An international standard for Information Security Management Systems (ISMS)"
+        "text": "A web browser"
       },
       {
         "id": "C",
@@ -4374,7 +4374,7 @@ const sampleQuestions = [
         "text": "A type of firewall hardware"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4389,18 +4389,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To manage information security systematically using policies, controls, and continuous improvement"
+        "text": "To replace all human security staff with automation"
       },
       {
         "id": "C",
-        "text": "To replace all human security staff with automation"
+        "text": "To manage information security systematically using policies, controls, and continuous improvement"
       },
       {
         "id": "D",
         "text": "To increase the number of user accounts in a system"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4415,18 +4415,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A framework (e.g., NIST Cyber security Framework) for managing and improving security"
+        "text": "A type of malware detection tool"
       },
       {
         "id": "C",
-        "text": "A type of malware detection tool"
+        "text": "A framework (e.g., NIST Cyber security Framework) for managing and improving security"
       },
       {
         "id": "D",
         "text": "A private company that sells firewalls"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4441,18 +4441,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Payment Card Industry Data Security Standard"
+        "text": "Public Cloud Infrastructure Data Storage System"
       },
       {
         "id": "C",
-        "text": "Public Cloud Infrastructure Data Storage System"
+        "text": "Payment Card Industry Data Security Standard"
       },
       {
         "id": "D",
         "text": "Personal Credential Identification and Data Sharing"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4489,11 +4489,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only following personal preferences"
+        "text": "Adhering to laws, regulations, standards, and internal policies"
       },
       {
         "id": "B",
-        "text": "Adhering to laws, regulations, standards, and internal policies"
+        "text": "Only following personal preferences"
       },
       {
         "id": "C",
@@ -4504,7 +4504,7 @@ const sampleQuestions = [
         "text": "A one-time certification that never needs renewal"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4619,11 +4619,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "To confuse users"
+        "text": "To educate users about threats (e.g., phishing) and safe behavior"
       },
       {
         "id": "B",
-        "text": "To educate users about threats (e.g., phishing) and safe behavior"
+        "text": "To confuse users"
       },
       {
         "id": "C",
@@ -4634,7 +4634,7 @@ const sampleQuestions = [
         "text": "To test the speed of the company network"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4675,18 +4675,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Planning how to keep critical functions running during or after a major incident"
+        "text": "A marketing plan for new products"
       },
       {
         "id": "C",
-        "text": "A marketing plan for new products"
+        "text": "Planning how to keep critical functions running during or after a major incident"
       },
       {
         "id": "D",
         "text": "A checklist for hiring new employees"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4701,18 +4701,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A plan to restore systems and data after a disruptive event"
-      },
-      {
-        "id": "C",
         "text": "A daily backup schedule with no recovery testing"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A policy for employee vacation requests"
+      },
+      {
+        "id": "D",
+        "text": "A plan to restore systems and data after a disruptive event"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4727,18 +4727,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A situation where personal interests may interfere with objective decision‑making"
-      },
-      {
-        "id": "C",
         "text": "A technical error in access control configuration"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A disagreement between two departments about budget"
+      },
+      {
+        "id": "D",
+        "text": "A situation where personal interests may interfere with objective decision‑making"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4749,11 +4749,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Ignoring third‑party suppliers"
+        "text": "Assessing and managing security risks from external vendors and partners"
       },
       {
         "id": "B",
-        "text": "Assessing and managing security risks from external vendors and partners"
+        "text": "Ignoring third‑party suppliers"
       },
       {
         "id": "C",
@@ -4764,7 +4764,7 @@ const sampleQuestions = [
         "text": "Requiring vendors to lower their prices"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4805,18 +4805,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A systematic review of security controls and processes to check compliance and effectiveness"
-      },
-      {
-        "id": "C",
         "text": "A one-time software installation"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A tool that automatically blocks all attacks"
+      },
+      {
+        "id": "D",
+        "text": "A systematic review of security controls and processes to check compliance and effectiveness"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4857,18 +4857,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Only collecting the data that is necessary for a specific purpose"
+        "text": "Storing data indefinitely regardless of need"
       },
       {
         "id": "C",
-        "text": "Storing data indefinitely regardless of need"
+        "text": "Only collecting the data that is necessary for a specific purpose"
       },
       {
         "id": "D",
         "text": "Sharing data with as many third parties as possible"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -4883,18 +4883,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Clear, informed permission given by the data subject to process their personal data"
-      },
-      {
-        "id": "C",
         "text": "A default setting that cannot be changed"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Permission given once and valid forever regardless of purpose"
+      },
+      {
+        "id": "D",
+        "text": "Clear, informed permission given by the data subject to process their personal data"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4905,11 +4905,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Moving data to any device without restriction"
+        "text": "The right of individuals to receive their data in a structured, commonly used format"
       },
       {
         "id": "B",
-        "text": "The right of individuals to receive their data in a structured, commonly used format"
+        "text": "Moving data to any device without restriction"
       },
       {
         "id": "C",
@@ -4920,7 +4920,7 @@ const sampleQuestions = [
         "text": "Encrypting data before it is shared"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -4961,18 +4961,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A formal request from an individual to know what data an organization holds about them"
-      },
-      {
-        "id": "C",
         "text": "A request to reset a forgotten password"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A technical report on network performance"
+      },
+      {
+        "id": "D",
+        "text": "A formal request from an individual to know what data an organization holds about them"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -4983,11 +4983,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only internal jokes"
+        "text": "Informing affected individuals and relevant authorities about a breach of personal data"
       },
       {
         "id": "B",
-        "text": "Informing affected individuals and relevant authorities about a breach of personal data"
+        "text": "Only internal jokes"
       },
       {
         "id": "C",
@@ -4998,7 +4998,7 @@ const sampleQuestions = [
         "text": "A marketing email sent to customers"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5013,18 +5013,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A risk analysis for processing activities that may significantly affect individuals' privacy"
+        "text": "A financial audit of a company's budget"
       },
       {
         "id": "C",
-        "text": "A financial audit of a company's budget"
+        "text": "A risk analysis for processing activities that may significantly affect individuals' privacy"
       },
       {
         "id": "D",
         "text": "A technical test of network speed"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5039,18 +5039,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A formal document defining security rules, responsibilities, and procedures"
-      },
-      {
-        "id": "C",
         "text": "A piece of antivirus software"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A single employee's personal opinion on security"
+      },
+      {
+        "id": "D",
+        "text": "A formal document defining security rules, responsibilities, and procedures"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5065,18 +5065,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The level of risk an organization is willing to accept after treatment"
-      },
-      {
-        "id": "C",
         "text": "The total elimination of all risk"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Risk that has already caused damage"
+      },
+      {
+        "id": "D",
+        "text": "The level of risk an organization is willing to accept after treatment"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5217,11 +5217,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only slow internet"
+        "text": "Unauthorized access and eavesdropping on wireless networks"
       },
       {
         "id": "B",
-        "text": "Unauthorized access and eavesdropping on wireless networks"
+        "text": "Only slow internet"
       },
       {
         "id": "C",
@@ -5232,7 +5232,7 @@ const sampleQuestions = [
         "text": "Reducing the cost of internet service"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5273,18 +5273,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A Wi‑Fi security protocol that uses AES encryption for securing traffic"
+        "text": "A type of router hardware"
       },
       {
         "id": "C",
-        "text": "A type of router hardware"
+        "text": "A Wi‑Fi security protocol that uses AES encryption for securing traffic"
       },
       {
         "id": "D",
         "text": "A wired Ethernet cable standard"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5299,18 +5299,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Its encryption is weak and easy to crack with common tools"
-      },
-      {
-        "id": "C",
         "text": "It requires a subscription fee to use"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "It only works on older phone models"
+      },
+      {
+        "id": "D",
+        "text": "Its encryption is weak and easy to crack with common tools"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5325,18 +5325,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "A fake Wi‑Fi access point that imitates a legitimate network to steal credentials"
+        "text": "A backup Wi-Fi router installed for redundancy"
       },
       {
         "id": "C",
-        "text": "A backup Wi-Fi router installed for redundancy"
+        "text": "A fake Wi‑Fi access point that imitates a legitimate network to steal credentials"
       },
       {
         "id": "D",
         "text": "A type of malware that duplicates files"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5347,11 +5347,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Driving to work"
+        "text": "Driving around to find and map unsecured or weakly secured Wi‑Fi networks"
       },
       {
         "id": "B",
-        "text": "Driving around to find and map unsecured or weakly secured Wi‑Fi networks"
+        "text": "Driving to work"
       },
       {
         "id": "C",
@@ -5362,7 +5362,7 @@ const sampleQuestions = [
         "text": "A legal certification for network engineers"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5399,11 +5399,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only file size"
+        "text": "Preventing unauthorized devices from connecting or eavesdropping"
       },
       {
         "id": "B",
-        "text": "Preventing unauthorized devices from connecting or eavesdropping"
+        "text": "Only file size"
       },
       {
         "id": "C",
@@ -5414,7 +5414,7 @@ const sampleQuestions = [
         "text": "Reducing battery consumption on the device"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5425,11 +5425,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "A harmless joke Bluetooth attack that sends unsolicited messages"
+        "text": "A harmless PowerPoint feature"
       },
       {
         "id": "B",
-        "text": "A harmless PowerPoint feature"
+        "text": "A harmless joke Bluetooth attack that sends unsolicited messages"
       },
       {
         "id": "C",
@@ -5440,7 +5440,7 @@ const sampleQuestions = [
         "text": "A method of permanently disabling Bluetooth hardware"
       }
     ],
-    "correctAnswer": "A",
+    "correctAnswer": "B",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5477,11 +5477,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only faster games"
+        "text": "Protecting data, apps, and network access on mobile phones and tablets"
       },
       {
         "id": "B",
-        "text": "Protecting data, apps, and network access on mobile phones and tablets"
+        "text": "Only faster games"
       },
       {
         "id": "C",
@@ -5492,7 +5492,7 @@ const sampleQuestions = [
         "text": "Extending battery life on all devices"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5507,18 +5507,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Using app stores, screen locks, and device encryption"
+        "text": "Disabling all app permissions by default"
       },
       {
         "id": "C",
-        "text": "Disabling all app permissions by default"
+        "text": "Using app stores, screen locks, and device encryption"
       },
       {
         "id": "D",
         "text": "Sharing device passwords with coworkers"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5529,11 +5529,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Deleting all user photos"
+        "text": "Managing and enforcing security policies on corporate mobile devices"
       },
       {
         "id": "B",
-        "text": "Managing and enforcing security policies on corporate mobile devices"
+        "text": "Deleting all user photos"
       },
       {
         "id": "C",
@@ -5544,7 +5544,7 @@ const sampleQuestions = [
         "text": "A cloud storage backup service"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5611,18 +5611,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Isolating apps so they cannot easily access other apps' data"
+        "text": "A backup storage location for deleted files"
       },
       {
         "id": "C",
-        "text": "A backup storage location for deleted files"
+        "text": "Isolating apps so they cannot easily access other apps' data"
       },
       {
         "id": "D",
         "text": "A testing environment used only before software release"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5637,18 +5637,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "To limit what data and hardware (camera, location, contacts) apps can access"
-      },
-      {
-        "id": "C",
         "text": "Allowing apps to update automatically without review"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Disabling all apps from accessing the internet"
+      },
+      {
+        "id": "D",
+        "text": "To limit what data and hardware (camera, location, contacts) apps can access"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5663,18 +5663,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Ensuring firmware and OS updates are signed and delivered securely over the air"
-      },
-      {
-        "id": "C",
         "text": "Allowing any source to push updates without verification"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Disabling updates entirely for security"
+      },
+      {
+        "id": "D",
+        "text": "Ensuring firmware and OS updates are signed and delivered securely over the air"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5689,18 +5689,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The ability to lock or erase data on a lost or stolen device remotely"
+        "text": "Preventing the device from ever being turned back on"
       },
       {
         "id": "C",
-        "text": "Preventing the device from ever being turned back on"
+        "text": "The ability to lock or erase data on a lost or stolen device remotely"
       },
       {
         "id": "D",
         "text": "Automatically backing up data to a public cloud"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5715,18 +5715,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Attackers can monitor traffic or perform man‑in‑the‑middle attacks"
-      },
-      {
-        "id": "C",
         "text": "Improved battery life while connected"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Automatic encryption of all transmitted data"
+      },
+      {
+        "id": "D",
+        "text": "Attackers can monitor traffic or perform man‑in‑the‑middle attacks"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5741,18 +5741,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Principles that guide responsible and fair use of computers and data"
-      },
-      {
-        "id": "C",
         "text": "The technical process of encrypting files"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A set of legal penalties for hacking"
+      },
+      {
+        "id": "D",
+        "text": "Principles that guide responsible and fair use of computers and data"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5767,18 +5767,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Authorized testing of systems to find and fix security weaknesses"
-      },
-      {
-        "id": "C",
         "text": "Illegally accessing systems to prove a point"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Writing malware for educational purposes only"
+      },
+      {
+        "id": "D",
+        "text": "Authorized testing of systems to find and fix security weaknesses"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5793,18 +5793,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Simulating attacks on systems with permission to find vulnerabilities"
-      },
-      {
-        "id": "C",
         "text": "Installing antivirus software on all systems"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Monitoring network traffic passively without testing"
+      },
+      {
+        "id": "D",
+        "text": "Simulating attacks on systems with permission to find vulnerabilities"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5819,18 +5819,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Written authorization (a clear scope and agreement)"
+        "text": "A verbal agreement with no documentation"
       },
       {
         "id": "C",
-        "text": "A verbal agreement with no documentation"
+        "text": "Written authorization (a clear scope and agreement)"
       },
       {
         "id": "D",
         "text": "Approval from any single employee"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -5845,18 +5845,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Informing the organization about discovered vulnerabilities so they can fix them"
+        "text": "Selling the vulnerability to the highest bidder"
       },
       {
         "id": "C",
-        "text": "Selling the vulnerability to the highest bidder"
+        "text": "Informing the organization about discovered vulnerabilities so they can fix them"
       },
       {
         "id": "D",
         "text": "Publishing the vulnerability publicly before notifying the organization"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5871,18 +5871,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Legal and ethical obligations to protect individuals' personal information"
-      },
-      {
-        "id": "C",
         "text": "A technical firewall configuration"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A marketing strategy for customer engagement"
+      },
+      {
+        "id": "D",
+        "text": "Legal and ethical obligations to protect individuals' personal information"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5923,18 +5923,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Illegal acts conducted using computers or networks (e.g., hacking, fraud, data theft)"
+        "text": "Only crimes committed by governments"
       },
       {
         "id": "C",
-        "text": "Only crimes committed by governments"
+        "text": "Illegal acts conducted using computers or networks (e.g., hacking, fraud, data theft)"
       },
       {
         "id": "D",
         "text": "Legal activities that occur over the internet"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -5949,18 +5949,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Stealing someone's personal information to impersonate them, often for fraud"
+        "text": "Creating a new identity for a witness protection program"
       },
       {
         "id": "C",
-        "text": "Creating a new identity for a witness protection program"
+        "text": "Stealing someone's personal information to impersonate them, often for fraud"
       },
       {
         "id": "D",
         "text": "A company rebranding its public image"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -5975,18 +5975,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "It is usually not legal; it is a cybercrime when used to deceive and steal"
+        "text": "A regulated marketing technique"
       },
       {
         "id": "C",
-        "text": "A regulated marketing technique"
+        "text": "It is usually not legal; it is a cybercrime when used to deceive and steal"
       },
       {
         "id": "D",
         "text": "An accepted business practice in some countries"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -6001,18 +6001,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Malicious software that encrypts data and demands payment, often illegal"
-      },
-      {
-        "id": "C",
         "text": "A type of antivirus software"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A government-approved data recovery tool"
+      },
+      {
+        "id": "D",
+        "text": "Malicious software that encrypts data and demands payment, often illegal"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -6023,11 +6023,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only printing documents"
+        "text": "Protecting creative works, code, patents, and trademarks from unauthorized copying"
       },
       {
         "id": "B",
-        "text": "Protecting creative works, code, patents, and trademarks from unauthorized copying"
+        "text": "Only printing documents"
       },
       {
         "id": "C",
@@ -6038,7 +6038,7 @@ const sampleQuestions = [
         "text": "Backing up company financial records"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -6053,18 +6053,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Unauthorized copying or distribution of copyrighted material (e.g., software, media)"
-      },
-      {
-        "id": "C",
         "text": "Purchasing a license for software use"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Creating original content from scratch"
+      },
+      {
+        "id": "D",
+        "text": "Unauthorized copying or distribution of copyrighted material (e.g., software, media)"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -6075,11 +6075,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only external hackers"
+        "text": "Risk from employees or trusted insiders who misuse access intentionally or negligently"
       },
       {
         "id": "B",
-        "text": "Risk from employees or trusted insiders who misuse access intentionally or negligently"
+        "text": "Only external hackers"
       },
       {
         "id": "C",
@@ -6090,7 +6090,7 @@ const sampleQuestions = [
         "text": "A type of malware that only affects mobile devices"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -6105,18 +6105,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Rules that define what users can and cannot do with IT resources"
-      },
-      {
-        "id": "C",
         "text": "A technical control that blocks malware"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A list of banned websites with no other rules"
+      },
+      {
+        "id": "D",
+        "text": "Rules that define what users can and cannot do with IT resources"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "D",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -6131,18 +6131,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Reporting unethical or illegal activities within an organization through proper channels"
+        "text": "Publicly leaking company secrets for personal gain"
       },
       {
         "id": "C",
-        "text": "Publicly leaking company secrets for personal gain"
+        "text": "Reporting unethical or illegal activities within an organization through proper channels"
       },
       {
         "id": "D",
         "text": "Ignoring wrongdoing to avoid conflict"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Medium"
   },
@@ -6157,18 +6157,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "The idea that data is subject to the laws of the country where it is stored"
+        "text": "The right of a company to own all customer data permanently"
       },
       {
         "id": "C",
-        "text": "The right of a company to own all customer data permanently"
+        "text": "The idea that data is subject to the laws of the country where it is stored"
       },
       {
         "id": "D",
         "text": "A technical protocol for data encryption"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Hard"
   },
@@ -6183,18 +6183,18 @@ const sampleQuestions = [
       },
       {
         "id": "B",
-        "text": "Laws governing use of computers, data, and the internet (e.g., hacking, fraud, data breaches)"
+        "text": "Rules that only apply to government computers"
       },
       {
         "id": "C",
-        "text": "Rules that only apply to government computers"
+        "text": "Laws governing use of computers, data, and the internet (e.g., hacking, fraud, data breaches)"
       },
       {
         "id": "D",
         "text": "International shipping regulations"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "C",
     "explanation": "",
     "difficulty": "Easy"
   },
@@ -6231,11 +6231,11 @@ const sampleQuestions = [
     "options": [
       {
         "id": "A",
-        "text": "Only to look good on paper"
+        "text": "To earn trust, protect users, and avoid misuse of their powerful access and skills"
       },
       {
         "id": "B",
-        "text": "To earn trust, protect users, and avoid misuse of their powerful access and skills"
+        "text": "Only to look good on paper"
       },
       {
         "id": "C",
@@ -6246,7 +6246,7 @@ const sampleQuestions = [
         "text": "To avoid following organizational policies"
       }
     ],
-    "correctAnswer": "B",
+    "correctAnswer": "A",
     "explanation": "",
     "difficulty": "Hard"
   }

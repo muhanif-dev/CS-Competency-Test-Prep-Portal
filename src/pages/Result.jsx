@@ -1,8 +1,9 @@
 import { Award, RefreshCw, RotateCcw } from 'lucide-react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useQuiz } from '../context/QuizContext'
 
 export default function Result() {
+  const navigate = useNavigate()
   const { scoreSummary, quizMeta, questions, retrySameQuiz, resetQuizSession } = useQuiz()
 
   if (questions.length === 0) {
@@ -10,6 +11,15 @@ export default function Result() {
   }
 
   const { correct, wrong, unattempted, total, percentage } = scoreSummary
+
+  const handleGenerateNewQuiz = () => {
+    // Destination ko resetQuizSession() se PEHLAY decide kar lein — warna
+    // quizMeta null ho jane ke baad quiz ka "source" pata nahi chalta aur
+    // page galat jagah (AI setup) navigate ho jata hai.
+    const destination = quizMeta?.source === 'database' ? '/quiz/db?fresh=1' : '/quiz/ai?fresh=1'
+    resetQuizSession()
+    navigate(destination)
+  }
 
   return (
     <section className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
@@ -58,14 +68,14 @@ export default function Result() {
               <RotateCcw className="h-4 w-4" aria-hidden />
               Try Again
             </Link>
-            <Link
-              to={quizMeta?.source === 'database' ? '/quiz/db?fresh=1' : '/quiz/ai?fresh=1'}
-              onClick={() => resetQuizSession()}
+            <button
+              type="button"
+              onClick={handleGenerateNewQuiz}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-ulm-purple px-4 py-2.5 text-sm font-semibold text-white hover:bg-ulm-purple-dark"
             >
               <RefreshCw className="h-4 w-4" aria-hidden />
               Generate New Quiz
-            </Link>
+            </button>
             <Link
               to="/competencies"
               className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-semibold text-ulm-dark hover:bg-gray-50"
