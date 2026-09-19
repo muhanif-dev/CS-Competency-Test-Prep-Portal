@@ -3,12 +3,6 @@ import mongoose from 'mongoose'
 import connectDB from '../config/db.js'
 import Question from '../models/Question.js'
 
-// Cyber Security ke 240 MCQs — final version.
-// - Content bilkul wahi hai jo seedCyberSecurity.js mein tha
-//   (Q1-140 aapki original file se, Q141-240 mein C/D generated the).
-// - FARQ: har question ka sahi jawab (correctAnswer) ab A/B/C/D mein
-//   barabar taqseem hai (60 A, 60 B, 60 C, 60 D) — pehlay zyada tar (198/240)
-//   sawalon ka jawab "B" hi tha, ab random/balanced hai.
 const sampleQuestions = [
   {
     "competencyId": "cyber-security",
