@@ -5,14 +5,12 @@ import ComputerNetworksQuestion from '../models/ComputerNetworksQuestion.js'
 
 const MAX_QUESTIONS = 50;
 
-// Map frontend competencyId to the correct Mongoose model.
 const questionModels = {
   databases: DatabaseQuestion,
   "cyber-security": CybersecurityQuestion,
   "operating-systems": OperatingSystemQuestion,
  'computer-networks': ComputerNetworksQuestion,};
 
-// GET /api/questions/quiz?competencyId=databases&count=10&difficulty=Mixed
 export async function getRandomQuiz(req, res) {
   try {
     const { competencyId, difficulty = "Mixed" } = req.query;
@@ -23,16 +21,15 @@ export async function getRandomQuiz(req, res) {
 
     if (!competencyId) {
       return res.status(400).json({
-        error: "competencyId query param required hai.",
+        error: "A competency area is required to generate a quiz.",
       });
     }
 
-    // Find the model for the selected subject.
     const QuestionModel = questionModels[competencyId];
 
     if (!QuestionModel) {
       return res.status(404).json({
-        error: `Is subject ke liye question model configured nahi hai: ${competencyId}`,
+        error: `Quiz generation is not currently available for this subject. ${competencyId}`,
       });
     }
 
@@ -47,13 +44,13 @@ export async function getRandomQuiz(req, res) {
     if (available === 0) {
       return res.status(404).json({
         error:
-          "Is subject ke liye database mein abhi koi MCQ mojood nahi hai. Pehlay questions seed karein.",
+          "No practice questions are currently available for this subject.",
       });
     }
 
     if (available < numberOfQuestions) {
       return res.status(400).json({
-        error: `Is subject ke liye sirf ${available} question(s) available hain, lekin ${numberOfQuestions} maange gaye hain.`,
+        error: `Only ${available} practice questions are currently available for this subject. Please reduce the requested number of questions.`,
       });
     }
 
@@ -93,12 +90,11 @@ export async function getRandomQuiz(req, res) {
     console.error("Quiz generation error:", err);
 
     return res.status(500).json({
-      error: "Quiz generate karte hue server error aya.",
+      error: "We could not generate the quiz right now. Please try again later.",
     });
   }
 }
 
-// GET /api/questions/summary
 export async function getSubjectsSummary(req, res) {
   try {
     const summary = [];
@@ -152,7 +148,7 @@ export async function getSubjectsSummary(req, res) {
     console.error("Summary error:", err);
 
     return res.status(500).json({
-      error: "Summary fetch karte hue error aya.",
+      error: "We could not fetch the summary right now. Please try again later.",
     });
   }
 }
@@ -166,7 +162,7 @@ export async function createQuestion(req, res) {
 
     if (!QuestionModel) {
       return res.status(400).json({
-        error: `Unsupported competencyId: ${competencyId}`,
+        error: `The selected competency area is not supported.`,
       });
     }
 
@@ -187,7 +183,7 @@ export async function bulkCreateQuestions(req, res) {
 
     if (!Array.isArray(questions) || questions.length === 0) {
       return res.status(400).json({
-        error: '"questions" array required hai aur khali nahi honi chahiye.',
+        error: 'A non-empty questions list is required.',
       });
     }
 

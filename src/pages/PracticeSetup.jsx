@@ -17,7 +17,6 @@ export default function PracticeSetup() {
 
   const competencyFromUrl = searchParams.get('competency')
 
-  // Preselect subject when Practice is opened from a competency card.
   useEffect(() => {
     if (competencyFromUrl && getCompetencyById(competencyFromUrl)) {
       setSettings({
@@ -56,8 +55,6 @@ export default function PracticeSetup() {
       return
     }
 
-    // Practice always uses MongoDB.
-    // No topic and no difficulty filter.
     setSettings({
       topicId: '',
       difficulty: 'Mixed',
@@ -65,20 +62,17 @@ export default function PracticeSetup() {
       quizMode: 'db',
     })
 
-    // Clear the previous quiz session.
     resetQuizSession()
 
-    // Open database quiz.
-    // The backend will randomly select new questions.
     navigate('/quiz/db?fresh=1')
   }
 
   return (
     <>
       <PageHero
-        title="Practice"
-        subtitle="Select a subject and question quantity to practice with random questions from the database."
-      />
+  title="Practice by Subject"
+  subtitle="Choose a competency area and start a focused practice quiz with randomly selected questions."
+/>
 
       <section className="mx-auto max-w-xl px-4 py-10 sm:px-6">
         <form

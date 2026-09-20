@@ -81,7 +81,7 @@ function mapApiError(error) {
       return 'Rate limit reached. Please wait a moment and try again.'
     }
     if (status === 401 || status === 403) {
-      return 'API authentication failed. Check your API key configuration.'
+      return 'Quiz generation is temporarily unavailable. Please try again later.'
     }
     if (error.code === 'ERR_NETWORK') {
       return 'Network error. Check your internet connection and try again.'
@@ -104,7 +104,7 @@ export async function generateQuiz({
 }) {
   if (!isAiConfigured()) {
     throw new Error(
-      'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
+      'Quiz generation is currently unavailable. Please try again later.'
     )
   }
 

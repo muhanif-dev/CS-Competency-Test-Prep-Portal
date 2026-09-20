@@ -17,9 +17,7 @@ export default function QuizSetup() {
 
   const competencyFromUrl = searchParams.get('competency')
 
-  // Yeh page sirf "AI Quiz" flow ke liye hai, is liye quizMode hamesha 'ai'
-  // force kar dete hain — user ko yahan mode select karne ki zaroorat nahi.
-  useEffect(() => {
+    useEffect(() => {
     if (settings.quizMode !== 'ai') {
       setSettings({ quizMode: 'ai' })
     }
@@ -65,7 +63,7 @@ export default function QuizSetup() {
 
     if (!isAiConfigured()) {
       setError(
-        'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
+        'Quiz generation is currently unavailable. Please try again later.',
       )
       return
     }
@@ -77,9 +75,9 @@ export default function QuizSetup() {
   return (
     <>
       <PageHero
-        title="AI Quiz Setup"
-        subtitle="Choose your competency area, topic, and preferences. AI will generate fresh questions for your selected topic."
-      />
+  title="Create an AI Quiz"
+  subtitle="Choose a competency area, topic, question count, and difficulty to generate a fresh practice quiz."
+/>
 
       <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <form
