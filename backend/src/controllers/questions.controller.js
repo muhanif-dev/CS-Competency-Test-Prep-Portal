@@ -29,7 +29,7 @@ export async function getRandomQuiz(req, res) {
 
     if (!QuestionModel) {
       return res.status(404).json({
-        error: `Quiz generation is not currently available for this subject. ${competencyId}`,
+        error: `Quiz generation is not currently available for this subject.`,
       });
     }
 
