@@ -1,12 +1,7 @@
-import 'dotenv/config'
-import mongoose from 'mongoose'
-import connectDB from '../config/db.js'
-import Question from '../models/Question.js'
-
-const sampleQuestions = [
-  {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+const databaseQuestions = [
+{
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "What is a DBMS used for?",
     "options": [
       { "id": "A", "text": "Managing hardware" },
@@ -19,8 +14,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A database is:",
     "options": [
       { "id": "A", "text": "Collection of programs" },
@@ -33,8 +28,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "DBMS stands for:",
     "options": [
       { "id": "A", "text": "Data Backup Management System" },
@@ -47,8 +42,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Which is an example of DBMS?",
     "options": [
       { "id": "A", "text": "Windows" },
@@ -61,8 +56,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Redundancy in databases means:",
     "options": [
       { "id": "A", "text": "Data duplication" },
@@ -75,8 +70,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Three-schema architecture includes:",
     "options": [
       { "id": "A", "text": "Internal, External, Conceptual" },
@@ -89,8 +84,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "External schema refers to:",
     "options": [
       { "id": "A", "text": "Physical storage" },
@@ -103,8 +98,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Internal schema deals with:",
     "options": [
       { "id": "A", "text": "User interface" },
@@ -117,8 +112,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Conceptual schema describes:",
     "options": [
       { "id": "A", "text": "Physical data" },
@@ -131,8 +126,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Data independence means:",
     "options": [
       { "id": "A", "text": "Data is secure" },
@@ -145,8 +140,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A data model is used to:",
     "options": [
       { "id": "A", "text": "Store hardware" },
@@ -159,8 +154,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Which is a relational data model?",
     "options": [
       { "id": "A", "text": "Table-based" },
@@ -173,8 +168,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Hierarchical model uses:",
     "options": [
       { "id": "A", "text": "Tables" },
@@ -187,8 +182,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Entity-Relationship model is used for:",
     "options": [
       { "id": "A", "text": "Coding" },
@@ -201,8 +196,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "An entity represents:",
     "options": [
       { "id": "A", "text": "Attribute" },
@@ -215,8 +210,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A table in a database is called:",
     "options": [
       { "id": "A", "text": "Entity" },
@@ -229,8 +224,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A row is called:",
     "options": [
       { "id": "A", "text": "Attribute" },
@@ -243,8 +238,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A column is called:",
     "options": [
       { "id": "A", "text": "Tuple" },
@@ -257,8 +252,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Primary key is used to:",
     "options": [
       { "id": "A", "text": "Duplicate data" },
@@ -271,8 +266,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Foreign key is used to:",
     "options": [
       { "id": "A", "text": "Delete table" },
@@ -285,8 +280,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Selection operation is denoted by:",
     "options": [
       { "id": "A", "text": "σ" },
@@ -299,8 +294,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Projection operation is denoted by:",
     "options": [
       { "id": "A", "text": "σ" },
@@ -313,8 +308,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Union operation combines:",
     "options": [
       { "id": "A", "text": "Rows" },
@@ -327,8 +322,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Cartesian product combines:",
     "options": [
       { "id": "A", "text": "Columns" },
@@ -341,8 +336,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Relational calculus is:",
     "options": [
       { "id": "A", "text": "Procedural" },
@@ -355,8 +350,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "SQL stands for:",
     "options": [
       { "id": "A", "text": "Structured Query Language" },
@@ -369,8 +364,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Which is a DDL command?",
     "options": [
       { "id": "A", "text": "SELECT" },
@@ -383,8 +378,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Which is a DML command?",
     "options": [
       { "id": "A", "text": "ALTER" },
@@ -397,8 +392,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "SELECT is used to:",
     "options": [
       { "id": "A", "text": "Delete data" },
@@ -411,8 +406,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "WHERE clause is used to:",
     "options": [
       { "id": "A", "text": "Sort data" },
@@ -425,8 +420,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "GROUP BY is used for:",
     "options": [
       { "id": "A", "text": "Filtering" },
@@ -439,8 +434,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "HAVING clause is used with:",
     "options": [
       { "id": "A", "text": "WHERE" },
@@ -453,8 +448,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "JOIN is used to:",
     "options": [
       { "id": "A", "text": "Delete tables" },
@@ -467,8 +462,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "INNER JOIN returns:",
     "options": [
       { "id": "A", "text": "All rows" },
@@ -481,8 +476,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "COUNT() function is used to:",
     "options": [
       { "id": "A", "text": "Sum values" },
@@ -495,8 +490,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Normalization is used to:",
     "options": [
       { "id": "A", "text": "Increase redundancy" },
@@ -509,8 +504,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "1NF removes:",
     "options": [
       { "id": "A", "text": "Transitive dependency" },
@@ -523,8 +518,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "2NF removes:",
     "options": [
       { "id": "A", "text": "Partial dependency" },
@@ -537,8 +532,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "3NF removes:",
     "options": [
       { "id": "A", "text": "Partial dependency" },
@@ -551,8 +546,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Functional dependency means:",
     "options": [
       { "id": "A", "text": "Relation between attributes" },
@@ -565,8 +560,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Transaction is:",
     "options": [
       { "id": "A", "text": "Single query" },
@@ -579,8 +574,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "ACID properties include:",
     "options": [
       { "id": "A", "text": "Atomicity" },
@@ -593,8 +588,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Atomicity means:",
     "options": [
       { "id": "A", "text": "All or nothing" },
@@ -607,8 +602,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "COMMIT is used to:",
     "options": [
       { "id": "A", "text": "Undo" },
@@ -621,8 +616,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "ROLLBACK is used to:",
     "options": [
       { "id": "A", "text": "Save changes" },
@@ -635,8 +630,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Concurrency means:",
     "options": [
       { "id": "A", "text": "Single user" },
@@ -649,8 +644,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Lost update problem occurs when:",
     "options": [
       { "id": "A", "text": "Data lost" },
@@ -663,8 +658,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Locking is used for:",
     "options": [
       { "id": "A", "text": "Security" },
@@ -677,8 +672,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Deadlock occurs when:",
     "options": [
       { "id": "A", "text": "Infinite loop" },
@@ -691,8 +686,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Two-phase locking ensures:",
     "options": [
       { "id": "A", "text": "Deadlock" },
@@ -705,8 +700,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Recovery management is used to:",
     "options": [
       { "id": "A", "text": "Improve performance" },
@@ -719,8 +714,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A log file is used for:",
     "options": [
       { "id": "A", "text": "Query execution" },
@@ -733,8 +728,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Checkpoint is used to:",
     "options": [
       { "id": "A", "text": "Stop transactions" },
@@ -747,8 +742,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "An index is used to:",
     "options": [
       { "id": "A", "text": "Store data" },
@@ -761,8 +756,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Primary index is based on:",
     "options": [
       { "id": "A", "text": "Foreign key" },
@@ -775,8 +770,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "B+ Tree is commonly used in:",
     "options": [
       { "id": "A", "text": "Networking" },
@@ -789,8 +784,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Heap file organization stores records in:",
     "options": [
       { "id": "A", "text": "Sorted order" },
@@ -803,8 +798,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Hashing is mainly used for:",
     "options": [
       { "id": "A", "text": "Sorting" },
@@ -817,8 +812,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Static hashing uses:",
     "options": [
       { "id": "A", "text": "Dynamic buckets" },
@@ -831,8 +826,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Dynamic hashing allows:",
     "options": [
       { "id": "A", "text": "Fixed size" },
@@ -845,8 +840,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Query processing involves:",
     "options": [
       { "id": "A", "text": "Parsing" },
@@ -859,8 +854,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Query optimization is used to:",
     "options": [
       { "id": "A", "text": "Delete queries" },
@@ -873,8 +868,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "A query plan is:",
     "options": [
       { "id": "A", "text": "Data structure" },
@@ -887,8 +882,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Database security is used to:",
     "options": [
       { "id": "A", "text": "Increase redundancy" },
@@ -901,8 +896,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Authorization means:",
     "options": [
       { "id": "A", "text": "Authentication" },
@@ -915,8 +910,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Encryption is used for:",
     "options": [
       { "id": "A", "text": "Speed" },
@@ -929,8 +924,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Authentication verifies:",
     "options": [
       { "id": "A", "text": "Data" },
@@ -943,8 +938,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Distributed database is:",
     "options": [
       { "id": "A", "text": "Single location" },
@@ -957,8 +952,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Fragmentation means:",
     "options": [
       { "id": "A", "text": "Merging data" },
@@ -971,8 +966,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Replication means:",
     "options": [
       { "id": "A", "text": "Splitting data" },
@@ -985,8 +980,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "NoSQL databases are:",
     "options": [
       { "id": "A", "text": "Relational" },
@@ -999,8 +994,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "MongoDB is an example of:",
     "options": [
       { "id": "A", "text": "RDBMS" },
@@ -1013,8 +1008,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Key-value store is a type of:",
     "options": [
       { "id": "A", "text": "SQL database" },
@@ -1027,8 +1022,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Document-based databases store data in:",
     "options": [
       { "id": "A", "text": "Tables" },
@@ -1041,8 +1036,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Data warehouse is used for:",
     "options": [
       { "id": "A", "text": "Transactions" },
@@ -1055,8 +1050,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "OLAP stands for:",
     "options": [
       { "id": "A", "text": "Online Analytical Processing" },
@@ -1069,8 +1064,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Data mining is:",
     "options": [
       { "id": "A", "text": "Storing data" },
@@ -1083,8 +1078,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Star schema is used in:",
     "options": [
       { "id": "A", "text": "Networking" },
@@ -1097,8 +1092,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Fact table contains:",
     "options": [
       { "id": "A", "text": "Keys only" },
@@ -1111,8 +1106,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Dimension table contains:",
     "options": [
       { "id": "A", "text": "Measures" },
@@ -1125,8 +1120,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "ETL stands for:",
     "options": [
       { "id": "A", "text": "Extract Transform Load" },
@@ -1139,8 +1134,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Serializability ensures:",
     "options": [
       { "id": "A", "text": "Speed" },
@@ -1153,8 +1148,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Timestamp ordering is used in:",
     "options": [
       { "id": "A", "text": "Security" },
@@ -1167,8 +1162,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Dirty read means:",
     "options": [
       { "id": "A", "text": "Reading deleted data" },
@@ -1181,8 +1176,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Phantom read occurs due to:",
     "options": [
       { "id": "A", "text": "Indexing" },
@@ -1195,8 +1190,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Cascading rollback happens when:",
     "options": [
       { "id": "A", "text": "One failure affects others" },
@@ -1209,8 +1204,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "NOT NULL constraint ensures:",
     "options": [
       { "id": "A", "text": "No duplicates" },
@@ -1223,8 +1218,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "UNIQUE constraint ensures:",
     "options": [
       { "id": "A", "text": "No null" },
@@ -1237,8 +1232,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "DEFAULT constraint sets:",
     "options": [
       { "id": "A", "text": "Key" },
@@ -1251,8 +1246,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "CHECK constraint ensures:",
     "options": [
       { "id": "A", "text": "Data format" },
@@ -1265,8 +1260,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "View is a:",
     "options": [
       { "id": "A", "text": "Physical table" },
@@ -1279,8 +1274,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Stored procedure is:",
     "options": [
       { "id": "A", "text": "Table" },
@@ -1293,8 +1288,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Trigger executes:",
     "options": [
       { "id": "A", "text": "Manually" },
@@ -1307,8 +1302,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Cursor is used for:",
     "options": [
       { "id": "A", "text": "Bulk processing" },
@@ -1321,8 +1316,8 @@ const sampleQuestions = [
     "difficulty": "Hard"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Subquery is:",
     "options": [
       { "id": "A", "text": "Outer query" },
@@ -1335,8 +1330,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Durability means:",
     "options": [
       { "id": "A", "text": "Temporary data" },
@@ -1349,8 +1344,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Index improves:",
     "options": [
       { "id": "A", "text": "Storage" },
@@ -1363,8 +1358,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Schema defines:",
     "options": [
       { "id": "A", "text": "Data values" },
@@ -1377,8 +1372,8 @@ const sampleQuestions = [
     "difficulty": "Easy"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Instance is:",
     "options": [
       { "id": "A", "text": "Design" },
@@ -1391,8 +1386,8 @@ const sampleQuestions = [
     "difficulty": "Medium"
   },
   {
-    "competencyId": "database",
-    "competencyName": "Database Systems",
+    "competencyId": "databases",
+    "competencyName": "Databases",
     "question": "Metadata is:",
     "options": [
       { "id": "A", "text": "Data" },
@@ -1404,20 +1399,6 @@ const sampleQuestions = [
     "explanation": "Metadata is defined as data that provides information about other data, such as schema definitions and table characteristics.",
     "difficulty": "Easy"
   }
-];
+]
 
-const seedDatabaseQuestions = async () => {
-  try {
-    await connectDB();
-    await Question.deleteMany({ competencyId: "database" });
-    await Question.insertMany(sampleQuestions);
-    console.log("Database questions seeded successfully!");
-    mongoose.connection.close();
-  } catch (error) {
-    console.error("Error seeding database questions:", error);
-    mongoose.connection.close();
-    process.exit(1);
-  }
-};
-
-seedDatabaseQuestions();
+export default databaseQuestions;

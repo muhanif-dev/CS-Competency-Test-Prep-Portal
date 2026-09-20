@@ -1,10 +1,5 @@
-import 'dotenv/config'
-import mongoose from 'mongoose'
-import connectDB from '../config/db.js'
-import Question from '../models/Question.js'
-
-const sampleQuestions = [
-  {
+const cybersecurityQuestions = [
+   {
     "competencyId": "cyber-security",
     "competencyName": "Cyber Security",
     "question": "Which of the following best describes the CIA triad in cybersecurity?",
@@ -6246,22 +6241,4 @@ const sampleQuestions = [
   }
 ]
 
-async function seed() {
-  await connectDB()
-
-  const competencyId = sampleQuestions[0].competencyId
-
-  const deleted = await Question.deleteMany({ competencyId })
-  console.log(`🗑️  Purani ${deleted.deletedCount} Cyber Security question(s) hata di gayi (agar thi).`)
-
-  const inserted = await Question.insertMany(sampleQuestions)
-  console.log(`✅ ${inserted.length} Cyber Security MCQs successfully seed ho gaye.`)
-
-  await mongoose.disconnect()
-  process.exit(0)
-}
-
-seed().catch((err) => {
-  console.error('❌ Seeding failed:', err)
-  process.exit(1)
-})
+export default cybersecurityQuestions

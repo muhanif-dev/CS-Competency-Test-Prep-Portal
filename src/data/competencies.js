@@ -3,7 +3,7 @@
  */
 export const competencies = [
   {
-    id: 'computer-networks-and-cloud-computing',
+    id: 'computer-networks',
     name: 'Computer Networks and Cloud Computing',
     weightage: 10,
     topics: [
