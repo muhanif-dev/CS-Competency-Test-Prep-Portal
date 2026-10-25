@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-ulm-lavender/60 bg-white/50 py-3 text-center text-xs text-gray-500">
-        © {new Date().getFullYear()} Muhammad Hanif CS Competency Preparation Academy. All rights reserved. For educational and practice purposes only.
+        © {new Date().getFullYear()} <strong>Muhammad Hanif</strong> CS Competency Preparation Academy. All rights reserved. For educational and practice purposes only.
       </div>
     </footer>
   );
