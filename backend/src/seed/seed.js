@@ -18,6 +18,9 @@ import computerNetworksQuestions from './computerNetworksQuestions.js'
 import WebDevelopmentQuestion from '../models/WebDevelopmentQuestion.js'
 import webDevelopmentQuestions from './webDevelopmentQuestions.js'
 
+import ProblemSolvingQuestion from '../models/ProblemSolvingQuestion.js'
+import problemSolvingQuestions from './problemSolvingQuestions.js'
+
 const seed = async () => {
   try {
     await connectDB();
@@ -92,6 +95,21 @@ const seed = async () => {
 
     console.log(
       `✅ Web Development: ${insertedWebDevQuestions.length} questions seeded.`,
+    )
+
+    // -----------------------------
+    // PROBLEM SOLVING & ANALYTICAL SKILLS
+    // -----------------------------
+
+    await ProblemSolvingQuestion.deleteMany({})
+
+    const insertedProblemSolvingQuestions =
+      await ProblemSolvingQuestion.insertMany(
+        problemSolvingQuestions,
+      )
+
+    console.log(
+      `✅ Problem Solving and Analytical Skills: ${insertedProblemSolvingQuestions.length} questions seeded.`,
     )
 
     console.log("\n🎉 All questions seeded successfully!");

@@ -3,6 +3,7 @@ import CybersecurityQuestion from "../models/CybersecurityQuestion.js";
 import OperatingSystemQuestion from "../models/operatingSystemQuestion.js";
 import ComputerNetworksQuestion from '../models/ComputerNetworksQuestion.js'
 import WebDevelopmentQuestion from '../models/WebDevelopmentQuestion.js'
+import ProblemSolvingQuestion from '../models/ProblemSolvingQuestion.js'
 
 const MAX_QUESTIONS = 50;
 
@@ -12,6 +13,7 @@ const questionModels = {
   "operating-systems": OperatingSystemQuestion,
   'computer-networks': ComputerNetworksQuestion,
   'web-development': WebDevelopmentQuestion,
+  'problem-solving-analytical-skills': ProblemSolvingQuestion,
 };
 
 export async function getRandomQuiz(req, res) {
@@ -170,6 +172,20 @@ export async function getSubjectsSummary(req, res) {
         _id: "web-development",
         competencyName: "Web Development",
         count: webDevCount,
+      });
+    }
+
+    // -----------------------------
+    // Problem Solving and Analytical Skills
+    // -----------------------------
+
+    const problemSolvingCount = await ProblemSolvingQuestion.countDocuments();
+
+    if (problemSolvingCount > 0) {
+      summary.push({
+        _id: "problem-solving-analytical-skills",
+        competencyName: "Problem Solving and Analytical Skills",
+        count: problemSolvingCount,
       });
     }
 
