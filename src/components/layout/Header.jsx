@@ -1,11 +1,13 @@
-import { Menu, X } from 'lucide-react'
+import { Award, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: 'Home' },
-  { to: '/competencies', label: 'Competency Areas' },
-  { to: '/quiz/setup', label: 'Quiz Setup' },
+  { to: '/competencies', label: 'Subjects' },
+  { to: '/practice/setup?competency=all', label: 'Full Mock Test', isSpecial: true },
+  { to: '/practice/setup', label: 'Practice' },
+  { to: '/quiz/setup', label: 'AI Quiz' },
   { to: '/about', label: 'About' },
 ]
 
@@ -26,7 +28,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="flex min-w-0 items-center gap-3">
           <span
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ulm-purple text-sm font-bold text-white"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ulm-purple text-sm font-bold text-white shadow-sm"
             aria-hidden
           >
             CS
@@ -43,7 +45,21 @@ export default function Header() {
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {navItems.map((item) => (
-            <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === '/'}>
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                item.isSpecial
+                  ? `inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-semibold transition ${
+                      isActive
+                        ? 'bg-ulm-purple text-white'
+                        : 'border border-ulm-purple/30 bg-ulm-lavender/40 text-ulm-purple hover:bg-ulm-purple hover:text-white'
+                    }`
+                  : linkClass({ isActive })
+              }
+              end={item.to === '/'}
+            >
+              {item.isSpecial && <Award className="h-4 w-4" />}
               {item.label}
             </NavLink>
           ))}
@@ -70,10 +86,19 @@ export default function Header() {
               <li key={item.to}>
                 <NavLink
                   to={item.to}
-                  className={linkClass}
+                  className={({ isActive }) =>
+                    item.isSpecial
+                      ? `flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold ${
+                          isActive
+                            ? 'bg-ulm-purple text-white'
+                            : 'bg-ulm-lavender/50 text-ulm-purple'
+                        }`
+                      : linkClass({ isActive })
+                  }
                   end={item.to === '/'}
                   onClick={() => setOpen(false)}
                 >
+                  {item.isSpecial && <Award className="h-4 w-4" />}
                   {item.label}
                 </NavLink>
               </li>

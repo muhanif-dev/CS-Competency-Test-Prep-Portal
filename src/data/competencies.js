@@ -421,7 +421,17 @@ export const competencies = [
   },
 ]
 
+export const allSubjectsCompetency = {
+  id: 'all',
+  name: 'All Subjects (Full Mock Test)',
+  weightage: 100,
+  topics: [],
+}
+
 export function getCompetencyById(competencyId) {
+  if (competencyId === 'all' || competencyId === 'all-subjects') {
+    return allSubjectsCompetency
+  }
   return competencies.find((c) => c.id === competencyId) ?? null
 }
 

@@ -44,10 +44,21 @@ export default function QuizPage() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-6 rounded-lg bg-ulm-lavender/40 px-4 py-2 text-sm text-ulm-dark">
-        <span className="font-medium">{quizMeta?.competencyArea}</span>
-        <span className="text-gray-500"> · </span>
-        <span>{quizMeta?.topic}</span>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-ulm-lavender/40 px-4 py-2 text-sm text-ulm-dark">
+        <div>
+          <span className="font-semibold text-ulm-purple">{quizMeta?.competencyArea}</span>
+          {quizMeta?.topic && (
+            <>
+              <span className="text-gray-400"> · </span>
+              <span className="text-gray-600">{quizMeta.topic}</span>
+            </>
+          )}
+        </div>
+        {question?.competencyName && (
+          <span className="inline-flex items-center rounded-full bg-white px-2.5 py-0.5 text-xs font-medium text-ulm-purple border border-ulm-purple/30 shadow-2xs">
+            {question.competencyName}
+          </span>
+        )}
       </div>
 
       <ProgressBar current={currentIndex + 1} total={total} />
