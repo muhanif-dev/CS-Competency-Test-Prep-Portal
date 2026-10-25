@@ -15,6 +15,9 @@ import operatingSystemQuestions from "./operatingSystemQuestions.js";
 import ComputerNetworksQuestion from '../models/ComputerNetworksQuestion.js'
 import computerNetworksQuestions from './computerNetworksQuestions.js'
 
+import WebDevelopmentQuestion from '../models/WebDevelopmentQuestion.js'
+import webDevelopmentQuestions from './webDevelopmentQuestions.js'
+
 const seed = async () => {
   try {
     await connectDB();
@@ -61,20 +64,35 @@ const seed = async () => {
     );
 
 
-   // -----------------------------
-// COMPUTER NETWORKS & CLOUD COMPUTING
-// -----------------------------
+    // -----------------------------
+    // COMPUTER NETWORKS & CLOUD COMPUTING
+    // -----------------------------
 
-await ComputerNetworksQuestion.deleteMany({})
+    await ComputerNetworksQuestion.deleteMany({})
 
-const insertedComputerNetworksQuestions =
-  await ComputerNetworksQuestion.insertMany(
-    computerNetworksQuestions,
-  )
+    const insertedComputerNetworksQuestions =
+      await ComputerNetworksQuestion.insertMany(
+        computerNetworksQuestions,
+      )
 
-console.log(
-  `✅ Computer Networks & Cloud Computing: ${insertedComputerNetworksQuestions.length} questions seeded.`,
-)
+    console.log(
+      `✅ Computer Networks & Cloud Computing: ${insertedComputerNetworksQuestions.length} questions seeded.`,
+    )
+
+    // -----------------------------
+    // WEB DEVELOPMENT
+    // -----------------------------
+
+    await WebDevelopmentQuestion.deleteMany({})
+
+    const insertedWebDevQuestions =
+      await WebDevelopmentQuestion.insertMany(
+        webDevelopmentQuestions,
+      )
+
+    console.log(
+      `✅ Web Development: ${insertedWebDevQuestions.length} questions seeded.`,
+    )
 
     console.log("\n🎉 All questions seeded successfully!");
 

@@ -2,6 +2,7 @@ import DatabaseQuestion from "../models/DatabaseQuestion.js";
 import CybersecurityQuestion from "../models/CybersecurityQuestion.js";
 import OperatingSystemQuestion from "../models/operatingSystemQuestion.js";
 import ComputerNetworksQuestion from '../models/ComputerNetworksQuestion.js'
+import WebDevelopmentQuestion from '../models/WebDevelopmentQuestion.js'
 
 const MAX_QUESTIONS = 50;
 
@@ -9,7 +10,9 @@ const questionModels = {
   databases: DatabaseQuestion,
   "cyber-security": CybersecurityQuestion,
   "operating-systems": OperatingSystemQuestion,
- 'computer-networks': ComputerNetworksQuestion,};
+  'computer-networks': ComputerNetworksQuestion,
+  'web-development': WebDevelopmentQuestion,
+};
 
 export async function getRandomQuiz(req, res) {
   try {
@@ -136,12 +139,39 @@ export async function getSubjectsSummary(req, res) {
 
     if (operatingSystemCount > 0) {
       summary.push({
-        _id: "operating-system",
-        competencyName: "Operating System",
+        _id: "operating-systems",
+        competencyName: "Operating Systems",
         count: operatingSystemCount,
       });
     }
 
+    // -----------------------------
+    // Computer Networks & Cloud Computing
+    // -----------------------------
+
+    const computerNetworksCount = await ComputerNetworksQuestion.countDocuments();
+
+    if (computerNetworksCount > 0) {
+      summary.push({
+        _id: "computer-networks",
+        competencyName: "Computer Networks and Cloud Computing",
+        count: computerNetworksCount,
+      });
+    }
+
+    // -----------------------------
+    // Web Development
+    // -----------------------------
+
+    const webDevCount = await WebDevelopmentQuestion.countDocuments();
+
+    if (webDevCount > 0) {
+      summary.push({
+        _id: "web-development",
+        competencyName: "Web Development",
+        count: webDevCount,
+      });
+    }
 
     return res.json(summary);
   } catch (err) {

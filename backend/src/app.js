@@ -2,9 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import questionsRouter from './routes/questions.routes.js'
 
-// Allowed frontend origins for CORS. Comma-separated list via env var, e.g.
-// CLIENT_ORIGIN="http://localhost:5173,https://your-frontend.vercel.app"
-// If not set, all origins are allowed (fine for this public, read-only quiz API).
+
 const allowedOrigins = (process.env.CLIENT_ORIGIN || '')
   .split(',')
   .map((o) => o.trim())
