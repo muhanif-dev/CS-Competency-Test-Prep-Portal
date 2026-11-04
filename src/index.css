@@ -13,10 +13,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply m-0 min-h-screen antialiased;
+    overflow-x: hidden;
   }
 
   code {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-ulm-lavender bg-ulm-lavender/40">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-start gap-3">
           <GraduationCap
             className="mt-0.5 h-5 w-5 shrink-0 text-ulm-gold"
@@ -20,7 +20,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-4 text-sm">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
           <Link to="/practice/setup?competency=all" className="font-semibold text-ulm-purple hover:underline">
             Full Mock Test
           </Link>
@@ -38,8 +38,8 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <div className="border-t border-ulm-lavender/60 bg-white/50 py-3 text-center text-xs text-gray-500">
-        © {new Date().getFullYear()} <strong>Muhammad Hanif</strong> CS Competency Preparation Academy. All rights reserved. For educational and practice purposes only.
+      <div className="border-t border-ulm-lavender/60 bg-white/50 px-4 py-3.5 text-center text-xs text-gray-500">
+        © 2026 CodeMinds. Designed by Muhammad Hanif. All rights reserved. For educational and practice purposes only.
       </div>
     </footer>
   );

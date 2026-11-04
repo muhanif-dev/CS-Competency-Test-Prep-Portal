@@ -33,10 +33,10 @@ export default function QuizOption({
       disabled={disabled || revealed}
       onClick={() => onSelect(option.id)}
       aria-pressed={isSelected}
-      className={`group flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 focus:ring-offset-1 disabled:cursor-default ${stateClasses}`}
+      className={`group flex w-full items-start gap-3 rounded-xl border p-3 sm:px-4 sm:py-3.5 text-left transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 focus:ring-offset-1 disabled:cursor-default min-h-[48px] ${stateClasses}`}
     >
       <span
-        className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold transition-colors ${
+        className={`mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg text-xs sm:text-sm font-bold transition-colors ${
           revealed && isCorrect
             ? 'bg-green-600 text-white'
             : revealed && isSelected && !isCorrect
@@ -55,7 +55,7 @@ export default function QuizOption({
         )}
       </span>
 
-      <span className="flex-1 pt-1 text-sm leading-6 text-ulm-dark sm:text-base">
+      <span className="flex-1 pt-0.5 text-xs sm:text-sm leading-relaxed text-ulm-dark break-words">
         {option.text}
       </span>
     </button>

@@ -30,7 +30,7 @@ export default function AIQuiz() {
 
     if (!isAiConfigured()) {
       setError(
-        'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file (see .env.example).',
+        'AI is not configured. Add VITE_GEMINI_API_KEY to your .env file.',
       )
       setLoading(false)
       return
@@ -66,6 +66,8 @@ export default function AIQuiz() {
     settings.topicId,
     settings.questionCount,
     settings.difficulty,
+    getQuestionHistory,
+    recordQuestionHistory,
     startNewQuiz,
     navigate,
   ])
@@ -88,32 +90,32 @@ export default function AIQuiz() {
         }
       />
 
-      <section className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+      <section className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
         {loading && !error && (
-          <LoadingSpinner label="Generating your quiz..." />
+          <LoadingSpinner label="Generating your quiz with AI..." />
         )}
 
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-6">
-            <div className="flex gap-3">
-              <AlertCircle className="h-6 w-6 shrink-0 text-red-600" aria-hidden />
-              <div>
-                <h2 className="font-semibold text-red-800">Generation failed</h2>
-                <p className="mt-2 text-sm text-red-700">{error}</p>
-                <div className="mt-4 flex flex-wrap gap-3">
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-5 sm:p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row items-start gap-3.5">
+              <AlertCircle className="h-6 w-6 shrink-0 text-red-600 mt-0.5" aria-hidden />
+              <div className="w-full">
+                <h2 className="font-bold text-red-800 text-base sm:text-lg">Generation failed</h2>
+                <p className="mt-1.5 text-xs sm:text-sm text-red-700 leading-relaxed">{error}</p>
+                <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
                   <button
                     type="button"
                     onClick={runGeneration}
-                    className="inline-flex items-center gap-2 rounded-lg bg-ulm-purple px-4 py-2 text-sm font-medium text-white hover:bg-ulm-purple-dark"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-ulm-purple px-4 py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-ulm-purple-dark transition shadow-xs"
                   >
-                    <RefreshCw className="h-4 w-4" aria-hidden />
-                    Try Again
+                    <RefreshCw className="h-4 w-4 shrink-0" aria-hidden />
+                    <span>Try Again</span>
                   </button>
                   <Link
                     to="/quiz/setup"
-                    className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-ulm-dark hover:bg-gray-50"
+                    className="inline-flex w-full sm:w-auto items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-xs sm:text-sm font-semibold text-ulm-dark hover:bg-gray-50 transition"
                   >
-                    Back to Setup
+                    <span>Back to Setup</span>
                   </Link>
                 </div>
               </div>
@@ -122,8 +124,8 @@ export default function AIQuiz() {
         )}
 
         {!resolved && !loading && (
-          <p className="text-center text-gray-600">
-            <Link to="/quiz/setup" className="text-ulm-purple hover:underline">
+          <p className="text-center text-xs sm:text-sm text-gray-600">
+            <Link to="/quiz/setup" className="text-ulm-purple font-medium hover:underline">
               Go to Quiz Setup
             </Link>{' '}
             to choose a competency and topic.

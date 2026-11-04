@@ -85,23 +85,23 @@ export default function PracticeSetup() {
         }
       />
 
-      <section className="mx-auto max-w-xl px-4 py-10 sm:px-6">
+      <section className="mx-auto max-w-xl px-4 py-8 sm:px-6 sm:py-12">
         {/* Quick Mode Toggle Banner */}
-        <div className="mb-6 flex overflow-hidden rounded-xl border border-ulm-lavender bg-white p-1.5 shadow-sm">
+        <div className="mb-6 flex flex-col sm:flex-row overflow-hidden rounded-xl border border-ulm-lavender bg-white p-1.5 shadow-xs gap-1 sm:gap-0">
           <button
             type="button"
             onClick={() => {
               setSettings({ competencyId: 'all', questionCount: settings.questionCount < 20 ? 20 : settings.questionCount })
               setError('')
             }}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${
               isAllSubjects
-                ? 'bg-ulm-purple text-white shadow-sm'
+                ? 'bg-ulm-purple text-white shadow-xs'
                 : 'text-gray-600 hover:text-ulm-purple hover:bg-ulm-lavender/50'
             }`}
           >
-            <Award className="h-4 w-4" />
-            All-Subjects Mock Test
+            <Award className="h-4 w-4 shrink-0" />
+            <span>All-Subjects Mock Test</span>
           </button>
           <button
             type="button"
@@ -109,26 +109,26 @@ export default function PracticeSetup() {
               if (isAllSubjects) setSettings({ competencyId: 'databases' })
               setError('')
             }}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${
               !isAllSubjects
-                ? 'bg-ulm-purple text-white shadow-sm'
+                ? 'bg-ulm-purple text-white shadow-xs'
                 : 'text-gray-600 hover:text-ulm-purple hover:bg-ulm-lavender/50'
             }`}
           >
-            <Sparkles className="h-4 w-4" />
-            Specific Subject
+            <Sparkles className="h-4 w-4 shrink-0" />
+            <span>Specific Subject</span>
           </button>
         </div>
 
         <form
           onSubmit={handleGenerate}
-          className="space-y-6 rounded-xl border border-ulm-lavender bg-white p-6 shadow-sm"
+          className="space-y-6 rounded-2xl border border-ulm-lavender bg-white p-5 sm:p-7 shadow-xs"
         >
           {/* Subject Dropdown */}
           <div>
             <label
               htmlFor="competency"
-              className="mb-1 block text-sm font-medium text-ulm-dark"
+              className="mb-1.5 block text-xs sm:text-sm font-semibold text-ulm-dark"
             >
               Subject / Test Mode
             </label>
@@ -137,7 +137,7 @@ export default function PracticeSetup() {
               id="competency"
               value={settings.competencyId}
               onChange={handleCompetencyChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-xs sm:text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 bg-white"
               required
             >
               <option value="">Select subject or mode</option>
@@ -167,19 +167,19 @@ export default function PracticeSetup() {
 
           {/* Question Quantity */}
           <div>
-            <label className="mb-3 block text-sm font-medium text-ulm-dark">
+            <label className="mb-2.5 block text-xs sm:text-sm font-semibold text-ulm-dark">
               Question Quantity
             </label>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
               {QUESTION_COUNTS.map((count) => (
                 <button
                   key={count}
                   type="button"
                   onClick={() => handleQuestionCountChange(count)}
-                  className={`rounded-lg border px-3 py-3 text-sm font-semibold transition ${
+                  className={`rounded-lg border px-3 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold transition ${
                     settings.questionCount === count
-                      ? 'border-ulm-purple bg-ulm-purple text-white shadow-sm'
+                      ? 'border-ulm-purple bg-ulm-purple text-white shadow-xs'
                       : 'border-gray-300 bg-white text-ulm-dark hover:border-ulm-purple hover:bg-ulm-lavender'
                   }`}
                 >
@@ -189,7 +189,7 @@ export default function PracticeSetup() {
             </div>
             <p className="mt-2 text-xs text-gray-500">
               {isAllSubjects
-                ? 'Recommended: 50 or 100 questions for full exam coverage.'
+                ? 'Recommended: 50 or 100 questions for comprehensive exam simulation.'
                 : 'Recommended: 10 or 20 questions for targeted subject review.'}
             </p>
           </div>
@@ -197,7 +197,7 @@ export default function PracticeSetup() {
           {/* Error */}
           {error && (
             <p
-              className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"
+              className="rounded-lg bg-red-50 px-4 py-3 text-xs sm:text-sm text-red-700"
               role="alert"
             >
               {error}
@@ -207,16 +207,15 @@ export default function PracticeSetup() {
           {/* Generate Quiz */}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ulm-purple px-5 py-3 text-sm font-semibold text-white shadow hover:bg-ulm-purple-dark transition"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ulm-purple px-5 py-3 text-sm font-semibold text-white shadow-xs hover:bg-ulm-purple-dark transition active:scale-[0.99]"
           >
-            <Play className="h-4 w-4" aria-hidden />
-            {isAllSubjects ? 'Start All-Subjects Mock Test' : 'Generate Subject Quiz'}
+            <Play className="h-4 w-4 shrink-0" aria-hidden />
+            <span>{isAllSubjects ? 'Start All-Subjects Mock Test' : 'Generate Subject Quiz'}</span>
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
-          Want topic-specific AI generated questions?
-          {' '}
+        <p className="mt-6 text-center text-xs sm:text-sm text-gray-500">
+          Want topic-specific AI generated questions?{' '}
           <Link
             to="/quiz/setup"
             className="font-medium text-ulm-purple hover:underline"

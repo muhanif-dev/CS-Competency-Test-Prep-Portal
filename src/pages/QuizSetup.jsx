@@ -17,7 +17,7 @@ export default function QuizSetup() {
 
   const competencyFromUrl = searchParams.get('competency')
 
-    useEffect(() => {
+  useEffect(() => {
     if (settings.quizMode !== 'ai') {
       setSettings({ quizMode: 'ai' })
     }
@@ -75,24 +75,24 @@ export default function QuizSetup() {
   return (
     <>
       <PageHero
-  title="Create an AI Quiz"
-  subtitle="Choose a competency area, topic, question count, and difficulty to generate a fresh practice quiz."
-/>
+        title="Create an AI Quiz"
+        subtitle="Choose a competency area, topic, question count, and difficulty to generate a fresh practice quiz."
+      />
 
-      <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+      <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
         <form
           onSubmit={handleGenerate}
-          className="space-y-6 rounded-xl border border-ulm-lavender bg-white p-6 shadow-sm"
+          className="space-y-6 rounded-2xl border border-ulm-lavender bg-white p-5 sm:p-7 shadow-xs"
         >
           <div>
-            <label htmlFor="competency" className="mb-1 block text-sm font-medium text-ulm-dark">
+            <label htmlFor="competency" className="mb-1.5 block text-xs sm:text-sm font-semibold text-ulm-dark">
               Competency Area
             </label>
             <select
               id="competency"
               value={settings.competencyId}
               onChange={handleCompetencyChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-xs sm:text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 bg-white"
               required
             >
               <option value="">Select competency area</option>
@@ -105,7 +105,7 @@ export default function QuizSetup() {
           </div>
 
           <div>
-            <label htmlFor="topic" className="mb-1 block text-sm font-medium text-ulm-dark">
+            <label htmlFor="topic" className="mb-1.5 block text-xs sm:text-sm font-semibold text-ulm-dark">
               Topic
             </label>
             <select
@@ -113,7 +113,7 @@ export default function QuizSetup() {
               value={settings.topicId}
               onChange={handleTopicChange}
               disabled={!settings.competencyId}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm disabled:bg-gray-100 focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-xs sm:text-sm disabled:bg-gray-100 focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 bg-white"
               required
             >
               <option value="">
@@ -129,7 +129,7 @@ export default function QuizSetup() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <span className="mb-2 block text-sm font-medium text-ulm-dark">
+              <span className="mb-2 block text-xs sm:text-sm font-semibold text-ulm-dark">
                 Number of Questions
               </span>
               <div className="flex gap-2">
@@ -138,27 +138,27 @@ export default function QuizSetup() {
                     key={n}
                     type="button"
                     onClick={() => setSettings({ questionCount: n })}
-                    className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium ${
+                    className={`flex-1 rounded-lg border px-3 py-2.5 text-xs sm:text-sm font-semibold transition ${
                       settings.questionCount === n
-                        ? 'border-ulm-purple bg-ulm-purple text-white'
+                        ? 'border-ulm-purple bg-ulm-purple text-white shadow-xs'
                         : 'border-gray-300 bg-white text-ulm-dark hover:bg-ulm-lavender'
                     }`}
                   >
-                    {n}
+                    {n} Questions
                   </button>
                 ))}
               </div>
             </div>
 
             <div>
-              <label htmlFor="difficulty" className="mb-1 block text-sm font-medium text-ulm-dark">
+              <label htmlFor="difficulty" className="mb-1.5 block text-xs sm:text-sm font-semibold text-ulm-dark">
                 Difficulty
               </label>
               <select
                 id="difficulty"
                 value={settings.difficulty}
                 onChange={(e) => setSettings({ difficulty: e.target.value })}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-xs sm:text-sm focus:border-ulm-purple focus:outline-none focus:ring-2 focus:ring-ulm-purple/20 bg-white"
               >
                 {DIFFICULTIES.map((d) => (
                   <option key={d} value={d}>
@@ -170,21 +170,21 @@ export default function QuizSetup() {
           </div>
 
           {error && (
-            <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+            <p className="rounded-lg bg-red-50 px-4 py-3 text-xs sm:text-sm text-red-700" role="alert">
               {error}
             </p>
           )}
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ulm-purple px-5 py-3 text-sm font-semibold text-white hover:bg-ulm-purple-dark sm:w-auto"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-ulm-purple px-6 py-3 text-sm font-semibold text-white shadow-xs hover:bg-ulm-purple-dark transition"
           >
-            <Play className="h-4 w-4" aria-hidden />
-            Generate Quiz
+            <Play className="h-4 w-4 shrink-0" aria-hidden />
+            <span>Generate Quiz</span>
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-xs sm:text-sm text-gray-500">
           Need to browse topics first?{' '}
           <Link to="/competencies" className="font-medium text-ulm-purple hover:underline">
             View competency areas
