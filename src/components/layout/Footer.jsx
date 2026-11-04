@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-ulm-lavender/60 bg-white/50 px-4 py-3.5 text-center text-xs text-gray-500">
-        © 2026 CodeMinds. Designed by Muhammad Hanif. All rights reserved. For educational and practice purposes only.
+        © 2026 CodeMinds. Designed & Developed by <span className="font-semibold text-ulm-purple">Muhammad Hanif.</span> All rights reserved. For educational and practice purposes only.
       </div>
     </footer>
   );
