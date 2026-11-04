@@ -8,6 +8,7 @@ import CompetencyDetail from './pages/CompetencyDetail'
 import DBQuiz from './pages/DBQuiz'
 import Home from './pages/Home'
 import PracticeSetup from './pages/PracticeSetup'
+import Projects from './pages/Projects'
 import QuizPage from './pages/Quiz'
 import QuizSetup from './pages/QuizSetup'
 import Result from './pages/Result'
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="quiz/db" element={<DBQuiz />} />
             <Route path="quiz" element={<QuizPage />} />
             <Route path="result" element={<Result />} />
+            <Route path="projects" element={<Projects />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<Navigate to="/" replace />} />
             

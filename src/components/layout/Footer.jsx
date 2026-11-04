@@ -33,8 +33,11 @@ export default function Footer() {
           <Link to="/quiz/setup" className="text-ulm-purple hover:underline">
             AI Quiz
           </Link>
+          <Link to="/projects" className="text-ulm-purple hover:underline">
+            Projects
+          </Link>
           <Link to="/about" className="text-ulm-purple hover:underline">
-            About
+            About Us
           </Link>
         </div>
       </div>

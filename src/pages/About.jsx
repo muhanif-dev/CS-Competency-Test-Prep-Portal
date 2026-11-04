@@ -1,66 +1,47 @@
 import {
-  Award,
   Briefcase,
   CheckCircle2,
   Code2,
   Compass,
   ExternalLink,
+  Globe,
   GraduationCap,
   Mail,
+  Phone,
   Sparkles,
   Target,
-  Users,
+  UserCheck,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 
-const TEAM_MEMBERS = [
-  {
-    name: 'Dr. Bilal Qureshi',
-    role: 'Director',
-    qualification: 'Faculty Leadership',
-    isLead: true,
-  },
-  {
-    name: 'Mr. Abdullah Khan',
-    role: 'Mentor',
-    qualification: 'Academic Guidance',
-    isLead: true,
-  },
+function LinkedInIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+    </svg>
+  )
+}
+
+const DEVELOPERS = [
   {
     name: 'Muhammad Hanif',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
+    semester: 'BSCS, 5th Semester',
+    role: 'Full Stack Developer & Aspiring Android & iOS Developer',
+    description:
+      'Lead full-stack developer and architect of TestPrepHub. Experienced in scalable web architectures with React, Node.js, and cloud ecosystems, with an aspiring focus on native mobile development for Android & iOS.',
+    portfolio: 'https://full-stack-portfolio-mu.vercel.app/',
+    linkedin: 'https://www.linkedin.com/in/muhammad-hanif-92a127358',
+    avatarText: 'MH',
   },
   {
     name: 'Muhammad Bilal',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
-  },
-  {
-    name: 'Muhammad Rehan',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
-  },
-  {
-    name: 'Muhammad Fawad',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
-  },
-  {
-    name: 'Muhammad Tauheed',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
-  },
-  {
-    name: 'Mujtaba',
-    role: 'Team Member',
-    qualification: 'BSCS, 5th Semester',
-    isLead: false,
+    semester: 'BSCS, 5th Semester',
+    role: 'Full Stack Developer',
+    description:
+      'Full-Stack Developer focused on modern web applications, interactive user experiences, backend services, and clean software engineering practices.',
+    portfolio: null,
+    linkedin: 'https://www.linkedin.com/in/m-biilal',
+    avatarText: 'MB',
   },
 ]
 
@@ -81,7 +62,7 @@ export default function About() {
   return (
     <>
       <PageHero
-        title="About TestPrepHub"
+        title="About Us"
         subtitle="A dedicated Computer Science competency test preparation platform empowering students through structured subject practice and full-scale mock examinations."
       />
 
@@ -174,7 +155,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Section 2: University of Lakki Marwat — Department of Computer Science & IT */}
+        {/* Section 2: University of Lakki Marwat — Institute of Computing & Information Technology */}
         <section
           aria-labelledby="department-heading"
           className="rounded-2xl border border-ulm-lavender bg-white p-6 sm:p-8 shadow-sm"
@@ -193,7 +174,7 @@ export default function About() {
                     id="department-heading"
                     className="text-xl font-bold tracking-tight text-ulm-dark sm:text-2xl"
                   >
-                    Department of Computer Science & IT
+                    Institute of Computing & Information Technology
                   </h2>
                 </div>
               </div>
@@ -203,13 +184,13 @@ export default function About() {
               </p>
 
               <p className="text-sm sm:text-base leading-relaxed text-gray-600">
-                The Department of Computer Science & Information Technology at the University of Lakki Marwat
+                The Institute of Computing & Information Technology at the University of Lakki Marwat
                 is committed to delivering quality computer science education rooted in research, innovation,
                 and hands-on practical learning.
               </p>
 
               <p className="text-sm sm:text-base leading-relaxed text-gray-600">
-                The department’s mission is to produce graduates capable of developing high-quality software
+                The institute’s mission is to produce graduates capable of developing high-quality software
                 solutions, working effectively within demanding professional environments, and providing
                 technical expertise to industry and the community at large. Through interactive academic
                 engagement and an active Training and Placement Cell, students are supported in developing
@@ -224,7 +205,7 @@ export default function About() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-ulm-purple hover:underline"
                 >
-                  <span>University of Lakki Marwat — Department of CS & IT</span>
+                  <span>University of Lakki Marwat — Institute of Computing & Information Technology</span>
                   <ExternalLink className="h-3.5 w-3.5" aria-hidden />
                 </a>
               </div>
@@ -234,20 +215,20 @@ export default function About() {
             <div className="w-full lg:max-w-xs shrink-0 rounded-xl border border-ulm-lavender bg-ulm-lavender/30 p-5 space-y-4">
               <div className="border-b border-ulm-lavender pb-3">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
-                  Department Leadership
+                  Institute Leadership
                 </span>
                 <h3 className="mt-1 text-base font-bold text-ulm-dark">
                   Dr. Muhammad Bilal Qureshi
                 </h3>
                 <p className="text-xs font-semibold text-ulm-purple">
-                  Director of Computer Science & IT
+                  Director, Institute of Computing & Information Technology
                 </p>
                 <p className="text-[11px] text-gray-500 mt-0.5">
                   University of Lakki Marwat
                 </p>
               </div>
 
-              <div className="space-y-2 text-xs">
+              <div className="space-y-2.5 text-xs">
                 <div className="flex items-center gap-2 text-gray-600">
                   <Mail className="h-4 w-4 shrink-0 text-ulm-purple" aria-hidden />
                   <a
@@ -258,90 +239,101 @@ export default function About() {
                   </a>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
+                  <Phone className="h-4 w-4 shrink-0 text-ulm-purple" aria-hidden />
+                  <a
+                    href="tel:03018753789"
+                    className="font-medium text-ulm-purple hover:underline"
+                  >
+                    0301-8753789
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
                   <Briefcase className="h-4 w-4 shrink-0 text-ulm-purple" aria-hidden />
                   <span>Training & Placement Cell</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Compass className="h-4 w-4 shrink-0 text-ulm-purple" aria-hidden />
-                  <span>Quality Academic Excellence</span>
+                  <span>Academic Excellence & Innovation</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 3: Team Section — Blood Bank Project Reference */}
-        <section aria-labelledby="team-heading">
-          <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ulm-purple">
-                <Users className="h-3.5 w-3.5" aria-hidden />
-                Project Contributors
-              </span>
-              <h2
-                id="team-heading"
-                className="mt-1 text-2xl font-bold tracking-tight text-ulm-dark sm:text-3xl"
-              >
-                CodeMind Team
-              </h2>
-              <p className="mt-1 text-xs sm:text-sm text-gray-600">
-                The contributors and academic leadership behind student platform initiatives.
-              </p>
-            </div>
-
-            {/* Blood Bank Project Reference External Attribution */}
-            <a
-              href="https://blood-bank-pi-bay.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-ulm-purple hover:underline shrink-0"
+        {/* Section 3: Developers Section */}
+        <section aria-labelledby="developers-heading">
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ulm-purple">
+              <UserCheck className="h-3.5 w-3.5" aria-hidden />
+              Development Team
+            </span>
+            <h2
+              id="developers-heading"
+              className="mt-1 text-2xl font-bold tracking-tight text-ulm-dark sm:text-3xl"
             >
-              <span>Blood Bank Project Reference</span>
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-            </a>
+              Platform Developers
+            </h2>
+            <p className="mt-1 text-xs sm:text-sm text-gray-600">
+              The student engineers and developers behind the architecture, implementation, and maintenance of TestPrepHub.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM_MEMBERS.map((member) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {DEVELOPERS.map((dev) => (
               <div
-                key={member.name}
-                className={`rounded-xl border p-4 transition-all duration-150 ${
-                  member.isLead
-                    ? 'border-ulm-purple/30 bg-ulm-lavender/40 shadow-xs'
-                    : 'border-gray-200 bg-white shadow-2xs hover:border-ulm-lavender hover:bg-ulm-lavender/10'
-                }`}
+                key={dev.name}
+                className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-xs hover:border-ulm-purple/40 hover:shadow-md transition-all duration-200"
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-bold text-sm ${
-                      member.isLead
-                        ? 'bg-ulm-purple text-white shadow-xs'
-                        : 'bg-ulm-lavender text-ulm-purple'
-                    }`}
-                    aria-hidden
-                  >
-                    {member.isLead ? (
-                      <Award className="h-5 w-5 text-ulm-gold" />
-                    ) : (
-                      member.name.split(' ').map((n) => n[0]).slice(0, 2).join('')
-                    )}
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ulm-lavender text-ulm-purple font-bold text-base shadow-xs">
+                        {dev.avatarText}
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-ulm-dark">{dev.name}</h3>
+                        <span className="inline-block rounded-full bg-ulm-purple/10 px-2.5 py-0.5 text-xs font-semibold text-ulm-purple">
+                          {dev.semester}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="min-w-0 flex-1">
-                    <h3 className="truncate text-sm font-bold text-ulm-dark">
-                      {member.name}
-                    </h3>
-                    <p
-                      className={`text-xs font-semibold ${
-                        member.isLead ? 'text-ulm-purple' : 'text-gray-700'
-                      }`}
+                  <p className="mt-4 text-xs font-semibold text-gray-700">
+                    {dev.role}
+                  </p>
+
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-gray-600">
+                    {dev.description}
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap gap-2.5">
+                  {dev.portfolio && (
+                    <a
+                      href={dev.portfolio}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-ulm-purple px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-ulm-purple-dark transition"
                     >
-                      {member.role}
-                    </p>
-                    <p className="truncate text-[11px] text-gray-500">
-                      {member.qualification}
-                    </p>
-                  </div>
+                      <Globe className="h-3.5 w-3.5" aria-hidden />
+                      <span>Portfolio</span>
+                      <ExternalLink className="h-3 w-3 opacity-80" />
+                    </a>
+                  )}
+
+                  {dev.linkedin && (
+                    <a
+                      href={dev.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-blue-600/30 bg-blue-50/70 px-3.5 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition"
+                    >
+                      <LinkedInIcon className="h-3.5 w-3.5" />
+                      <span>LinkedIn Profile</span>
+                      <ExternalLink className="h-3 w-3 opacity-80" />
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

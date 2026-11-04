@@ -94,11 +94,10 @@ export default function PracticeSetup() {
               setSettings({ competencyId: 'all', questionCount: settings.questionCount < 20 ? 20 : settings.questionCount })
               setError('')
             }}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${
-              isAllSubjects
+            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${isAllSubjects
                 ? 'bg-ulm-purple text-white shadow-xs'
                 : 'text-gray-600 hover:text-ulm-purple hover:bg-ulm-lavender/50'
-            }`}
+              }`}
           >
             <Award className="h-4 w-4 shrink-0" />
             <span>All-Subjects Mock Test</span>
@@ -109,11 +108,10 @@ export default function PracticeSetup() {
               if (isAllSubjects) setSettings({ competencyId: 'databases' })
               setError('')
             }}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${
-              !isAllSubjects
+            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 px-3 text-xs sm:text-sm font-semibold transition ${!isAllSubjects
                 ? 'bg-ulm-purple text-white shadow-xs'
                 : 'text-gray-600 hover:text-ulm-purple hover:bg-ulm-lavender/50'
-            }`}
+              }`}
           >
             <Sparkles className="h-4 w-4 shrink-0" />
             <span>Specific Subject</span>
@@ -142,13 +140,13 @@ export default function PracticeSetup() {
             >
               <option value="">Select subject or mode</option>
 
-              <optgroup label="🌟 Grand Mock Exam">
+              <optgroup label="Grand Mock Exam">
                 <option value="all">
-                  🔥 All 10 Subjects Combined (Full Mock Test)
+                  All 10 Subjects Combined (Full Mock Test)
                 </option>
               </optgroup>
 
-              <optgroup label="📚 Individual Subjects">
+              <optgroup label="Individual Subjects">
                 {competencies.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name} ({c.weightage}%)
@@ -177,11 +175,10 @@ export default function PracticeSetup() {
                   key={count}
                   type="button"
                   onClick={() => handleQuestionCountChange(count)}
-                  className={`rounded-lg border px-3 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold transition ${
-                    settings.questionCount === count
+                  className={`rounded-lg border px-3 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold transition ${settings.questionCount === count
                       ? 'border-ulm-purple bg-ulm-purple text-white shadow-xs'
                       : 'border-gray-300 bg-white text-ulm-dark hover:border-ulm-purple hover:bg-ulm-lavender'
-                  }`}
+                    }`}
                 >
                   {count} Qs
                 </button>

@@ -8,12 +8,13 @@ const navItems = [
   { to: '/practice/setup?competency=all', label: 'Full Mock Test', isSpecial: true },
   { to: '/practice/setup', label: 'Practice' },
   { to: '/quiz/setup', label: 'AI Quiz' },
-  { to: '/about', label: 'About' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/about', label: 'About Us' },
 ]
 
 function linkClass({ isActive }) {
   return [
-    'rounded-md px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-medium transition-colors',
+    'rounded-md px-2 lg:px-2.5 py-1.5 lg:py-2 text-xs lg:text-sm font-medium transition-colors whitespace-nowrap',
     isActive
       ? 'bg-ulm-purple text-white shadow-xs'
       : 'text-ulm-dark hover:bg-ulm-lavender hover:text-ulm-purple',
@@ -62,11 +63,10 @@ export default function Header() {
               to={item.to}
               className={({ isActive }) =>
                 item.isSpecial
-                  ? `inline-flex items-center gap-1.5 rounded-lg px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition ${
-                      isActive
-                        ? 'bg-ulm-purple text-white shadow-xs'
-                        : 'border border-ulm-purple/30 bg-ulm-lavender/40 text-ulm-purple hover:bg-ulm-purple hover:text-white'
-                    }`
+                  ? `inline-flex items-center gap-1.5 rounded-lg px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition ${isActive
+                    ? 'bg-ulm-purple text-white shadow-xs'
+                    : 'border border-ulm-purple/30 bg-ulm-lavender/40 text-ulm-purple hover:bg-ulm-purple hover:text-white'
+                  }`
                   : linkClass({ isActive })
               }
               end={item.to === '/'}
@@ -100,17 +100,16 @@ export default function Header() {
                   to={item.to}
                   className={({ isActive }) =>
                     item.isSpecial
-                      ? `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold ${
-                          isActive
-                            ? 'bg-ulm-purple text-white'
-                            : 'bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-lavender'
-                        }`
+                      ? `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive
+                        ? 'bg-ulm-purple text-white'
+                        : 'bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-lavender'
+                      }`
                       : [
-                          'flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                          isActive
-                            ? 'bg-ulm-purple text-white'
-                            : 'text-ulm-dark hover:bg-ulm-lavender hover:text-ulm-purple',
-                        ].join(' ')
+                        'flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                        isActive
+                          ? 'bg-ulm-purple text-white'
+                          : 'text-ulm-dark hover:bg-ulm-lavender hover:text-ulm-purple',
+                      ].join(' ')
                   }
                   end={item.to === '/'}
                   onClick={() => setOpen(false)}
