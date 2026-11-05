@@ -62,6 +62,39 @@ const TEAM_MEMBERS = [
   },
 ]
 
+const ANDROID_TEAM_MEMBERS = [
+  {
+    name: 'Dr. Bilal Qureshi',
+    role: 'Director',
+    qualification: 'Faculty Leadership',
+    isLead: true,
+  },
+  {
+    name: 'Mr. Inam Ullah Khan',
+    role: 'Mentor',
+    qualification: 'Academic Guidance',
+    isLead: true,
+  },
+  {
+    name: 'Ansa Bibi',
+    role: 'Team Member',
+    qualification: 'BSCS, 5th Semester',
+    isLead: false,
+  },
+  {
+    name: 'Areeba Hijab',
+    role: 'Team Member',
+    qualification: 'BSCS, 5th Semester',
+    isLead: false,
+  },
+  {
+    name: 'Asma Akram',
+    role: 'Team Member',
+    qualification: 'BSCS, 5th Semester',
+    isLead: false,
+  },
+]
+
 export default function Projects() {
   return (
     <>
@@ -248,7 +281,7 @@ export default function Projects() {
           </div>
         </section>
 
-        {/* CodeMind Team Section */}
+        {/* CodeMinds Team Section */}
         <section aria-labelledby="team-heading" className="rounded-2xl border border-ulm-lavender bg-white p-6 sm:p-8 shadow-sm">
           <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
@@ -260,7 +293,7 @@ export default function Projects() {
                 id="team-heading"
                 className="mt-1 text-2xl font-bold tracking-tight text-ulm-dark sm:text-3xl"
               >
-                CodeMind Team
+                CodeMinds Team
               </h2>
               <p className="mt-1 text-xs sm:text-sm text-gray-600">
                 The contributors, developers, and academic leadership behind student platform and community initiatives.
@@ -284,15 +317,15 @@ export default function Projects() {
               <div
                 key={member.name}
                 className={`rounded-xl border p-4 transition-all duration-150 ${member.isLead
-                    ? 'border-ulm-purple/30 bg-ulm-lavender/40 shadow-xs'
-                    : 'border-gray-200 bg-white shadow-2xs hover:border-ulm-lavender hover:bg-ulm-lavender/10'
+                  ? 'border-ulm-purple/30 bg-ulm-lavender/40 shadow-xs'
+                  : 'border-gray-200 bg-white shadow-2xs hover:border-ulm-lavender hover:bg-ulm-lavender/10'
                   }`}
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-bold text-sm ${member.isLead
-                        ? 'bg-ulm-purple text-white shadow-xs'
-                        : 'bg-ulm-lavender text-ulm-purple'
+                      ? 'bg-ulm-purple text-white shadow-xs'
+                      : 'bg-ulm-lavender text-ulm-purple'
                       }`}
                     aria-hidden
                   >
@@ -322,6 +355,71 @@ export default function Projects() {
             ))}
           </div>
         </section>
+
+        {/*  Android Developer Team Section */}
+        <section aria-labelledby="team-heading" className="rounded-2xl border border-ulm-lavender bg-white p-6 sm:p-8 shadow-sm">
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ulm-purple">
+                <Users className="h-3.5 w-3.5" aria-hidden />
+                Built With Purpose
+              </span>
+              <h2
+                id="team-heading"
+                className="mt-1 text-2xl font-bold tracking-tight text-ulm-dark sm:text-3xl"
+              >
+                Android Developer Team
+              </h2>
+              <p className="mt-1 text-xs sm:text-sm text-gray-600">
+                The visionaries, engineers, and educational leaders driving student-centered platforms and community ecosystems.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+            {ANDROID_TEAM_MEMBERS.map((member) => (
+              <div
+                key={member.name}
+                className={`rounded-xl border p-4 transition-all duration-150 ${member.isLead
+                  ? 'border-ulm-purple/30 bg-ulm-lavender/40 shadow-xs'
+                  : 'border-gray-200 bg-white shadow-2xs hover:border-ulm-lavender hover:bg-ulm-lavender/10'
+                  }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-bold text-sm ${member.isLead
+                      ? 'bg-ulm-purple text-white shadow-xs'
+                      : 'bg-ulm-lavender text-ulm-purple'
+                      }`}
+                    aria-hidden
+                  >
+                    {member.isLead ? (
+                      <Award className="h-5 w-5 text-ulm-gold" />
+                    ) : (
+                      member.name.split(' ').map((n) => n[0]).slice(0, 2).join('')
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <h3 className="truncate text-sm font-bold text-ulm-dark">
+                      {member.name}
+                    </h3>
+                    <p
+                      className={`text-xs font-semibold ${member.isLead ? 'text-ulm-purple' : 'text-gray-700'
+                        }`}
+                    >
+                      {member.role}
+                    </p>
+                    <p className="truncate text-[11px] text-gray-500">
+                      {member.qualification}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
     </>
   )
