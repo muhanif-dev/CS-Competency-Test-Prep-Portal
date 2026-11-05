@@ -4,7 +4,8 @@ import { parseQuizJson, validateQuizPayload } from '../utils/quizValidation'
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_MODEL =
-  import.meta.env.VITE_GEMINI_MODEL || 'gemini-3.5-flash-lite'
+  import.meta.env.VITE_GEMINI_MODEL?.trim() || 'gemini-3.5-flash'
+const MAX_GENERATION_ATTEMPTS = 3
 
 function buildPrompt({
   competencyName,
@@ -80,13 +81,22 @@ function mapApiError(error) {
     if (status === 429) {
       return 'Rate limit reached. Please wait a moment and try again.'
     }
+    if (status === 503) {
+      return 'Google Gemini is temporarily overloaded. Please try again in a few moments.'
+    }
+    if (status === 400) {
+      return `Gemini rejected the quiz request: ${message || 'check the configured model and request settings.'}`
+    }
     if (status === 401 || status === 403) {
-      return 'Quiz generation is temporarily unavailable. Please try again later.'
+      return `Gemini rejected the API key or access: ${message || 'check that the key is valid and the Gemini API is enabled for its project.'}`
+    }
+    if (status === 404) {
+      return `Gemini model "${GEMINI_MODEL}" was not found. Set VITE_GEMINI_MODEL to an available Gemini model.`
     }
     if (error.code === 'ERR_NETWORK') {
       return 'Network error. Check your internet connection and try again.'
     }
-    if (message) return message
+    if (message) return `Gemini API error${status ? ` (${status})` : ''}: ${message}`
   }
   return error?.message || 'Failed to generate quiz.'
 }
@@ -131,43 +141,56 @@ export async function generateQuiz({
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`
 
   let response
-  try {
-    response = await axios.post(
-      url,
-      {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 1.1,
-          topP: 0.97,
-          topK: 64,
-          responseMimeType: 'application/json',
+  for (let attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt += 1) {
+    try {
+      response = await axios.post(
+        url,
+        {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json',
+          },
         },
-      },
-      {
-        params: { key: GEMINI_API_KEY },
-        headers: { 'Content-Type': 'application/json' },
-        timeout: 120000,
-      },
-    )
-  } catch (error) {
-    throw new Error(mapApiError(error))
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': GEMINI_API_KEY,
+          },
+          timeout: 120000,
+        },
+      )
+      break
+    } catch (error) {
+      const isTemporaryOverload = error.response?.status === 503 || error.response?.status === 429
+      if (!isTemporaryOverload || attempt === MAX_GENERATION_ATTEMPTS - 1) {
+        throw new Error(mapApiError(error))
+      }
+      const delayMs = 700 * (2 ** attempt) + Math.random() * 300
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
+    }
   }
 
   const candidates = response.data?.candidates
-  const text = candidates?.[0]?.content?.parts?.[0]?.text
+  const candidate = candidates?.[0]
+  const text = candidate?.content?.parts?.map((part) => part.text || '').join('').trim()
 
   if (!text) {
-    throw new Error('Empty response from AI. Please try again.')
+    const reason = candidate?.finishReason || response.data?.promptFeedback?.blockReason
+    throw new Error(
+      reason
+        ? `Gemini did not return quiz text (reason: ${reason}). Try again or adjust the request.`
+        : 'Gemini returned an empty response. Please try again.',
+    )
   }
 
   const parsed = parseQuizJson(text)
   if (!parsed.ok) {
-    throw new Error('Unable to generate a valid quiz. Please try again.')
+    throw new Error(`Gemini returned invalid quiz JSON: ${parsed.error}`)
   }
 
   const validation = validateQuizPayload(parsed.data, numberOfQuestions)
   if (!validation.valid) {
-    throw new Error('Unable to generate a valid quiz. Please try again.')
+    throw new Error(`Gemini returned an invalid quiz: ${validation.error}`)
   }
 
   const questions = validation.questions.map((q, index) => ({

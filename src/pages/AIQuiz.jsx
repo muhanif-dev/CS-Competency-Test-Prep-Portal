@@ -14,6 +14,7 @@ export default function AIQuiz() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const runId = useRef(0)
+  const lastAutoRunKey = useRef(null)
 
   const resolved = getTopicByIds(settings.competencyId, settings.topicId)
 
@@ -75,6 +76,16 @@ export default function AIQuiz() {
   const freshParam = searchParams.get('fresh')
 
   useEffect(() => {
+    const runKey = JSON.stringify({
+      competencyId: settings.competencyId,
+      topicId: settings.topicId,
+      questionCount: settings.questionCount,
+      difficulty: settings.difficulty,
+      generationToken,
+      freshParam,
+    })
+    if (lastAutoRunKey.current === runKey) return
+    lastAutoRunKey.current = runKey
     runGeneration()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- regenerate when settings/token/fresh changes
   }, [runGeneration, generationToken, freshParam])

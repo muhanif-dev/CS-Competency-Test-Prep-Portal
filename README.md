@@ -31,7 +31,7 @@ For Gemini:
 
 `VITE_*` variables are included in the client build by design; restrictions reduce misuse if someone inspects the bundle.
 
-Optional: `VITE_GEMINI_MODEL` (default: `gemini-2.0-flash`).
+Optional: `VITE_GEMINI_MODEL` (default: `gemini-3.5-flash-lite`). If you rotate your key, replace the value of `VITE_GEMINI_API_KEY` in your local `.env` file and restart the Vite dev server. Do not share or commit the key.
 
 ## Scripts
 
