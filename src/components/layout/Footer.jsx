@@ -1,5 +1,15 @@
-import { GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { GraduationCap, ShieldCheck } from "lucide-react";
+import { NavLink } from "react-router-dom";
+
+const footerLinks = [
+  { to: "/live-quiz", label: "Live Quiz", isLive: true },
+  { to: "/practice/setup?competency=all", label: "Full Mock Test", isSpecial: true },
+  { to: "/practice/setup", label: "Practice" },
+  { to: "/quiz/setup", label: "AI Quiz" },
+  { to: "/projects", label: "Projects" },
+  { to: "/about", label: "About Us" },
+  { to: "/admin", label: "Admin", isAdmin: true },
+];
 
 export default function Footer() {
   return (
@@ -20,25 +30,38 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <Link to="/practice/setup?competency=all" className="font-semibold text-ulm-purple hover:underline">
-            Full Mock Test
-          </Link>
-          <Link to="/practice/setup" className="text-ulm-purple hover:underline">
-            Practice
-          </Link>
-          <Link to="/competencies" className="text-ulm-purple hover:underline">
-            Subjects
-          </Link>
-          <Link to="/quiz/setup" className="text-ulm-purple hover:underline">
-            AI Quiz
-          </Link>
-          <Link to="/projects" className="text-ulm-purple hover:underline">
-            Projects
-          </Link>
-          <Link to="/about" className="text-ulm-purple hover:underline">
-            About Us
-          </Link>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+          {footerLinks.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                [
+                  "inline-flex items-center gap-1.5 transition-colors",
+                  isActive
+                    ? "font-bold text-ulm-purple underline decoration-2 underline-offset-4"
+                    : item.isSpecial
+                    ? "font-semibold text-ulm-purple hover:underline"
+                    : item.isAdmin
+                    ? "text-gray-500 hover:text-ulm-purple hover:underline"
+                    : "text-ulm-purple hover:underline",
+                ].join(" ")
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-ulm-purple shrink-0 animate-pulse"
+                      title="Current Active Page"
+                    />
+                  )}
+                  {item.isAdmin && <ShieldCheck className="h-3.5 w-3.5" />}
+                  <span>{item.label}</span>
+                </>
+              )}
+            </NavLink>
+          ))}
         </div>
       </div>
       <div className="border-t border-ulm-lavender/60 bg-white/50 px-4 py-3.5 text-center text-xs text-gray-500">

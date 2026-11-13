@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import questionsRouter from './routes/questions.routes.js'
+import liveQuizRouter from './routes/liveQuiz.routes.js'
+import adminRouter from './routes/admin.routes.js'
 
 
 const allowedOrigins = (process.env.CLIENT_ORIGIN || '')
@@ -29,6 +31,8 @@ app.get('/api/health', (req, res) => {
 })
 
 app.use('/api/questions', questionsRouter)
+app.use('/api/live-quiz', liveQuizRouter)
+app.use('/api/admin', adminRouter)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found.' })

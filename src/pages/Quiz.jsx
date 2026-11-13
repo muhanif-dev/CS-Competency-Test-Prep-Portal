@@ -68,7 +68,7 @@ export default function QuizPage() {
         <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ulm-purple">
           Question {currentIndex + 1} of {total}
         </p>
-        <h2 className="mt-3 text-base sm:text-lg lg:text-xl font-bold leading-relaxed text-ulm-dark break-words">
+        <h2 className="mt-3 whitespace-pre-wrap text-base sm:text-lg lg:text-xl font-bold leading-relaxed text-ulm-dark break-words">
           {question.question}
         </h2>
 

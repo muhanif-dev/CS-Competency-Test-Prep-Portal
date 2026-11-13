@@ -6,7 +6,9 @@
     "scripts": {
       "dev": "nodemon server.js",
       "start": "node server.js",
-      "seed": "node src/seed/seed.js"
+      "seed": "node src/seed/seed.js",
+      "repair:question-prompts": "node src/seed/repairQuestionPrompts.js",
+      "test:question-prompts": "node --test src/seed/questionMarkdown.test.js"
     },
     "dependencies": {
       "cors": "^2.8.5",

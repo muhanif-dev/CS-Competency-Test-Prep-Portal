@@ -1,15 +1,15 @@
-import { Award, Menu, X } from 'lucide-react'
+import { Award, Menu, ShieldCheck, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: 'Home' },
-  { to: '/competencies', label: 'Subjects' },
+  { to: '/live-quiz', label: 'Live Quiz', isLive: true },
   { to: '/practice/setup?competency=all', label: 'Full Mock Test', isSpecial: true },
-  { to: '/practice/setup', label: 'Practice' },
   { to: '/quiz/setup', label: 'AI Quiz' },
   { to: '/projects', label: 'Projects' },
   { to: '/about', label: 'About Us' },
+  { to: '/admin', label: 'Admin', isAdmin: true },
 ]
 
 function linkClass({ isActive }) {
@@ -61,18 +61,51 @@ export default function Header() {
             <NavLink
               key={item.to}
               to={item.to}
-              className={({ isActive }) =>
-                item.isSpecial
-                  ? `inline-flex items-center gap-1.5 rounded-lg px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition ${isActive
-                    ? 'bg-ulm-purple text-white shadow-xs'
-                    : 'border border-ulm-purple/30 bg-ulm-lavender/40 text-ulm-purple hover:bg-ulm-purple hover:text-white'
+              className={({ isActive }) => {
+                if (item.isLive) {
+                  return `inline-flex items-center gap-1.5 rounded-lg px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition ${
+                    isActive
+                      ? 'bg-ulm-purple text-white shadow-xs'
+                      : 'border border-ulm-purple/30 bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-purple hover:text-white'
                   }`
-                  : linkClass({ isActive })
-              }
+                }
+                if (item.isSpecial) {
+                  return `inline-flex items-center gap-1.5 rounded-lg px-2.5 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold transition ${
+                    isActive
+                      ? 'bg-ulm-purple text-white shadow-xs'
+                      : 'border border-ulm-purple/30 bg-ulm-lavender/40 text-ulm-purple hover:bg-ulm-purple hover:text-white'
+                  }`
+                }
+                if (item.isAdmin) {
+                  return `inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium text-gray-500 hover:text-ulm-purple hover:bg-ulm-lavender/50 transition ${
+                    isActive ? 'bg-ulm-lavender text-ulm-purple font-semibold' : ''
+                  }`
+                }
+                return linkClass({ isActive })
+              }}
               end={item.to === '/'}
             >
-              {item.isSpecial && <Award className="h-3.5 w-3.5 lg:h-4 lg:w-4" />}
-              {item.label}
+              {({ isActive }) => (
+                <>
+                  {item.isLive && (
+                    <span className="relative flex h-2 w-2 shrink-0">
+                      <span
+                        className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
+                          isActive ? 'bg-emerald-300' : 'bg-rose-400'
+                        } opacity-75`}
+                      ></span>
+                      <span
+                        className={`relative inline-flex rounded-full h-2 w-2 ${
+                          isActive ? 'bg-emerald-400' : 'bg-rose-600'
+                        }`}
+                      ></span>
+                    </span>
+                  )}
+                  {item.isSpecial && <Award className="h-3.5 w-3.5 lg:h-4 lg:w-4" />}
+                  {item.isAdmin && <ShieldCheck className="h-3.5 w-3.5" />}
+                  {item.label}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -98,24 +131,52 @@ export default function Header() {
               <li key={item.to}>
                 <NavLink
                   to={item.to}
-                  className={({ isActive }) =>
-                    item.isSpecial
-                      ? `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive
-                        ? 'bg-ulm-purple text-white'
-                        : 'bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-lavender'
-                      }`
-                      : [
-                        'flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  className={({ isActive }) => {
+                    if (item.isLive) {
+                      return `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold ${
                         isActive
                           ? 'bg-ulm-purple text-white'
-                          : 'text-ulm-dark hover:bg-ulm-lavender hover:text-ulm-purple',
-                      ].join(' ')
-                  }
+                          : 'bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-lavender'
+                      }`
+                    }
+                    if (item.isSpecial) {
+                      return `flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold ${
+                        isActive
+                          ? 'bg-ulm-purple text-white'
+                          : 'bg-ulm-lavender/50 text-ulm-purple hover:bg-ulm-lavender'
+                      }`
+                    }
+                    return [
+                      'flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                      isActive
+                        ? 'bg-ulm-purple text-white'
+                        : 'text-ulm-dark hover:bg-ulm-lavender hover:text-ulm-purple',
+                    ].join(' ')
+                  }}
                   end={item.to === '/'}
                   onClick={() => setOpen(false)}
                 >
-                  {item.isSpecial && <Award className="h-4 w-4" />}
-                  {item.label}
+                  {({ isActive }) => (
+                    <>
+                      {item.isLive && (
+                        <span className="relative flex h-2 w-2 shrink-0">
+                          <span
+                            className={`animate-ping absolute inline-flex h-full w-full rounded-full ${
+                              isActive ? 'bg-emerald-300' : 'bg-rose-400'
+                            } opacity-75`}
+                          ></span>
+                          <span
+                            className={`relative inline-flex rounded-full h-2 w-2 ${
+                              isActive ? 'bg-emerald-400' : 'bg-rose-600'
+                            }`}
+                          ></span>
+                        </span>
+                      )}
+                      {item.isSpecial && <Award className="h-4 w-4" />}
+                      {item.isAdmin && <ShieldCheck className="h-4 w-4 text-gray-500" />}
+                      {item.label}
+                    </>
+                  )}
                 </NavLink>
               </li>
             ))}

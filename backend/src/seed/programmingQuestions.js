@@ -21436,6 +21436,33 @@ const programmingQuestions = [
     "correctAnswer": "B",
     "explanation": "Since 12 is greater than 9, the function returns 1",
     "difficulty": "Medium"
+  },
+  {
+    "competencyId": "programming-cpp-java-python",
+    "competencyName": "Programming (C++/Java/Python)",
+    "topic": "Object-Oriented Programming (OOP) - Python",
+    "question": "What is the output?\nclass Animal:\n    def sound(self):\n        print(\"Sound\")\n\nclass Dog(Animal):\n    def sound(self):\n        print(\"Bark\")\n\nd = Dog()\nd.sound()",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sound"
+      },
+      {
+        "id": "B",
+        "text": "Animal"
+      },
+      {
+        "id": "C",
+        "text": "Bark"
+      },
+      {
+        "id": "D",
+        "text": "Error"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Dog overrides Animal.sound(), so d.sound() calls the Dog method and prints Bark.",
+    "difficulty": "Medium"
   }
 ];
 export default programmingQuestions;

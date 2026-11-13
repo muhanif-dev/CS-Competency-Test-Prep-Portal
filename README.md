@@ -1,46 +1,78 @@
 # CS Competency Test Preparation Portal
 
-Frontend-only React application for practicing Computer Science competency test questions with **topic-scoped AI-generated quizzes**.
+Comprehensive Computer Science competency test preparation portal featuring topic-scoped practice, Full Mock Exams, AI quizzes, and a **Live Timed Quiz Examination System** with server-verified scoring and centralized administration.
 
 ## Stack
 
-- React + Vite
-- Tailwind CSS
-- React Router
-- Axios
-- Lucide React
+- **Frontend**: React 19, Vite, Tailwind CSS, React Router, Axios, Lucide React
+- **Backend**: Express, MongoDB & Mongoose
+- **AI Engine**: Google Gemini API
 
-## Setup
+## Getting Started
+
+### 1. Frontend Setup
 
 ```bash
 npm install
-cp .env.example .env
-# Add your Google Gemini API key to .env
 npm run dev
 ```
 
-## AI API (browser-safe configuration)
+Frontend will run at `http://localhost:5173`.
 
-This app calls **Google Gemini** directly from the browser. OpenAI/Anthropic **secret** keys must not be embedded in client bundles.
+### 2. Backend Setup
 
-For Gemini:
+```bash
+cd backend
+npm install
+# Set your environment variables in backend/.env (refer to backend/.env.example)
+npm run dev
+```
 
-1. Create an API key at [Google AI Studio](https://aistudio.google.com/apikey).
-2. Set `VITE_GEMINI_API_KEY` in `.env` (never commit `.env`).
-3. For production, restrict the key in [Google Cloud Console](https://console.cloud.google.com/): limit APIs and add **HTTP referrer** restrictions.
+Backend will run at `http://localhost:5000`.
 
-`VITE_*` variables are included in the client build by design; restrictions reduce misuse if someone inspects the bundle.
+### 3. Backend Environment Variables (`backend/.env`)
 
-Optional: `VITE_GEMINI_MODEL` (default: `gemini-3.5-flash-lite`). If you rotate your key, replace the value of `VITE_GEMINI_API_KEY` in your local `.env` file and restart the Vite dev server. Do not share or commit the key.
+Configure the following variables in `backend/.env`:
 
-## Scripts
+| Variable | Description | Default |
+|---|---|---|
+| `PORT` | Backend server port | `5000` |
+| `MONGODB_URI` | MongoDB connection URI string | *Required* |
+| `CLIENT_ORIGIN` | Allowed client origin(s) for CORS | `http://localhost:5173` |
+| `ADMIN_USERNAME` | Username for admin portal authentication | *Required* |
+| `ADMIN_PASSWORD` | Password for admin authentication | *Required* |
+| `ADMIN_JWT_SECRET` | Random secret for signing HMAC admin tokens (at least 32 characters) | *Required* |
 
-- `npm run dev` — development server
-- `npm run build` — production build
-- `npm run preview` — preview production build
+Set all admin credentials in `backend/.env` and use a unique password and random JWT secret. Do not commit `.env` or use example values as production credentials.
 
-## Flow
+### Repairing Question Prompts
 
-Home → Competency & Topic → Quiz Setup → Generate AI Quiz → Validated JSON → Quiz → Results → Generate New Quiz
+After MongoDB access is available, repair stored question prompts from the complete Markdown source and add missing, uniquely matched seed questions without replacing answer keys or deleting question records:
 
-Competency and topic data live in `src/data/competencies.js` and are the only selectable syllabus sources.
+```bash
+cd backend
+npm run repair:question-prompts
+```
+
+Only uniquely matched prompts are updated or inserted; ambiguous matches are skipped and reported. Live quizzes also restore complete prompts from this Markdown source in the bundled question pool.
+
+## Key Features
+
+1. **Full Mock Test**:
+   - Comprehensive exam simulation sampling balanced questions across all 10 computer science subjects.
+   - Accessible via the "Full Mock Test" navigation entry (`/practice/setup?competency=all`).
+
+2. **Live Quiz Flow (`/live-quiz`)**:
+   - Student enters candidate name and selects academic semester (Semester 1 to 8).
+   - Selection of 20, 50, or 100 questions.
+   - Strict 30-second countdown timer per question.
+   - Race-condition guard preventing double submissions between clicks and timer timeouts.
+   - Server-side scoring: correct answers are strictly stored on the server and never sent to the client browser.
+   - End-of-quiz message: **"Result will be announced."**
+   - Centralized result announcement: once announced by admin, the student status dynamically updates to **"Result announced"** with the full verified score report.
+
+3. **Admin Examination Portal (`/admin`)**:
+   - Protected with HMAC token authentication and constant-time credential verification.
+   - Overview table of all live test attempts showing candidate name, semester, total questions, attempted, unanswered, correct, and incorrect counts.
+   - Real-time announcement toggle for individual attempts or in bulk ("Announce All" / "Unannounce All").
+   - Detailed question-by-question audit modal for authorized academic review.
