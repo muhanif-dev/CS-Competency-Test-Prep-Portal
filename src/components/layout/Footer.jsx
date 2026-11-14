@@ -9,6 +9,7 @@ const footerLinks = [
   { to: "/leaderboard", label: "Leaderboard", isLeaderboard: true },
   { to: "/projects", label: "Projects" },
   { to: "/about", label: "About Us" },
+  { to: "/admin", label: "Admin" },
 ];
 
 export default function Footer() {
