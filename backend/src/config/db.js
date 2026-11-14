@@ -21,8 +21,7 @@ export default async function connectDB() {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(uri, {
-        bufferCommands: false,
-        serverSelectionTimeoutMS: 4000, // 4-second timeout to avoid hanging when IP is not whitelisted
+        serverSelectionTimeoutMS: 20000,
       })
       .then((mongooseInstance) => {
         console.log('✅ MongoDB Atlas connected successfully!')

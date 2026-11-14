@@ -60,6 +60,12 @@ const liveQuestionItemSchema = new mongoose.Schema(
 
 const liveQuizAttemptSchema = new mongoose.Schema(
   {
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Student',
+      default: null,
+      index: true,
+    },
     studentName: {
       type: String,
       required: true,

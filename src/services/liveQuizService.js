@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getStoredToken } from './studentService'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
@@ -21,6 +22,7 @@ function formatError(error) {
 
 export async function startLiveQuiz({ name, semester, questionCount, competencyId = 'all' }) {
   try {
+    const token = getStoredToken()
     const response = await axios.post(
       `${API_BASE_URL}/api/live-quiz/start`,
       {
@@ -29,7 +31,10 @@ export async function startLiveQuiz({ name, semester, questionCount, competencyI
         questionCount,
         competencyId,
       },
-      { timeout: 30000 },
+      {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        timeout: 30000,
+      },
     )
     return response.data
   } catch (error) {

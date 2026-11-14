@@ -158,3 +158,31 @@ export async function deleteAllAdminAttempts() {
     throw new Error(formatError(error))
   }
 }
+
+export async function getAdminStudents(search = '') {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/admin/students`, {
+      params: search ? { search } : {},
+      headers: getAuthHeaders(),
+      timeout: 20000,
+    })
+    return response.data.students || []
+  } catch (error) {
+    throw new Error(formatError(error))
+  }
+}
+
+export async function deleteAdminStudent(studentId) {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/api/admin/students/${studentId}`,
+      {
+        headers: getAuthHeaders(),
+        timeout: 15000,
+      },
+    )
+    return response.data
+  } catch (error) {
+    throw new Error(formatError(error))
+  }
+}

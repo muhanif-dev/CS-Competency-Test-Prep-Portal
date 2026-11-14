@@ -1,8 +1,9 @@
 import { Award, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import { competencies, getCompetencyById } from '../data/competencies'
+import { useAuth } from '../context/AuthContext'
 import { useQuiz } from '../context/QuizContext'
 
 const QUESTION_COUNTS = [10, 20, 50, 100]
@@ -10,6 +11,8 @@ const QUESTION_COUNTS = [10, 20, 50, 100]
 export default function PracticeSetup() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { isAuthenticated } = useAuth()
 
   const { settings, setSettings, resetQuizSession } = useQuiz()
 
@@ -66,6 +69,16 @@ export default function PracticeSetup() {
       questionCount: settings.questionCount,
       quizMode: 'db',
     })
+
+    if (!isAuthenticated) {
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please log in or sign up to generate your quiz.',
+        },
+      })
+      return
+    }
 
     resetQuizSession()
 

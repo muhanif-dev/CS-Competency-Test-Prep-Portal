@@ -3,6 +3,8 @@ import cors from 'cors'
 import questionsRouter from './routes/questions.routes.js'
 import liveQuizRouter from './routes/liveQuiz.routes.js'
 import adminRouter from './routes/admin.routes.js'
+import authRouter from './routes/auth.routes.js'
+import studentRouter from './routes/student.routes.js'
 
 
 const allowedOrigins = (process.env.CLIENT_ORIGIN || '')
@@ -33,6 +35,8 @@ app.get('/api/health', (req, res) => {
 app.use('/api/questions', questionsRouter)
 app.use('/api/live-quiz', liveQuizRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/student', studentRouter)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found.' })

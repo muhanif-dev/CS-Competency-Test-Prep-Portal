@@ -5,11 +5,12 @@ import {
   completeLiveQuiz,
   getLiveQuizStatus,
 } from '../controllers/liveQuiz.controller.js'
+import { requireStudent } from '../middleware/requireStudent.js'
 
 const router = express.Router()
 
-// POST /api/live-quiz/start - Student starts a live quiz session
-router.post('/start', startLiveQuiz)
+// POST /api/live-quiz/start - Student starts a live quiz session (requires authentication)
+router.post('/start', requireStudent, startLiveQuiz)
 
 // POST /api/live-quiz/:attemptId/answer - Submit an answer or timeout for a question
 router.post('/:attemptId/answer', submitLiveAnswer)

@@ -8,6 +8,8 @@ import {
   bulkToggleAnnounce,
   deleteAdminAttempt,
   deleteAllAdminAttempts,
+  getAdminStudents,
+  deleteAdminStudent,
 } from '../controllers/admin.controller.js'
 import { requireAdmin } from '../utils/adminAuth.js'
 
@@ -24,5 +26,9 @@ router.patch('/live-quiz/attempts/:attemptId/announce', requireAdmin, toggleAnno
 router.post('/live-quiz/announce-all', requireAdmin, bulkToggleAnnounce)
 router.delete('/live-quiz/attempts', requireAdmin, deleteAllAdminAttempts)
 router.delete('/live-quiz/attempts/:attemptId', requireAdmin, deleteAdminAttempt)
+
+// Leaderboard Students administration
+router.get('/students', requireAdmin, getAdminStudents)
+router.delete('/students/:studentId', requireAdmin, deleteAdminStudent)
 
 export default router

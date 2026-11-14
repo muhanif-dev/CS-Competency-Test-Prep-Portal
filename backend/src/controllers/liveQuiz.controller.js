@@ -5,6 +5,7 @@ import {
   findAttemptById,
   saveAttempt,
 } from '../utils/attemptStore.js'
+import { recordLiveQuizScore } from './student.controller.js'
 
 const ALLOWED_QUESTION_COUNTS = [20, 50, 100]
 
@@ -120,6 +121,7 @@ export async function startLiveQuiz(req, res) {
     const sessionToken = crypto.randomBytes(32).toString('hex')
 
     const attemptData = {
+      studentId: req.studentId || null,
       studentName: trimmedName,
       semester: formattedSemester,
       questionCount,
@@ -366,6 +368,10 @@ export async function getLiveQuizStatus(req, res) {
         ...baseData,
         message: 'Result will be announced.',
       })
+    }
+
+    if (attempt.studentId) {
+      await recordLiveQuizScore(attempt)
     }
 
     // Once announced by Admin, securely return score aggregate counts

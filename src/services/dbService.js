@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getCompetencyById } from '../data/competencies'
+import { getStoredToken } from './studentService'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
@@ -25,7 +26,9 @@ export async function generateQuizFromDB({ competencyId, numberOfQuestions, diff
 
   let response
   try {
+    const token = getStoredToken()
     response = await axios.get(`${API_BASE_URL}/api/questions/quiz`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
       params: {
         competencyId,
         count: numberOfQuestions,

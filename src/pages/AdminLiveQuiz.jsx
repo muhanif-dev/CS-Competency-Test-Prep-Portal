@@ -1,5 +1,6 @@
 import {
   AlertCircle,
+  BarChart3,
   CheckCircle2,
   Clock,
   Eye,
@@ -12,9 +13,11 @@ import {
   ShieldCheck,
   Trash2,
   User,
+  Users,
   X,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import AdminStudentsPanel from '../components/admin/AdminStudentsPanel'
 import PageHero from '../components/PageHero'
 import { getTopCompletedAttempts } from '../utils/adminLeaderboard'
 import {
@@ -44,11 +47,18 @@ export default function AdminLiveQuiz() {
   const [adminUser, setAdminUser] = useState('')
   const [checkingAuth, setCheckingAuth] = useState(true)
 
+  // Navigation Tabs: 'students' | 'attempts'
+  const [activeTab, setActiveTab] = useState('students')
+
   // Login form state
   const [usernameInput, setUsernameInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
   const [loginError, setLoginError] = useState('')
   const [isLoggingIn, setIsLoggingIn] = useState(false)
+
+  // Students panel coordination
+  const [studentCount, setStudentCount] = useState(0)
+  const [studentsRefreshKey, setStudentsRefreshKey] = useState(0)
 
   // Attempts dashboard state
   const [attempts, setAttempts] = useState([])
@@ -57,7 +67,7 @@ export default function AdminLiveQuiz() {
   const [dashboardError, setDashboardError] = useState('')
   const [actionSuccess, setActionSuccess] = useState('')
 
-  // Search & Filters
+  // Search & Filters for Attempts
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all') // 'all' | 'completed' | 'in-progress' | 'announced' | 'unannounced'
   const [semesterFilter, setSemesterFilter] = useState('all')
@@ -106,10 +116,14 @@ export default function AdminLiveQuiz() {
     }
   }
 
+  const handleRefreshActiveTab = () => {
+    fetchAttempts()
+    setStudentsRefreshKey((key) => key + 1)
+  }
+
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchAttempts()
-    }
+    if (!isAuthenticated) return
+    fetchAttempts()
   }, [isAuthenticated])
 
   // Handle Login
@@ -137,6 +151,18 @@ export default function AdminLiveQuiz() {
     setIsAuthenticated(false)
     setAttempts([])
     setSelectedAttempt(null)
+    setStudentCount(0)
+  }
+
+  const showSuccess = (message) => {
+    setDashboardError('')
+    setActionSuccess(message)
+    setTimeout(() => setActionSuccess(''), 5000)
+  }
+
+  const showError = (message) => {
+    setActionSuccess('')
+    setDashboardError(message)
   }
 
   // Toggle Single Attempt Announcement
@@ -457,7 +483,7 @@ export default function AdminLiveQuiz() {
               <div className="flex items-center gap-2.5 self-start sm:self-auto">
                 <button
                   type="button"
-                  onClick={fetchAttempts}
+                  onClick={handleRefreshActiveTab}
                   disabled={loadingAttempts}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs font-semibold text-ulm-dark hover:bg-gray-50 transition cursor-pointer"
                 >
@@ -476,6 +502,87 @@ export default function AdminLiveQuiz() {
               </div>
             </div>
 
+            {/* Success / Error banners (shared by both tabs) */}
+            {actionSuccess && (
+              <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 p-4 text-xs sm:text-sm font-semibold text-green-800">
+                <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />
+                <span>{actionSuccess}</span>
+              </div>
+            )}
+            {dashboardError && (
+              <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-xs sm:text-sm text-red-800">
+                <AlertCircle className="h-5 w-5 shrink-0 text-red-600" />
+                <span>{dashboardError}</span>
+              </div>
+            )}
+
+            {/* Section tabs */}
+            <div
+              role="tablist"
+              aria-label="Admin sections"
+              className="flex flex-col gap-2 rounded-2xl border border-ulm-lavender bg-white p-2 shadow-xs sm:flex-row"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'students'}
+                onClick={() => setActiveTab('students')}
+                className={`inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+                  activeTab === 'students'
+                    ? 'bg-ulm-purple text-white shadow-xs'
+                    : 'text-ulm-dark hover:bg-ulm-lavender/60'
+                }`}
+              >
+                <Users className="h-4 w-4" />
+                <span>Leaderboard Students</span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+                    activeTab === 'students'
+                      ? 'bg-white/25 text-white'
+                      : 'bg-ulm-lavender text-ulm-purple'
+                  }`}
+                >
+                  {studentCount}
+                </span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'attempts'}
+                onClick={() => setActiveTab('attempts')}
+                className={`inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+                  activeTab === 'attempts'
+                    ? 'bg-ulm-purple text-white shadow-xs'
+                    : 'text-ulm-dark hover:bg-ulm-lavender/60'
+                }`}
+              >
+                <BarChart3 className="h-4 w-4" />
+                <span>Live Quiz Attempts</span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+                    activeTab === 'attempts'
+                      ? 'bg-white/25 text-white'
+                      : 'bg-ulm-lavender text-ulm-purple'
+                  }`}
+                >
+                  {attempts.length}
+                </span>
+              </button>
+            </div>
+
+            {/* STUDENTS TAB: leaderboard students with search & removal */}
+            {activeTab === 'students' && (
+              <AdminStudentsPanel
+                refreshKey={studentsRefreshKey}
+                onNotify={showSuccess}
+                onError={showError}
+                onCountChange={setStudentCount}
+              />
+            )}
+
+            {/* ATTEMPTS TAB: live quiz result administration */}
+            {activeTab === 'attempts' && (
+              <>
             {/* Metrics Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
               <div className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5 shadow-xs">
@@ -503,20 +610,6 @@ export default function AdminLiveQuiz() {
                 </p>
               </div>
             </div>
-
-            {/* Success / Error Alerts */}
-            {actionSuccess && (
-              <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 p-4 text-xs sm:text-sm font-semibold text-green-800">
-                <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />
-                <span>{actionSuccess}</span>
-              </div>
-            )}
-            {dashboardError && (
-              <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-xs sm:text-sm text-red-800">
-                <AlertCircle className="h-5 w-5 shrink-0 text-red-600" />
-                <span>{dashboardError}</span>
-              </div>
-            )}
 
             {/* Filter and Bulk Actions Bar */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-2xl border border-ulm-lavender bg-white p-4 shadow-xs">
@@ -891,6 +984,8 @@ export default function AdminLiveQuiz() {
                 </table>
               </div>
             </div>
+              </>
+            )}
           </div>
         )}
 

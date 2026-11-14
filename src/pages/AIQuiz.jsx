@@ -1,15 +1,18 @@
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import PageHero from '../components/PageHero'
 import { getTopicByIds } from '../data/competencies'
+import { useAuth } from '../context/AuthContext'
 import { useQuiz } from '../context/QuizContext'
 import { generateQuiz, isAiConfigured } from '../services/aiService'
 
 export default function AIQuiz() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams] = useSearchParams()
+  const { isAuthenticated, loading: authLoading } = useAuth()
   const { settings, startNewQuiz, generationToken, getQuestionHistory, recordQuestionHistory } = useQuiz()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -76,6 +79,18 @@ export default function AIQuiz() {
   const freshParam = searchParams.get('fresh')
 
   useEffect(() => {
+    if (authLoading) return
+    if (!isAuthenticated) {
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please log in to generate your AI quiz.',
+        },
+        replace: true,
+      })
+      return
+    }
+
     const runKey = JSON.stringify({
       competencyId: settings.competencyId,
       topicId: settings.topicId,
@@ -88,7 +103,7 @@ export default function AIQuiz() {
     lastAutoRunKey.current = runKey
     runGeneration()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- regenerate when settings/token/fresh changes
-  }, [runGeneration, generationToken, freshParam])
+  }, [runGeneration, generationToken, freshParam, isAuthenticated, authLoading])
 
   return (
     <>

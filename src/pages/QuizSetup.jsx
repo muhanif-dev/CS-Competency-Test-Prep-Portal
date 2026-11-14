@@ -1,8 +1,9 @@
 import { Play } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import { competencies, getCompetencyById, getTopicByIds } from '../data/competencies'
+import { useAuth } from '../context/AuthContext'
 import { useQuiz } from '../context/QuizContext'
 import { isAiConfigured } from '../services/aiService'
 
@@ -12,6 +13,8 @@ const COUNTS = [10, 20]
 export default function QuizSetup() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { isAuthenticated } = useAuth()
   const { settings, setSettings, resetQuizSession } = useQuiz()
   const [error, setError] = useState('')
 
@@ -65,6 +68,16 @@ export default function QuizSetup() {
       setError(
         'Quiz generation is currently unavailable. Please try again later.',
       )
+      return
+    }
+
+    if (!isAuthenticated) {
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please log in or sign up to generate your AI quiz.',
+        },
+      })
       return
     }
 

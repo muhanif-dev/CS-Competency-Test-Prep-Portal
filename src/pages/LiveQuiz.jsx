@@ -11,15 +11,17 @@ import {
   User,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import ProgressBar from '../components/ProgressBar'
+import { useAuth } from '../context/AuthContext'
 import {
   completeLiveQuiz,
   getLiveQuizStatus,
   startLiveQuiz,
   submitLiveAnswer,
 } from '../services/liveQuizService'
+import { submitQuizAttempt } from '../services/studentService'
 
 const SEMESTER_OPTIONS = [
   'Semester 1',
@@ -52,11 +54,21 @@ const QUESTION_TIME_LIMIT = 30 // 30 seconds per question
 const SESSION_STORAGE_KEY = 'cs_prep_live_quiz_session'
 
 export default function LiveQuiz() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { student, isAuthenticated, refreshStudent } = useAuth()
+
   // Session / flow state: 'setup' | 'active' | 'completed'
   const [stage, setStage] = useState('setup')
 
   // Setup form inputs
-  const [studentName, setStudentName] = useState('')
+  const [studentName, setStudentName] = useState(student?.fullName || '')
+
+  useEffect(() => {
+    if (student?.fullName && !studentName) {
+      setStudentName(student.fullName)
+    }
+  }, [student, studentName])
   const [semester, setSemester] = useState('Semester 5')
   const [selectedSubject, setSelectedSubject] = useState('all')
   const [questionCount, setQuestionCount] = useState(20)
@@ -94,6 +106,11 @@ export default function LiveQuiz() {
       setIsAnnounced(Boolean(data.isAnnounced))
       if (data.isAnnounced && data.score) {
         setAnnouncedScore(data.score)
+        if (isAuthenticated) {
+          submitQuizAttempt({ quizType: 'live', liveAttemptId: targetId })
+            .then(() => refreshStudent())
+            .catch(() => {})
+        }
       }
       if (data.studentName) {
         setCompletedMeta({
@@ -141,6 +158,16 @@ export default function LiveQuiz() {
   const handleStartQuiz = async (e) => {
     e.preventDefault()
     setSetupError('')
+
+    if (!isAuthenticated) {
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please log in or sign up to participate in the Live Quiz.',
+        },
+      })
+      return
+    }
 
     const trimmed = studentName.trim()
     if (!trimmed || trimmed.length < 2) {

@@ -1,4 +1,4 @@
-import { GraduationCap, ShieldCheck } from "lucide-react";
+import { BarChart3, GraduationCap } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const footerLinks = [
@@ -6,9 +6,9 @@ const footerLinks = [
   { to: "/practice/setup?competency=all", label: "Full Mock Test", isSpecial: true },
   { to: "/practice/setup", label: "Practice" },
   { to: "/quiz/setup", label: "AI Quiz" },
+  { to: "/leaderboard", label: "Leaderboard", isLeaderboard: true },
   { to: "/projects", label: "Projects" },
   { to: "/about", label: "About Us" },
-  { to: "/admin", label: "Admin", isAdmin: true },
 ];
 
 export default function Footer() {
@@ -42,8 +42,8 @@ export default function Footer() {
                     ? "font-bold text-ulm-purple underline decoration-2 underline-offset-4"
                     : item.isSpecial
                     ? "font-semibold text-ulm-purple hover:underline"
-                    : item.isAdmin
-                    ? "text-gray-500 hover:text-ulm-purple hover:underline"
+                    : item.isLeaderboard
+                    ? "font-semibold text-ulm-purple hover:underline"
                     : "text-ulm-purple hover:underline",
                 ].join(" ")
               }
@@ -56,7 +56,7 @@ export default function Footer() {
                       title="Current Active Page"
                     />
                   )}
-                  {item.isAdmin && <ShieldCheck className="h-3.5 w-3.5" />}
+                  {item.isLeaderboard && <BarChart3 className="h-3.5 w-3.5" />}
                   <span>{item.label}</span>
                 </>
               )}
